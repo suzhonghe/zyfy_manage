@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.UmpSettleTransferRecordDao'>
+	<resultMap type="com.zhongyang.java.pojo.UmpSettleTransferRecord" id="rm">
+		<id column="ORDERID" property="orderid"/>
+		<result column="ACCOUNTDATE" property="accountdate"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="INACCOUNTID" property="inaccountid"/>
+		<result column="MERDATE" property="merdate"/>
+		<result column="OUTACCOUNTID" property="outaccountid"/>
+		<result column="SETTLEDATE" property="settledate"/>
+		<result column="SETTLETIME" property="settletime"/>
+		<result column="TRANSACTIONID" property="transactionid"/>	
+	</resultMap>
+	<sql id="sqlfile">
+		select ORDERID orderid,ACCOUNTDATE accountdate,AMOUNT amount,INACCOUNTID inaccountid,MERDATE merdate,
+			OUTACCOUNTID outaccountid,SETTLEDATE settledate,SETTLETIME settletime,TRANSACTIONID transactionid from TB_UMP_SETTLE_TRANSFER_RECORD
+		where 1=1
+	</sql>
+	<insert id="batchInsertRecord" parameterType="java.util.List">
+		insert into TB_UMP_SETTLE_TRANSFER_RECORD values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.orderid},#{item.accountdate},#{item.amount},#{item.inaccountid},
+			#{item.merdate},#{item.outaccountid},#{item.settledate},#{item.settletime},#{item.transactionid})
+  		</foreach>
+	</insert>
+	<delete id="batchDeleteRecord" parameterType="java.util.List">
+		delete from TB_UMP_SETTLE_TRANSFER_RECORD where ORDERID in
+			<foreach collection="list" index="index" item="item" open="(" separator="," close=")"> 
+       			 #{item.orderid} 
+    		</foreach>
+	</delete>
+	<select id="selectAllRecords" parameterType="com.zhongyang.java.system.page.Page" resultMap="rm">
+		<include refid="sqlfile"/>
+			<if test="startTime!=null">
+				and SETTLEDATE &gt;=#{startTime}
+			</if>
+			<if test="endTime!=null">
+				and SETTLEDATE &lt;=#{endTime}
+			</if>
+			<if test="params.containsKey('ORDERID')">
+				and ORDERID like '%${params.ORDERID}%'
+			</if>
+			order by SETTLEDATE
+			<if test="params.containsKey('sort')">
+				${params.sort}
+			</if>
+	</select>
+	<select id="selectCount" parameterType="java.util.Map" resultType="int">
+		select count(*) from TB_UMP_SETTLE_TRANSFER_RECORD where 1=1
+			<if test="_parameter.containsKey('startTime')">
+				and SETTLEDATE &gt;=#{startTime}
+			</if>
+			<if test="_parameter.containsKey('endTime')">
+				and SETTLEDATE &lt;=#{endTime}
+			</if>
+			<if test="_parameter.containsKey('ORDERID')">
+				and ORDERID like '%${ORDERID}%'
+			</if>	
+	</select>
+	<update id="updateRecord" parameterType="com.zhongyang.java.pojo.UmpSettleRechargeRecord">
+		update TB_UMP_SETTLE_TRANSFER_RECORD
+			<set>
+				<if test="accountdate!=null">ACCOUNTDATE=#{accountdate},</if>
+				<if test="amount!=null">AMOUNT=#{amount},</if>
+				<if test="inaccountid!=null">INACCOUNTID=#{inaccountid},</if>
+				<if test="merdate!=null">MERDATE=#{merdate},</if>
+				<if test="OUTACCOUNTID!=null">OUTACCOUNTID=#{OUTACCOUNTID},</if>
+				<if test="settledate!=null">SETTLEDATE=#{settledate},</if>
+				<if test="settletime!=null">SETTLETIME=#{settletime},</if>
+				<if test="transactionid!=null">TRANSACTIONID=#{transactionid},</if>
+			</set>
+		where ORDERID=#{orderid}
+	</update>
+</mapper>
+

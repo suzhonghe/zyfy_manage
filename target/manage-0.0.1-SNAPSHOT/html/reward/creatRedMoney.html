@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>redMoney</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header">创建红包</p>
+<div class="clear title">
+    <div class="left" ><span>名称：</span></div>
+    <div class="right"><input type="text" /></div>
+</div>
+<div class="clear InvestmentGroup groupId">
+    <div class="left"><span>触发方式：</span></div>
+    <div class="right position"><span code="" class="select"></span><ul>
+        <!-- <li code="1">注册成功</li>
+        <li code="2">首次投资</li>
+        <li code="3">身份认证</li>
+        <li code="4">邀请成功</li> -->
+    </ul></div>
+</div>
+<div class="clear serial amount">
+    <div class="left"><span>金额：</span></div>
+    <div class="right"><input type="text" />元</div>
+</div>
+<div class="clear serial effectDay">
+    <div class="left"><span>有效期：</span></div>
+    <div class="right"><input type="text" />天</div>
+</div>
+<div class="clear serial amountLimit">
+    <div class="left"><span>投资下限：</span></div>
+    <div class="right"><input type="text" />元</div>
+</div>
+<div class="clear serial dateLimit">
+    <div class="left"><span>投资期限下限：</span></div>
+    <div class="right"><input type="text" />月</div>
+</div>
+<div class="clear serial">
+    <div class="left"><span>活动开始时间：</span></div>
+    <div class="right"><input id="dataStar" type="text" /></div>
+</div>
+<div class="clear serial">
+    <div class="left"><span>活动结束时间：</span></div>
+    <div class="right"><input id="dataEnd" type="text" /></div>
+</div>
+<p class="subBtn"><input type="button" value="创建"/></p>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.creatTest();
+window.onload = function(){
+    $(".subBtn input").click(function(){
+        zycfH.creatTestBtn({
+            "name":$(".title .right input").val(),
+            "triggerType":$(".groupId .select").attr("code"),
+            "amount":$(".amount .right input").val(),
+            "effectDay":$(".effectDay .right input").val(),
+            "amountLimit":$(".amountLimit .right input").val(),
+            "dateLimit":$(".dateLimit .right input").val(),
+            "startTime":$("#dataStar").val(),
+            "endTime":$("#dataEnd").val(),
+            "type":1
+        });
+    });
+};
+
+</script>
+</body>
+</html>

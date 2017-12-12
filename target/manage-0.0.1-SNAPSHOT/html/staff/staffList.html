@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>员工列表</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="header clear">
+    <span class="left">员工列表<span></span></span>
+    <div class="left searchBar">
+        <span>机构：</span><span class="searchResult"></span>
+        <ul class="list"></ul>
+    </div>
+    <a class="right headBtn" href="javasctipt:void(0);">添加员工</a>
+</div>
+<!-- <div class="function clear">
+    <div class="left"></div>
+    <div class="right">
+        <input type="text"/><span id="searchBtn" class="searchBtn"></span>
+    </div>
+</div> -->
+<div class="staffTable">
+    <table>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>登录名</th>
+                <th>唯一号</th>
+                <th>手机号码</th>
+                <th>注册时间</th>
+                <th>最后登录时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td><a href="javascript:void(0);">张三丰</a></td>
+                <td>zsf</td>
+                <td>000001</td>
+                <td>13599999999</td>
+                <td>2016年1月1日 12:00:00</td>
+                <td>2016年1月1日 14:00:00</td>
+                <td class="operation"><a href='javascript:void(0);'>编辑</a><a href='javascript:void(0);'>禁用</a></td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.staffList();
+</script>
+</body>
+</html>

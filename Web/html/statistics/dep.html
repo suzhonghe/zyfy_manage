@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>存管统计</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header">存管统计</p>
+<div class="inviteHeader clear">
+    <div class="alignRight">
+        <span>数据统计区间</span>
+        <input id="dataStar" type="text" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM'})"/>
+        <span id="searchTime" class="searchTime">查询</span>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <tbody>
+            <tr>
+                <th>借款余额（仅包含本金）（万）</th>
+                <td class="loanAmount"></td>
+                <th>未偿还利息（万）</th>
+                <td class="feeAmount"></td>
+            </tr>
+            <tr>
+                <th>借贷人数（人）</th>
+                <td class="loanPerson"></td>
+                <th>借出人数（人）</th>
+                <td class="inPerson"></td>
+            </tr>
+            <tr>
+                <th>平均借款期限（天）</th>
+                <td class="limitDays"></td>
+                <th>自然人平均借款额度（万）</th>
+                <td class="freedomAmount"></td>
+            </tr>
+            <tr>
+                <th>法人及其他组织平均借款额度（万）</th>
+                <td class="legonAmount"></td>
+                <th>平均借款利率（%）</th>
+                <td class="rate"></td>
+            </tr>
+            <tr>
+                <th>逾期金额（万）</th>
+                <td class="overAmount"></td>
+                <th>不良金额（万）</th>
+                <td class="bidAmount"></td>
+            </tr>
+            <tr>
+                <th>逾期率（%）</th>
+                <td class="overRate"></td>
+                <th>不良率（%）</th>
+                <td class="bidRate"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+$("#searchTime").click(function () {
+    $.ajax({
+        type: 'POST',
+        url: '../../queryManagerData',
+        data: {
+            date: $("#dataStar").val()
+        },
+        success: function (data) {
+            $(".loanAmount").html(data.loanAmount);
+            $(".feeAmount").html(data.feeAmount);
+            $(".loanPerson").html(data.loanPerson);
+            $(".inPerson").html(data.inPerson);
+            $(".limitDays").html(data.limitDays);
+            $(".freedomAmount").html(data.freedomAmount);
+            $(".legonAmount").html(data.legonAmount);
+            $(".rate").html(data.rate);
+            $(".overAmount").html(data.overAmount);
+            $(".bidAmount").html(data.bidAmount);
+            $(".overRate").html(data.overRate);
+            $(".bidRate").html(data.bidRate);
+        },
+        error: function (err) {}
+    });
+});
+</script>
+</body>
+</html>

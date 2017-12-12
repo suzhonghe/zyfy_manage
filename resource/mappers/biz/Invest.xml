@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.InvestDao'>
+	<resultMap type="com.zhongyang.java.pojo.Invest" id="rm">
+		<id column="ID" property="id" />
+		<result column="ORDERID" property="orderId" />
+		<result column="AMOUNT" property="amount" />
+		<result column="BIDMETHOD" property="bidmethod" />
+		<result column="CREDITASSIGNID" property="creditassignid" />
+		<result column="LOANID" property="loanid" />
+		<result column="ORIGINALAMOUNT" property="originalamount" />
+		<result column="PURPOSE" property="purpose" />
+		<result column="RATE" property="rate" />
+		<result column="REPAYMETHOD" property="repaymethod" />
+		<result column="SOURCE" property="source" />
+		<result column="STATUS" property="status" />
+		<result column="SUBMITTIME" property="submittime" />
+		<result column="USERID" property="userid" />
+		<result column="DAYS" property="days" />
+		<result column="MONTHS" property="months" />
+		<result column="YEARS" property="years" />
+	</resultMap>
+	<sql id="sqlfield">
+		select ID id,ORDERID orderId,AMOUNT amount,BIDMETHOD
+		bidmethod,CREDITASSIGNID creditassignid,LOANID loanid,ORIGINALAMOUNT
+		originalamount,PURPOSE purpose,
+		RATE rate,REPAYMETHOD
+		repaymethod,SOURCE source,STATUS status,SUBMITTIME
+		submittime,USERID
+		userid,DAYS days,MONTHS months,YEARS years
+		from
+		TB_INVEST where 1=1
+	</sql>
+	<!-- 根据OrderId查询userID -->
+	<select id="getInvestByLoanId" parameterType="com.zhongyang.java.pojo.Invest"
+		resultType="com.zhongyang.java.pojo.Invest">
+		select ID id,USERID userid,AMOUNT amount,STATUS status,SUBMITTIME submittime from TB_INVEST where LOANID = #{loanid}
+		<if test="status != null">
+			and STATUS = #{status}
+		</if>
+	</select>
+	<select id="selectInvest" parameterType="com.zhongyang.java.pojo.Invest"
+		resultMap="rm">
+		<include refid="sqlfield" />
+		<if test="loanid != null">
+			and LOANID = #{loanid}
+		</if>
+		<if test="status!=null">
+			and STATUS=#{status}
+		</if>
+		order by SUBMITTIME desc
+	</select>
+	<select id="selectByInvest" parameterType="com.zhongyang.java.pojo.Invest"
+		resultMap="rm">
+		<include refid="sqlfield" />
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+	<update id="updateInvest" parameterType="com.zhongyang.java.pojo.Invest">
+		update TB_INVEST
+		<set>
+			<if test="status!=null">
+				STATUS=#{status},
+			</if>
+		</set>
+		where 1=1
+		<if test="id!=null">and ID=#{id}</if>
+		<if test="orderId!=null">and ORDERID=#{orderId}</if>
+	</update>
+
+	<!--根据loanId更新投资人资金状态：处理中成功失败 -->
+	<update id="updateInvestByLoanId" parameterType="com.zhongyang.java.pojo.Invest">
+		update TB_INVEST
+		<set>
+			<if test="status != null">
+				STATUS = #{status}
+			</if>
+		</set>
+		where LOANID = #{loanid} and STATUS ='AUDITING'
+	</update>
+	
+	<update id="updateInvestStatus">
+		update TB_INVEST set STATUS = #{afterStatus} where LOANID = #{loanid} and status =#{beforStatus} and userid = #{userid}
+	</update>
+	<select id="getUsetInvestNumber" parameterType="String"
+		resultType="int">
+		select count(ID) from TB_INVEST where USERID = #{userId}
+	</select>
+
+
+	<select id="getInvestCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from TB_INVEST where USERID = #{userId}
+	</select>
+
+	<select id="getUserInvestList" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.vo.InvestVo">
+		SELECT
+		  tl.ID id,
+		  ti.LOANID loanId,
+		  ti.AMOUNT amount,
+		  ti.SUBMITTIME submittime,
+		  tl.RATE rate,
+		  tl.TITLE title,
+		  tl.MONTHS months,
+		  tl.STATUS statuss,
+		  tl.METHOD Methods
+		FROM TB_INVEST ti,TB_LOAN tl WHERE tl.ID =  ti.LOANID AND ti.userid = #{params.userId}
+		AND ti.STATUS IN('OPENED','FAILED','FINISHED','CANCELED','SETTLED','CLEARED','OVERDUE','BREACH')
+		ORDER BY ti.SUBMITTIME DESC
+	</select>
+
+	<select id="selectByParams" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.vo.InvestRecord">
+		select tu.ID userId,tu.NAME userName,ti.AMOUNT amount,ti.SUBMITTIME
+		date,tl.title title,tl.MONTHS months from TB_INVEST ti
+		left join
+		TB_LOAN tl on ti.LOANID=tl.ID
+		left join TB_USER tu on ti.USERID=tu.ID
+		where 1=1
+			<if test="params.containsKey('referralId')">and tu.REFERRAL_ID=#{params.referralId}</if>
+			<if test="params.containsKey('status')">and ti.STATUS in(#{params.status})</if>
+			<if test="startTime!=null">and ti.SUBMITTIME &gt;=#{startTime}</if>
+			<if test="endTime!=null">and ti.SUBMITTIME &lt;=#{endTime}</if>
+			order by ti.SUBMITTIME desc
+	</select>
+	<select id="selectResultByMap" parameterType="java.util.Map"
+		resultType="com.zhongyang.java.vo.Result">
+		select count(*) count,sum(ti.AMOUNT) totalAmount from TB_INVEST ti
+		left join TB_USER tu on ti.USERID=tu.ID
+		where 1=1
+		<if test="_parameter.containsKey('referralId')">and tu.REFERRAL_ID=#{referralId}</if>
+		<if test="_parameter.containsKey('status')">and ti.STATUS=#{status}</if>
+		<if test="_parameter.containsKey('startTime')">and SUBMITTIME &gt;=#{startTime}</if>
+		<if test="_parameter.containsKey('endTime')">and SUBMITTIME &lt;=#{endTime}</if>
+	</select>
+
+	<select id="getInvestAndMobileByLoanId" parameterType="String"
+		resultType="com.zhongyang.java.vo.InvestVo">
+		SELECT MOBILE userMobile FROM TB_USER WHERE id IN
+		(SELECT USERID FROM TB_INVEST WHERE LOANID = #{loanId} and STATUS ='SETTLED')
+	</select>
+	<select id="selectById" parameterType="com.zhongyang.java.pojo.Invest" resultMap="rm">
+		<include refid="sqlfield"/>
+			<if test="id!=null">and ID=#{id}</if>
+	</select>
+	
+	<select id="findInvestRepayMent" parameterType="String" resultType="int">
+            SELECT COUNT(tr.ID)
+				FROM TB_INVEST_REPAYMENT tr WHERE INVEST_ID IN (SELECT ti.ID FROM TB_INVEST ti WHERE  LOANID= #{loanId})
+	</select>
+	
+	
+</mapper>

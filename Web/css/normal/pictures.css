@@ -1,0 +1,281 @@
+@charset "utf-8";
+.main {
+    padding-top: 20px;
+}
+.slideBox {
+    width: 15%;
+    padding: 0 3% 0 2%;
+}
+.slideNav {
+    width: 180px;
+}
+.slideNav li {
+    margin-bottom: 12px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #e4e4e4;
+    cursor: pointer;
+}
+.slideNav li.act,
+.slideNav li:hover {
+    background-color: #fe9900;
+    color: #fff;
+}
+/*图片编辑块*/
+.photoBox {
+    display: none;
+}
+.viewBox{
+    width: 78%;
+    padding-right: 2%;
+}
+.viewBox table {
+    border-collapse: collapse;
+}
+.viewBox table td,
+.viewBox table th {
+    border: 1px solid #000;
+    text-align: center;
+}
+.viewBox table td.img {
+    width: 150px;
+    height: 76px;
+    text-align: center;
+}
+.viewBox table td.control {
+    width: 126px;
+}
+.viewBox table td.control {
+    width: 126px;
+}
+.viewBox table img {
+    display: inline-block;
+    width: 120px;
+    height: 62px;
+}
+.subBox input.btn{
+    padding: 8px 20px;
+    background-color: #0166ff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.subBox table input[type=button]{
+    background: none;
+    color: #0063fc;
+    cursor: pointer;
+}
+.pictureView {
+    width: 100%;
+ }
+.pictureView.act {
+    display: block;
+}
+.pictureView li{
+    position: relative;
+    width: 130px;
+    height: 120px;
+    margin-right: 40px;
+    margin-bottom: 22px;
+}
+.pictureView li i {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    content: "×";
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+.pictureView li i:hover {
+    color: #eb6100;
+}
+.pictureView li img {
+    height: 86px;
+    width: 130px;
+    background-color: #c9cdd0;
+}
+.pictureView li p {
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    background-color: #e4e4e4;
+}
+.upload {
+    position: relative;
+    text-align: center;
+    background-color: #e4e4e4;
+    cursor: pointer;
+}
+.upload .uploadify {
+    position: absolute!important;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    width: 100%!important;
+    height: 100%!important;
+
+}
+.pictureView li.upload i,
+.pictureView li.upload b {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    width: 70px;
+    height: 12px;
+    margin-left: -35px;
+    background-color: #d7d7d7;
+}
+.pictureView li.upload p {
+    padding-top: 80px;
+}
+.pictureView li.upload b{
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    -o-transform:rotate(90deg);
+}
+
+/*图片添加*/
+.addBox,
+.editBox {
+    display: none;
+    width: 340px;
+    height: 328px;
+    border: 1px solid #000;
+    text-align: center;
+}
+.addBox img,.editBox img {
+    width: 80px;
+    height: 80px;
+}
+.addBox span.btn,
+.editBox span.btn {
+    position: relative;
+    margin-top: 50px;
+    margin-left: 20px;
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #6599ff;
+}
+
+.addBox h4,.editBox h4 {
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    background-color: #f2f2f2;
+}
+.addBox p ,
+.editBox p{
+    line-height: 22px;
+    padding: 15px 0;
+}
+.addBox p label,
+.editBox p label {
+    width: 96px;
+    text-align: center;
+}
+.addBox input[type=text],
+.editBox input[type=text] {
+    width: 184px;
+    height: 18px;
+    padding: 2px 4px;
+    border: 1px solid #bcbcbc;
+}
+.subBox table {
+    width: 100%;
+}
+.uploadify,
+.uploadify object {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+}
+.reBox {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(29,3,6,0.3);
+    padding-top: 200px;
+}
+
+.reBox .tabBanner {
+    position: relative;
+    width: 100%;
+    height: 360px;
+}
+.reBox .tabBanner ul {
+    position: relative;
+    height: 100%;
+}
+
+.reBox .tabBanner ol {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    width: 360px;
+    margin-left: -180px;
+}
+.reBox .tabBanner ol li {
+    width: 60px;
+    height: 8px;
+    margin: 0 6px;
+    background-color: #666;
+    cursor: pointer;
+}
+.reBox .tabBanner ol li.act {
+    background-color: #fff;
+}
+.reBox .tabBanner ul li {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 360px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    transition: all 2s;
+    -moz-transition: all 2s;
+    -webkit-transition: all 2s;
+    -o-transition: all 2s;
+}
+.reBox .tabBanner ul li.act {
+
+    opacity: 1;
+    filter:alpha(opacity=100);
+}
+.reBox .signOut {
+    text-align: center;
+}
+.reBox .signOut input {
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    background: #1148e5;
+}
+/*tabBanner end*/
+
+.pic_wrap{width:810px;background-color: #fff;position: fixed;top:100px;left:50%;margin-left:-405px;border:1px solid #d1d1d1;display: none;}
+.pic_position{position: relative;overflow: hidden;height:270px;}
+.pic_list{position: absolute;left:0;top:0;width:20000px;overflow: hidden;}
+.pic_list li{float:left;width:260px;padding:5px;}
+.pic_list li a{display: inline-block;}
+.pic_list li img{width:260px;}
+.close{position: absolute;top:2px;right:2px;width:11px;height:11px;cursor:pointer;background: url(../img/closeBg.png) no-repeat;}
+.next,.prev{width:20px;height:28px;position: absolute;top:110px;opacity: 0.7;filter:alpha(opacity=70);cursor:pointer;}
+.next{right:-30px;background: url(../img/next_bg.png) no-repeat;}
+.prev{left:-30px;background: url(../img/prev_bg.png) no-repeat;}

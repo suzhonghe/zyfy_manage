@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="../../css/zyfyCommon.css">
+    <script src="../../js/laydate.js"></script>
+    <script src="../../js/jquery.min.1.10.2.js"></script>
+    <style>
+        .head,.showPho,.edit,.sendBar{padding:0 40px;}
+        .title{margin-top:40px;height:44px;line-height: 44px;text-align: center;color:#333;font-size: 14px;background-color:#5aafd9;border:1px solid #666;}
+        .query{height:60px;line-height: 60px;font-size: 12px;border:1px solid #666;border-top:none;}
+        .query span,.sendBar span{padding:0 12px;display: inline-block;vertical-align: middle;}
+		.query input,.sendBar input{padding:7px 12px;height:14px;border:1px solid #e5e5e5;font-size: 14px;color:#333;vertical-align: middle;}
+		.query .dateInp,.sendBar .dateInp{width:120px;}
+		.query .searchTime,.sendBar .searchTime{margin:0 20px 0 10px;background-color: #38afff;border-radius:4px;color:#fff;cursor:pointer;height:30px;line-height: 30px;}
+		.pho{margin-top:20px;line-height: 30px;color:#333;font-size: 12px;border:1px solid #666;padding:10px 20px;word-break:break-all;}
+		.num{line-height: 30px;color:#333;font-size: 12px;border:1px solid #666;border-top:none;padding:4px 20px;}
+		.edit textarea{width:98%;padding:10px 1%;line-height: 30px;color:#333;font-size: 12px;border:1px solid #666;word-break:break-all;margin-top:20px;}
+    </style>
+</head>
+<body>
+<div class="head">
+	<P class="title">短信群发</P>
+	<div class="query">
+		<span>时间区间</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span><span id="searchBirthday" class="searchTime">生日查询</span><span id="InvestUser" class="searchTime">投资用户查询</span>
+	</div>
+</div>
+<div class="showPho">
+	<p class="pho"></p>
+	<p class="num">总共选择了：<span></span>个电话号码</p>
+</div>
+<div class="edit"><textarea name="editContent" id="" rows="4"></textarea></div>
+<div class="sendBar">
+	<span>定时发送</span><input id="timer" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" type="text" value=""/><span id="sendBtn" class="searchTime">发送</span>
+</div>
+<script>
+	!function(){
+        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#dataStar'});//绑定元素
+    }();
+    !function(){
+        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#dataEnd'});//绑定元素
+    }();
+    var number = 0;
+    $("#searchBirthday").click(function(){
+        getMobile("queryBirthDateUsers");
+    });
+    $("#searchTime").click(function(){
+        getMobile("getUserMobiles");
+    });
+    $("#InvestUser").click(function(){
+        getMobile("queryInvestUsers");
+    });
+    function getMobile(getUrl){
+        if( (new Date($("#dataStar").val()).getTime() <= new Date($("#dataEnd").val()).getTime()) && $("#dataStar").val()!="" && $("#dataEnd").val()!="" ){
+            $.ajax({
+                type:"POST",
+                url:"../../"+getUrl,
+                data:{"startTime":$("#dataStar").val(),"endTiem":$("#dataEnd").val()},
+                success:function(str){
+                    if(str.code){
+                        if(str.code == "UNKNOW_EXCEPTION" || str.code == "UNKNOW_NAME" || str.code == "USETTLE_FAIL" || str.code == "NO_UUSERINVEST" || str.code == "NO_INFORMATIONLOAN" || str.code == "PREPARE_DEPOSIT_FAILED" || str.code == "FILE_READ_WRITE_EXCEPTION" || str.code == "EN_CODE_MD5_EXCEPTION" || str.code == "SERVER_REFUSED" || str.code == "LOGIN_ERROR" || str.code == "USER_NOT_EXISTS" || str.code == "USER_PASSWORD_VAILD_FAILURE" || str.code == "NOREGISTERED_UMPACCOUNT" || str.code == "USER_NOLOGIN" || str.code == "LOGIN_SUCCESS" ){
+                            alert(str.message);
+                            return;
+                        }
+                    };
+                    $(".pho").html("");
+                    if(!str || !str.length){
+                        $(".pho").html("暂无数据");
+                        $(".num span").html("0");
+                    }else{
+                        $(".pho").html(str.join(","));
+                        $(".num span").html(str.length);
+                    }
+                }
+            });
+        }else if(new Date($("#dataStar").val()).getTime() > new Date($("#dataEnd").val()).getTime()){
+            alert("开始时间必须小于结束时间")
+        }else if($("#dataStar").val()=="" || $("#dataEnd").val()==""){
+            alert("时间区间为必选")
+        };
+    };
+    $("#sendBtn").click(function(){
+        var sendTime;
+        if( new Date($("#timer").val()).getTime() < new Date().getTime() || $("#timer").val()=="" ){
+            sendTime = "";
+        }else{
+            sendTime = $("#timer").val();
+        };
+        if( $(".edit textarea").val()!="" && $(".pho").html()!="" && $(".pho").html()!="暂无数据" && number<=5000 ){
+            $.ajax({
+                type:"POST",
+                url:"../../sensMessageToUser",
+                data:{"sendTime":sendTime,"messsge":$(".edit textarea").val(),"mobiles":$(".pho").html()},
+                success:function(str){
+                    if(str.code == "UNKNOW_EXCEPTION" || str.code == "UNKNOW_NAME" || str.code == "USETTLE_FAIL" || str.code == "NO_UUSERINVEST" || str.code == "NO_INFORMATIONLOAN" || str.code == "PREPARE_DEPOSIT_FAILED" || str.code == "FILE_READ_WRITE_EXCEPTION" || str.code == "EN_CODE_MD5_EXCEPTION" || str.code == "SERVER_REFUSED" || str.code == "LOGIN_ERROR" || str.code == "USER_NOT_EXISTS" || str.code == "USER_PASSWORD_VAILD_FAILURE" || str.code == "NOREGISTERED_UMPACCOUNT" || str.code == "USER_NOLOGIN" || str.code == "LOGIN_SUCCESS" ){
+                        alert(str.message);
+                        return;
+                    };
+                    if(str == "0000"){
+                        alert("发送成功")
+                    }else{
+                        alert("发送失败")
+                    }
+                }
+            });
+        }else if($(".edit textarea").val()==""){
+            alert("请输入你要说的话")
+        }else if($(".pho").html()==""){
+            alert("请先选择要发送的手机号")
+        }else if($(".pho").html()=="暂无数据"){
+            alert("这个区间没有手机号码，请扩大范围")
+        }else if(number>5000){
+            alert("电话号码数量不能大于5000个")
+        };
+    });
+</script>
+</body>
+</html>

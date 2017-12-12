@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>充值对账</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="function clear">
+    <div class="left"></div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><input id="fuzzyQuery" type="text" placeholder="订单号" /><span id="searchTime" class="searchTime">查询</span><input class="export" type="button" value="导出"/>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>订单号</th>
+                <th>用户账号</th>
+                <th>手机号码</th>
+                <th>真实姓名</th>
+                <th>充值金额（元）</th>
+                <th>联动流水号</th>
+                <th>联动对账日期</th>
+                <th>联动对账时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>1</td>
+                <td>大别山</td>
+                <td>张三丰</td>
+                <td>1000</td>
+                <td>10.3</td>
+                <td>3个月</td>
+                <td>95%</td>
+                <td>95%</td>
+                <td>999</td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.RechargeRecord("../../queryRechargeRecord",zycfH.rRecordCallback);
+zycfH.settleExport("uploadRechargeRecords");
+</script>
+</body>
+</html>

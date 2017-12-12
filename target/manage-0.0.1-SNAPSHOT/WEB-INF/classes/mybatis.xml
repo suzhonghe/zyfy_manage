@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration  
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+	<properties resource="database.properties"></properties>
+
+	<plugins>
+		<plugin interceptor="com.zhongyang.java.system.page.PageInterceptor">
+			<property name="databaseType" value="${database.type}" />
+		</plugin>
+		<plugin interceptor="com.zhongyang.java.system.database.AfterThrowingAdvice"></plugin>
+	</plugins>
+
+</configuration>

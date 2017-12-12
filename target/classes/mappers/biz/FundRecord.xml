@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+
+<mapper namespace='com.zhongyang.java.dao.FundRecordDao'>
+	<!-- 新增充值记录 -->
+	<insert id="addFundRecord" parameterType="com.zhongyang.java.pojo.FundRecord">
+		INSERT INTO
+		TB_FUND_RECORD (ID,AMOUNT,AVIAMOUNT,DESCRIPTION,
+		OPERATION,ORDERID,STATUS,TIMERECORDED,TYPE,USER_ID)
+		VALUES (#{id},
+		#{amount},#{aviAmount},#{description},
+		#{operation},
+		#{orderid},
+		#{status},#{timerecorded},
+		#{type},#{userId})
+	</insert>
+	<!-- 更新充值状态 -->
+	<update id="updateFundRecordByOrderId" parameterType="com.zhongyang.java.pojo.FundRecord">
+		update TB_FUND_RECORD
+		<set>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="aviAmount != null">
+				AVIAMOUNT = #{aviAmount},
+			</if>
+		</set>
+		where ORDERID = #{orderid}
+	</update>
+	<!-- 根据OrderId查询userID -->
+	<select id="findFundRecordByOrderId" parameterType="com.zhongyang.java.pojo.FundRecord"
+		resultType="com.zhongyang.java.pojo.FundRecord">
+		select USER_ID userId,STATUS,status,AMOUNT amount,ORDERID orderid from
+		TB_FUND_RECORD where 1 = 1
+		<if test="orderid != null">
+			and ORDERID = #{orderid}
+		</if>
+		<if test="type != null">
+			and TYPE = #{type}
+		</if>
+	</select>
+
+
+	<!-- 根据OrderId查询userID -->
+	<select id="findFundRecordListByOrderId" parameterType="com.zhongyang.java.pojo.FundRecord"
+		resultType="com.zhongyang.java.pojo.FundRecord">
+		select USER_ID userId,STATUS,status,AMOUNT amount,TYPE type from
+		TB_FUND_RECORD where 1 = 1
+		<if test="orderid != null">
+			and ORDERID = #{orderid}
+		</if>
+	</select>
+
+	<resultMap type="com.zhongyang.java.pojo.FundRecord" id="rm">
+		<id column="ID" property="id" />
+		<result column="DTYPE" property="dtype" />
+		<result column="AMOUNT" property="amount" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="OPERATION" property="operation" />
+		<result column="ORDERID" property="orderid" />
+		<result column="RECORDPRIV" property="recordpriv" />
+		<result column="STATUS" property="status" />
+		<result column="TIMERECORDED" property="timerecorded" />
+		<result column="TRANSACTIONID" property="transactionid" />
+		<result column="TYPE" property="type" />
+		<result column="ENTITYID" property="entityid" />
+		<result column="FUND_ACCOUNT_ID" property="fundAccountId" />
+		<result column="REALM" property="realm" />
+		<result column="USER_ID" property="userId" />
+	</resultMap>
+	<sql id="sqlfield">
+		select ID id,DTYPE dtype,AMOUNT amount,AVIAMOUNT aviAmount,DESCRIPTION
+		description,OPERATION operation,ORDERID orderid, RECORDPRIV
+		recordpriv,STATUS status,
+		TIMERECORDED timerecorded,TRANSACTIONID transactionid,TYPE type,ENTITYID
+		entityid,FUND_ACCOUNT_ID fundAccountId,REALM realm,USER_ID userId from
+		TB_FUND_RECORD where 1=1
+	</sql>
+	<select id="selectFundRecord" parameterType="String" resultMap="rm">
+		<include refid="sqlfield" />
+		<if test="operation!=null">
+			and OPERATION=#{operation}
+		</if>
+		<if test="#{1}!=null">
+			and ORDERID=#{orderid}
+		</if>
+	</select>
+	<update id="updateFundRecord" parameterType="com.zhongyang.java.pojo.FundRecord">
+		update TB_FUND_RECORD
+		<set>
+			<if test="aviAmount != null">
+				AVIAMOUNT = #{aviAmount},
+			</if>
+			<if test="status!=null">
+				STATUS = #{status},
+			</if>
+			<if test="description!=null">
+				DESCRIPTION=#{description},
+			</if>
+			<if test="transactionid!=null">
+				TRANSACTIONID=#{transactionid},
+			</if>
+			<if test="recordpriv!=null">
+				RECORDPRIV=#{recordpriv},
+			</if>
+		</set>
+		where 1=1
+		<if test="operation!=null">
+			and OPERATION=#{operation}
+		</if>
+		<if test="orderid!=null">
+			and ORDERID=#{orderid}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</update>
+
+	<select id="getFundRecordCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from TB_FUND_RECORD where USER_ID = #{userId}
+		<if test="_parameter.containsKey('type')">
+			and TYPE=#{type}
+		</if>
+		<if test="_parameter.containsKey('status')">
+			and STATUS=#{status}
+		</if>
+		<if test="startTime!=null">
+			and TIMERECORDED &gt;=#{startTime}
+		</if>
+		<if test="endTime!=null">
+			and TIMERECORDED &lt;=#{endTime}
+		</if>
+		AND OPERATION IN('IN','OUT')
+	</select>
+
+	<select id="getFundRecordList" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.FundRecord">
+		select ID id,ORDERID orderid,AMOUNT amount,TYPE type,OPERATION
+		operation,TIMERECORDED timerecorded,STATUS status,DESCRIPTION
+		description
+		FROM TB_FUND_RECORD where USER_ID = #{params.userId}
+		<if test="params.containsKey('type')">
+			and TYPE=#{params.type}
+		</if>
+		<if test="params.containsKey('status')">
+			and STATUS=#{params.status}
+		</if>
+		<if test="startTime!=null">
+			and TIMERECORDED &gt;=#{startTime}
+		</if>
+		<if test="endTime!=null">
+			and TIMERECORDED &lt;=#{endTime}
+		</if>
+		AND OPERATION IN('IN','OUT')
+		ORDER BY TIMERECORDED DESC
+	</select>
+	<select id="selectFundRecords" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.vo.FundRecordSettle">
+		select f.ORDERID orderId,f.AMOUNT amount,f.STATUS
+		status,f.TIMERECORDED date,f.TYPE type,
+		u.MOBILE mobile,u.NAME realName
+		from TB_FUND_RECORD f
+		left join TB_USER u on f.USER_ID=u.ID
+		where 1=1
+		<if
+			test="params.containsKey('type') and params.type!='' and params.type!=null">
+			and f.TYPE=#{params.type}
+		</if>
+		<if test="startTime!=null">
+			and f.TIMERECORDED &gt;=#{startTime}
+		</if>
+		<if test="endTime!=null">
+			and f.TIMERECORDED &lt;=#{endTime}
+		</if>
+		order by f.TIMERECORDED desc
+	</select>
+	<select id="selectInvestUsers" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		select DISTINCT r.USER_ID id,u.MOBILE mobile from TB_FUND_RECORD r left join TB_USER u on
+		r.USER_ID=u.ID where r.TYPE='INVEST' and r.STATUS='SUCCESSFUL'
+		<if test="params.containsKey('startTime')">and DATE_FORMAT(TIMERECORDED,'%Y-%m-%d') &gt;=#{params.startTime}</if>
+		<if test="params.containsKey('endTime')">and DATE_FORMAT(TIMERECORDED,'%Y-%m-%d') &lt;=#{params.endTime}</if>
+	</select>
+	<!-- 定时器修改用户处理中资金记录 -->
+	<update id="updateStatusForFailed">
+		update TB_FUND_RECORD
+		<set>
+				STATUS='FAILED'
+		</set>
+		where STATUS='PROCESSING'
+		and DATE_FORMAT(TIMERECORDED,'%Y-%m-%d') &gt;=#{0}
+		and DATE_FORMAT(TIMERECORDED,'%Y-%m-%d') &lt;=#{1}
+    </update>
+</mapper>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>个人资金记录</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="function clear fundRecord">
+    <div class="left">
+        <div class="alignLeft selectWrap"><em>类型：</em><span proId="" class="selectedList">全部资金类型</span>
+            <ul class="list">
+                <li proId="">全部资金类型</li>
+                <li proId="INVEST">投标</li>
+                <li proId="WITHDRAW">取现</li>
+                <li proId="DEPOSIT">充值</li>
+                <li proId="LOAN">放款</li>
+                <li proId="LOAN_REPAY">贷款还款</li>
+                <li proId="DISBURSE">垫付还款</li>
+                <li proId="INVEST_REPAY">投资还款</li>
+                <li proId="FAILED_LOAN_REPAY">流标返款</li>
+                <li proId="TRANSFER">转账扣款</li>
+                <li proId="FEE_WITHDRAW">提现手续费</li>
+                <li proId="FEE_INVEST_INTEREST">投资管理费</li>
+                <li proId="FEE_LOAN_SERVICE">借款服务费</li>
+                <li proId="FEE_LOAN_MANAGE">借款管理费</li>
+                <li proId="FEE_LOAN_INTEREST">还款管理费</li>
+                <li proId="FEE_LOAN_RISK">风险管理费</li>
+                <li proId="FEE_DEPOSIT">充值手续费</li>
+            </ul>
+        </div>
+    </div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span><input class="export" type="button" value="导出"/>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>订单号</th>
+                <th>手机号</th>
+                <th>真实姓名</th>
+                <th>金额</th>
+                <th>交易类型</th>
+                <th>交易状态</th>
+                <th>日期</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.fundRecord();
+</script>
+</body>
+</html>

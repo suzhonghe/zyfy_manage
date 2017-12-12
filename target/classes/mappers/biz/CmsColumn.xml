@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.CmsColumnDao'>
+	<resultMap type="com.zhongyang.java.pojo.CmsColumn" id="rm">
+		<id column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="TIME" property="time"/>
+	</resultMap>
+	<sql id="sqlfile">
+		select ID id,NAME name,TIME time from TB_CMS_COLUMN where 1=1
+	</sql>
+	<insert id="insertCmsColumn" parameterType="com.zhongyang.java.pojo.CmsColumn">
+		insert into TB_CMS_COLUMN (ID,NAME,TIME)values(#{id},#{name},#{time})
+	</insert>
+	<update id="updateByParams" parameterType="com.zhongyang.java.pojo.CmsColumn">
+		update TB_CMS_COLUMN 
+			<set>
+				<if test="name!=null">NAME=#{name},</if>
+				<if test="time!=null">TIME=#{time},</if>
+			</set>
+		where 1=1
+			<if test="id!=null">and ID=#{id}</if>
+	</update>
+	<delete id="deleteByParams" parameterType="com.zhongyang.java.pojo.CmsColumn">
+		delete from TB_CMS_COLUMN where ID=#{id}
+	</delete>
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.CmsColumn" resultMap="rm">
+		<include refid="sqlfile"/>
+			order by TIME
+	</select>
+</mapper>

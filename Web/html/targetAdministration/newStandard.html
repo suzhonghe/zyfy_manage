@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新建标的</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header">新建标的</p>
+<div class="clear title">
+    <div class="left" ><span>标的名称：</span></div>
+    <div class="right"><input type="text" /><span>项目名称+期数</span></div>
+</div>
+<div class="clear serial">
+    <div class="left"><span>唯一号：</span></div>
+    <div class="right"><input type="text" /><span>担保公司简称首字母-线下借款申请日期-担保公司借款项目序号-标的期数<br /><strong>例：DBS-20150831-021-084</strong></span></div>
+</div>
+<div class="clear amount">
+    <div class="left"><span>本次发标金额（元）：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear loanUserId">
+    <div class="left"><span>借款人ID：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear affEnterprise guaranteeRealm">
+    <div class="left"><span>关联企业：</span></div>
+    <div class="right"><span class="select"></span><ul>
+    </ul></div>
+</div>
+<div class="clear productType productId">
+    <div class="left"><span>产品类型：</span></div>
+    <div class="right"><span class="select"></span><ul>
+    </ul></div>
+</div>
+<div class="clear date">
+    <div class="left"><span>借款期限：</span></div>
+    <div class="right"><input class="months" type="text" value="" />月</div>
+</div>
+<div class="clear rate">
+    <div class="left"><span>年利率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear addRate">
+    <div class="left"><span>加息：</span></div>
+    <div class="right"><input type="text" value="0" />%</div>
+</div>
+<div class="clear InvestmentGroup groupId">
+    <div class="left"><span>投资人群：</span></div>
+    <div class="right"><span class="select">全部用户</span><ul>
+        <li>全部用户</li>
+        <li>新用户</li>
+    </ul></div>
+</div>
+<div class="clear Whether whetherTransfer">
+    <div class="left"><span>是否可转：</span></div>
+    <div class="right"><span class="select">否</span><ul>
+        <li>是</li>
+        <li>否</li>
+    </ul></div>
+</div>
+<div class="clear RepaymentMethod method">
+    <div class="left"><span>还款方式：</span></div>
+    <div class="right"><span class="select">一次性还本付息</span><ul>
+        <li>一次性还本付息</li>
+        <li>按月付息到期还本</li>
+    </ul></div>
+</div>
+<div class="clear collateral mortgaged">
+    <div class="left"><span>抵押品：</span></div>
+    <div class="right">
+        <div><input id="mortgage" type="radio" name="mortgage" value="0"/><lable for="mortgage">无抵押-信用借款</lable></div>
+        <div><input id="mortgage1" type="radio" name="mortgage" value="1"/><lable for="mortgage1">有抵押-信用借款</lable></div>
+        <div class="martgageType">
+        </div>
+    </div>
+</div>
+<div class="clear minAmount">
+    <div class="left"><span>起投金额（元）：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear maxAmount">
+    <div class="left"><span>最大投资金额（元）：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear stepAmount">
+    <div class="left"><span>投资增量（元）：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear loanGuaranteeFee">
+    <div class="left"><span>担保费率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear loanServiceFee">
+    <div class="left"><span>服务费率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear loanRiskFee">
+    <div class="left"><span>风险管理费率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear LoanManageFee">
+    <div class="left"><span>借款管理费率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear loanInterestFee">
+    <div class="left"><span>还款（借款）利息管理费率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear investInterestFee">
+    <div class="left"><span>回款（投资）利息管理费率：</span></div>
+    <div class="right"><input type="text" value="" />%</div>
+</div>
+<div class="clear loanTime">
+    <div class="left"><span>标的有效期：</span></div>
+    <div class="right"><input type="text" value="10" />天</div>
+</div>
+<div class="clear firmInfo">
+    <div class="left"><span>公司简介：</span></div>
+    <div class="right"><textarea rows="3"></textarea></div>
+</div>
+<div class="clear operationRange">
+    <div class="left"><span>经营范围：</span></div>
+    <div class="right"><textarea rows="3"></textarea></div>
+</div>
+<div class="clear description">
+    <div class="left"><span>资金用途：</span></div>
+    <div class="right"><textarea rows="3"></textarea></div>
+</div>
+<div class="clear repaySource">
+    <div class="left"><span>还款来源：</span></div>
+    <div class="right"><textarea rows="3"></textarea></div>
+</div>
+<div class="clear riskInfo">
+    <div class="left"><span>风险措施：</span></div>
+    <div class="right"><textarea rows="3"></textarea></div>
+</div>
+<div class="clear personID legalPersonIdentityCard">
+    <div class="left"><span>法人身份证：</span></div>
+    <div class="right uploadImg"></div>
+</div>
+<div class="clear enterpriseInfo companyInfo">
+    <div class="left"><span>企业信息：</span></div>
+    <div class="right uploadImg"></div>
+</div>
+<div class="clear contract contractDocument">
+    <div class="left"><span>合同文件：</span></div>
+    <div class="right uploadImg"></div>
+</div>
+<div class="clear assetsInfo propertyInfo">
+    <div class="left"><span>资产信息：</span></div>
+    <div class="right uploadImg"></div>
+</div>
+<div class="clear other otherDetails">
+    <div class="left"><span>其他资料：</span></div>
+    <div class="right uploadImg"></div>
+</div>
+<p class="subBtn"><input type="button" value="提交申请"/><a>返回项目管理</a></p>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.addBid();
+zycfH.newStandard();
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.zhongyang.java.dao.RepaymentDao'>
+
+	 <select id="repayQuery"  resultType="com.zhongyang.java.pojo.RepayQuery">
+	select repay.ID as id,
+		loan.ID loanId,
+		loan.TITLE title,
+		tbuser.NAME name,
+		repay.duedate duedate,
+		repay.CURRENTPERIOD currentPeriod,
+		repay.AMOUNTINTEREST amountInterest,
+		repay.AMOUNTPRINCIPAL amountPrincipal
+		 ,userfund.AVAILABLE_AMOUNT available_amount,
+		 repay.STATUS status,
+		 tender.Amount as amountTender
+		from TB_LOAN_REPAYMENT repay
+		LEFT JOIN TB_LOAN loan on repay.LOAN_ID=loan.ID
+		LEFT JOIN TB_USER tbuser on loan.LOANUSERID=tbuser.ID
+		LEFT JOIN TB_USER_FUND userfund on tbuser.ID=userfund.USERID
+		LEFT JOIN TB_UMP_TENDER tender ON loan.ID = tender.LOANID
+		where 1 = 1
+		<if test="params.containsKey('startTime') and  params.startTime !=null">
+            and   repay.duedate  &gt;= #{params.startTime}
+		</if>
+        <if test="params.containsKey('endTime') and  params.endTime !=null">
+            and   repay.duedate  &lt;= #{params.endTime}
+        </if>
+        <if test="params.containsKey('duedate') and params.duedate != null">
+        	and repay.duedate == #{params.duedate}
+        </if>
+        <if test="params.containsKey('status') and params.status != null">
+        	and repay.STATUS = #{params.status}
+        </if>
+         order by loan.id, currentPeriod asc 
+        
+	</select> 
+	
+	
+	 <select id="repaymentQuery"  parameterType="com.zhongyang.java.system.page.Page" resultType="com.zhongyang.java.pojo.RepayQuery">
+	select repay.ID as id,
+		loan.ID loanId,
+		loan.TITLE title,
+		tbuser.ID userId,
+		tbuser.NAME name,
+		repay.duedate duedate,
+		repay.CURRENTPERIOD currentPeriod,
+		repay.AMOUNTINTEREST amountInterest,
+		repay.AMOUNTPRINCIPAL amountPrincipal
+		 ,userfund.AVAILABLE_AMOUNT available_amount,
+		 repay.REPAYDATE repayDate,
+		 repay.STATUS status,
+		 tender.Amount as amountTender,
+		 case length(repay.SOURCE_ID)
+		 when 36 then '正常还款' 
+		 when 7  then '垫付' end as sourceId
+		from TB_LOAN_REPAYMENT repay
+		LEFT JOIN TB_LOAN loan on repay.LOAN_ID=loan.ID
+		LEFT JOIN TB_USER tbuser on loan.LOANUSERID=tbuser.ID
+		LEFT JOIN TB_USER_FUND userfund on tbuser.ID=userfund.USERID
+		LEFT JOIN TB_UMP_TENDER tender ON loan.ID = tender.LOANID
+		where 1 = 1
+		<if test="params.containsKey('startTime') and  params.startTime !=null and  params.startTime !='' ">
+            and   date(repay.duedate)  &gt;= date(#{params.startTime})
+		</if>
+        <if test="params.containsKey('endTime') and  params.endTime !=null and  params.endTime !=''">
+            and   date(repay.duedate)  &lt;= date(#{params.endTime})
+        </if>
+       <!--  <if test="params.containsKey('duedate') and params.duedate != null and params.duedate != ''">
+        	and repay.duedate = #{params.duedate}
+        </if> -->
+      
+        <if test="params.containsKey('loanUserId') and params.loanUserId != null and params.loanUserId != ''">
+        	and loan.LOANUSERID = #{params.loanUserId}
+        </if>
+        <choose>
+           <when test="params.containsKey('status') and params.status != null and params.status == 'UNDUE'">
+               and repay.STATUS in ('${params.status}')
+               order by  repay.dueDate ASC 
+           </when>
+           <otherwise>
+            and repay.STATUS in ('${params.status}')
+               order by  repay.dueDate DESC 
+           </otherwise>
+        </choose>
+         <!--  <if test="params.containsKey('status') and params.status != null and params.status != ''">
+        	and repay.STATUS in ('${params.status}')
+        </if>
+         order by  repay.dueDate ASC  -->
+        
+	</select> 
+	
+	<select id="repaymentById" parameterType="com.zhongyang.java.pojo.RepaymentByID" resultType="com.zhongyang.java.pojo.RepaymentByID">
+		select repay.ID,
+		loan.TITLE,
+		round((repay.AMOUNTINTEREST*loan.LOANINTERESTFEE/100),2) as LOANINTERESTFEE ,
+		tbuser.NAME,
+		repay.CURRENTPERIOD,
+		round(repay.AMOUNTINTEREST+repay.AMOUNTPRINCIPAL+(repay.AMOUNTINTEREST*loan.LOANINTERESTFEE/100),2) MONEY ,
+		repay.AMOUNTINTEREST amountInterest,
+		repay.AMOUNTPRINCIPAL amountPrincipal,
+		userfund.AVAILABLE_AMOUNT,
+		tender.Amount,
+		repay.LOAN_ID,
+		tbuser.id as USERID ,
+		accoount.ACCOUNTID accountId,
+		ACCOUNTNAME accountName
+		from TB_LOAN_REPAYMENT repay 
+		LEFT JOIN TB_LOAN loan on repay.LOAN_ID=loan.ID
+		LEFT JOIN TB_USER tbuser on loan.LOANUSERID=tbuser.ID
+		LEFT JOIN TB_USER_FUND userfund on tbuser.ID=userfund.USERID
+		LEFT JOIN TB_UMP_TENDER tender ON loan.ID = tender.LOANID
+		LEFT JOIN TB_UMP_ACCOUNT accoount ON tbuser.ID = accoount.USERID
+		where repay.STATUS in('UNDUE','OVERDUE')
+			<if test="id != null">
+				 and repay.ID = #{id}
+			</if>
+	</select>
+
+
+    <select id="repaymentInvest" parameterType="com.zhongyang.java.pojo.RepayIvest" resultType="com.zhongyang.java.pojo.ReturnRepayIvest">
+        SELECT  invest.ID,invest.USERID,
+        investRepaymnet.ID repayId,
+        round((investRepaymnet.AMOUNTINTEREST+investRepaymnet.AMOUNTPRINCIPAL),2) AMOUNT,
+        investRepaymnet.AMOUNTINTEREST amountinterest,
+        investRepaymnet.AMOUNTPRINCIPAL amountprincipal,
+		invest.LOANID loanid,
+		investRepaymnet.CURRENTPERIOD currentPeriod,
+		investRepaymnet.STATUS status,
+        umpAccount.ACCOUNTID,
+        umpAccount.ACCOUNTNAME
+        from TB_INVEST_REPAYMENT investRepaymnet
+        LEFT  JOIN TB_INVEST invest ON  investRepaymnet.INVEST_ID=invest.ID
+        LEFT  JOIN TB_LOAN_REPAYMENT loanRepayment on loanRepayment.LOAN_ID=invest.LOANID and loanRepayment.CURRENTPERIOD=investRepaymnet.CURRENTPERIOD
+        LEFT  JOIN TB_UMP_ACCOUNT  umpAccount ON  invest.USERID = umpAccount.USERID
+        WHERE 1=1 and invest.status = 'SETTLED'
+        <if test="loanID != null">
+            and loanRepayment.LOAN_ID = #{loanID}
+        </if>
+        <if test="currentPeriod != null">
+            and loanRepayment.CURRENTPERIOD=#{currentPeriod}
+        </if>
+    </select>
+
+	<select id="getLoanRepayment" parameterType="com.zhongyang.java.pojo.LoanRepayment"
+		resultType="com.zhongyang.java.pojo.LoanRepayment">
+		select
+			t.AMOUNTINTEREST amountinterest,t.AMOUNTOUTSTANDING amountoutstanding,t.AMOUNTPRINCIPAL amountprincipal,
+			t.CURRENTPERIOD as currentperiod,t.DUEDATE duedate,t.ID,t.LOAN_ID as loanId,t.REPAYAMOUNT as repayamount,
+			t.REPAYDATE repaydate,t.SOURCE_ID sourceId,t.SOURCE_REALM sourceRealm,t.`STATUS` `status`
+		from TB_LOAN_REPAYMENT t
+		where 1=1
+		<if test="id != null">
+			and ID = #{id}
+		</if>
+	</select>
+
+    
+    <select id="getInvestRepaymentById"  parameterType="com.zhongyang.java.pojo.InvestRepayment" resultType="com.zhongyang.java.pojo.InvestRepayment">
+    select ID,CURRENTPERIOD,STATUS,AMOUNTINTEREST,
+		AMOUNTOUTSTANDING,AMOUNTPRINCIPAL,DUEDATE,INVEST_ID
+		from TB_INVEST_REPAYMENT
+		where 1=1
+		<if test="id !=null">
+		and ID = #{id}
+		</if>
+    </select>
+	<update id="updateInvestRepaymentById" parameterType="com.zhongyang.java.pojo.InvestRepayment">
+	UPDATE TB_INVEST_REPAYMENT
+	<set>
+	<if test="repaydate !=null">
+	REPAYDATE=#{repaydate},
+	</if>
+	<if test="repayamount !=null">
+		REPAYAMOUNT = #{repayamount},
+	</if>
+	<if test="sourceId !=null">
+	SOURCE_ID =  #{sourceId},
+	</if>
+	<if test="status !=null">
+	STATUS = #{status},
+	</if>
+	</set>
+	where ID= #{id}
+	</update>
+
+
+	<select id="selectByLoanId" parameterType="com.zhongyang.java.pojo.LoanRepayment" resultType="com.zhongyang.java.pojo.LoanRepayment">
+		select 
+		<!-- CURRENTPERIOD currentperiod,
+		DUEDATE duedate,
+		AMOUNTINTEREST amountinterest,
+		AMOUNTPRINCIPAL,amountprincipal,
+		STATUS status  -->
+			t.AMOUNTINTEREST amountinterest,t.AMOUNTOUTSTANDING amountoutstanding,t.AMOUNTPRINCIPAL amountprincipal,
+			t.CURRENTPERIOD as currentperiod,t.DUEDATE duedate,t.ID,t.LOAN_ID as loanId,t.REPAYAMOUNT as repayamount,
+			t.REPAYDATE repaydate,t.SOURCE_ID sourceId,t.SOURCE_REALM sourceRealm,t.`STATUS` `status`
+		from TB_LOAN_REPAYMENT t
+        where 1=1
+        <if test="loanId!= null">
+            and LOAN_ID = #{loanId}
+        </if>
+        order by CURRENTPERIOD asc
+	</select>
+
+</mapper>

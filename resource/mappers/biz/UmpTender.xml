@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.UmpTenderDao'>
+	<resultMap type="com.zhongyang.java.pojo.UmpTender" id="rm">
+		<id column="LOANID" property="loanid"/>
+		<result column="TIMECREATED" property="timecreated"/>
+		<result column="UMPCHECKDATE" property="umpcheckdate"/>
+		<result column="UMPTENDERACCOUNTID" property="umptenderaccountid"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="UMPTENDERID" property="umptenderid"/>
+	</resultMap>
+	<select id="selecAll" resultMap="rm">
+		select LOANID,TIMECREATED,UMPCHECKDATE,UMPTENDERACCOUNTID,AMOUNT,UMPTENDERID from TB_UMP_TENDER
+		where 1=1 and AMOUNT &gt;0
+	</select>
+	<insert id="insertOneUmpTender" parameterType="com.zhongyang.java.pojo.UmpTender">
+		insert into TB_UMP_TENDER(LOANID,TIMECREATED,UMPCHECKDATE,UMPTENDERACCOUNTID,AMOUNT,UMPTENDERID) values(#{loanid},#{timecreated},#{umpcheckdate},#{umptenderaccountid},#{amount},#{umptenderid})
+	</insert>
+
+	<select id="getUmpTender" parameterType="String" resultType="com.zhongyang.java.pojo.UmpTender">
+		select AMOUNT amount,LOANID loanId,TIMECREATED timeCreated, UMPTENDERACCOUNTID umpTenderAccountId,UMPTENDERID umptenderid from TB_UMP_TENDER where
+			 LOANID = #{loanId}
+	</select>
+
+	<select id="selectUmpTenderByLoanId" parameterType="String" resultMap="rm">
+		select LOANID loanid,TIMECREATED timecreated,UMPCHECKDATE umpcheckdate,UMPTENDERACCOUNTID umptenderaccountid,AMOUNT amount,UMPTENDERID umptenderid from TB_UMP_TENDER where LOANID=#{loanid}                
+	</select>
+	<update id="updateUmpTender" parameterType="com.zhongyang.java.pojo.UmpTender">
+		update TB_UMP_TENDER
+			<set>
+				<if test="amount!=null">
+					AMOUNT=#{amount},
+				</if>
+			</set>
+		where LOANID=#{loanid}
+	</update>
+	<update id="updateAmound" parameterType="com.zhongyang.java.pojo.UmpTender">
+		update TB_UMP_TENDER
+			<set>
+				<if test="amount!=null">
+					AMOUNT=#{amount},
+				</if>
+			</set>
+		where LOANID=#{loanid}
+	</update>
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.UmpTender" resultMap="rm">
+		select LOANID,TIMECREATED,UMPCHECKDATE,UMPTENDERACCOUNTID,AMOUNT,UMPTENDERID from TB_UMP_TENDER
+		where 1=1
+			<if test="umptenderid!=null">and UMPTENDERID=#{umptenderid}</if>
+			<if test="umptenderaccountid!=null">and UMPTENDERACCOUNTID=#{umptenderaccountid}</if>
+			<if test="loanid!=null">and LOANID=#{loanid}</if>
+	</select>
+</mapper>

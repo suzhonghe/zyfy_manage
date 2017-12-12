@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.StatisticDao'>
+	<!-- 员工邀请投资明细/员工个人投资明细 -->	
+	<select id="getAllInviteUser" parameterType="com.zhongyang.java.system.page.Page" resultType="com.zhongyang.java.vo.InviteStatisticVo">
+		SELECT
+		us.NAME as inviteName,us.MOBILE as mobile, SUM(invest.AMOUNT) as investAmount,CONCAT('【',loan.PRODUCTNAME,'】',loan.TITLE) AS title,loan.AMOUNT as loanAmount, loan.ADDRATE as addRate, invest.SUBMITTIME as submitTime, loan.TIMESETTLED as timeSettled,loan.MONTHS as months,loan.RATE as rate,
+		CASE invest.`STATUS` WHEN 'SETTLED' THEN '已结算' WHEN 'CLEARED' THEN '已还清' WHEN 'AUDITING' THEN '未结算' END AS status,
+		CASE loan.MONTHS
+		WHEN 12 THEN SUM(invest.AMOUNT)
+		WHEN 6 THEN SUM(invest.AMOUNT*0.5)
+		WHEN 3 THEN SUM(invest.AMOUNT*0.25)
+		WHEN 2 THEN SUM(invest.AMOUNT*0.2)
+		WHEN 1 THEN SUM(invest.AMOUNT*0.1)
+		END  as yearAmount
+		FROM
+		TB_USER us
+		LEFT JOIN TB_INVEST invest ON us.ID = invest.USERID
+		LEFT JOIN TB_LOAN loan ON invest.LOANID = loan.ID
+		WHERE
+		1 = 1
+		AND invest.`STATUS` IN (
+		'AUDITING',
+		'SETTLED',
+		'CLEARED'
+		)
+		and loan.`STATUS` in ('OPENED','FINISHED','SETTLED','CLEARED')
+		<if test="params.containsKey('referralId')">
+		and us.REFERRAL_ID=#{params.referralId}
+		</if>
+		<if test="params.containsKey('id')">
+		and us.ID=#{params.id}
+		</if>
+	   <if test="params.containsKey('startTime')">
+		and date(invest.SUBMITTIME)&gt;=date(#{params.startTime})
+	   </if>
+	   <if test="params.containsKey('endTime')">
+		and date(invest.SUBMITTIME)&lt;=date(#{params.endTime})
+	   </if>
+		group by us.`NAME`,loan.ID order by invest.status asc , invest.SUBMITTIME desc
+	</select>
+	<!-- 员工个人统计总计 -->
+	<select id="getMarkStatisticByOrg" parameterType="com.zhongyang.java.system.page.Page"
+	resultType="com.zhongyang.java.vo.MarkStatisticVo">
+	select
+	T.staffName as staffName,T.orgName as orgName,T.mobile as mobile, round(Sum(T.amount),2) as totalAmount,round(SUM(T.yearAmount),2) as yearAmount,T.description as description
+	from (SELECT
+		DISTINCT
+	E.`NAME` as staffName, O.`NAME` as orgName,I.AMOUNT as
+	amount,J.DESCRIPTION as description,E.MOBILE as mobile,I.ID as id,
+	CASE L.MONTHS
+	WHEN 12 THEN I.AMOUNT
+	WHEN 6 THEN I.AMOUNT*0.5
+	WHEN 3 THEN I.AMOUNT*0.25
+	WHEN 2 THEN I.AMOUNT*0.2
+	WHEN 1 THEN I.AMOUNT*0.1
+	END as yearAmount
+	FROM
+	TB_EMPLOYEE E
+	LEFT JOIN TB_USER U ON E.MOBILE = U.MOBILE
+	LEFT JOIN TB_USER US ON U.ID = US.REFERRAL_ID
+	LEFT JOIN TB_ORGANIZATION O ON O.ID = E.ORG_ID
+	LEFT JOIN (select * from TB_INVEST where 1=1 
+	<if test="params.containsKey('startTime')">
+		and date(SUBMITTIME)&gt;=date(#{params.startTime})
+	</if>
+	<if test="params.containsKey('endTime')">
+		and date(SUBMITTIME)&lt;=date(#{params.endTime})
+	</if>
+	and STATUS in('AUDITING','SETTLED','CLEARED'))  I ON I.USERID = U.ID
+	
+	LEFT JOIN TB_LOAN L ON I.LOANID = L.ID
+	LEFT JOIN TB_JOB J on J.ID=E.JOB_ID
+	WHERE 1=1
+	and E.ENABLED=1
+	AND O.ID in
+	<if test="params.containsKey('list')">
+	<foreach collection="params.list" item="item" index="index" open="(" separator="," close=")">
+		'${item}'
+	</foreach>
+	</if>  
+	) T
+	GROUP BY T.mobile
+	ORDER BY T.orgName
+	</select>
+	<!-- 员工邀请投资总计 -->
+	<select id="getEmployStatistic" parameterType="java.util.HashMap"
+	resultType="com.zhongyang.java.vo.MarkStatisticVo">
+	select
+	T.staffName as staffName,T.orgName as orgName,T.mobile as mobile, round(Sum(T.amount),2) as totalAmount,round(SUM(T.yearAmount),2) as yearAmount,T.description as description
+	from (SELECT
+		DISTINCT
+	E.`NAME` as staffName, O.`NAME` as orgName,I.AMOUNT as
+	amount,J.DESCRIPTION as description,E.MOBILE as mobile,I.ID as id,
+	CASE L.MONTHS
+	WHEN 12 THEN I.AMOUNT
+	WHEN 6 THEN I.AMOUNT*0.5
+	WHEN 3 THEN I.AMOUNT*0.25
+	WHEN 2 THEN I.AMOUNT*0.2
+	WHEN 1 THEN I.AMOUNT*0.1
+	END as yearAmount
+	FROM
+	TB_EMPLOYEE E
+	LEFT JOIN TB_USER U ON E.MOBILE = U.MOBILE
+	LEFT JOIN TB_ORGANIZATION O ON O.ID = E.ORG_ID
+	LEFT JOIN TB_USER US ON U.ID = US.REFERRAL_ID
+	LEFT JOIN TB_INVEST I ON I.USERID = US.ID
+	LEFT JOIN TB_LOAN L ON I.LOANID = L.ID
+	LEFT JOIN TB_JOB J on J.ID=E.JOB_ID
+	WHERE 1=1
+	and E.ENABLED=1
+	AND O.ID in
+	<if test="list!=null">
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		'${item}'
+	</foreach>
+	</if>
+	<if test="startTime!=null">
+		and date(I.SUBMITTIME)&gt;=date(#{startTime})
+	</if>
+	<if test="endTime!=null">
+		and date(I.SUBMITTIME)&lt;=date(#{endTime})
+	</if>
+	and I.STATUS in('AUDITING','SETTLED','CLEARED')   
+	) T
+	GROUP BY T.mobile
+	ORDER BY T.orgName
+	</select>
+	<!-- 员工个人投资明细 	
+	<select id="getEmployStatisticData" parameterType="com.zhongyang.java.system.page.Page" resultType="com.zhongyang.java.vo.InviteStatisticVo">
+		SELECT
+		us.NAME as inviteName,us.MOBILE as mobile, SUM(invest.AMOUNT) as investAmount,CONCAT('【',loan.PRODUCTNAME,'】',loan.TITLE) AS title,loan.AMOUNT as loanAmount, invest.SUBMITTIME as submitTime, loan.TIMESETTLED as timeSettled,loan.MONTHS as months,loan.RATE as rate,
+		CASE invest.`STATUS` WHEN 'SETTLED' THEN '已结算' WHEN 'CLEARED' THEN '已还清' WHEN 'AUDITING' THEN '未结算' END AS status,
+		CASE loan.MONTHS
+		WHEN 12 THEN SUM(invest.AMOUNT)
+		WHEN 6 THEN SUM(invest.AMOUNT*0.5)
+		WHEN 3 THEN SUM(invest.AMOUNT*0.25)
+		WHEN 2 THEN SUM(invest.AMOUNT*0.2)
+		WHEN 1 THEN SUM(invest.AMOUNT*0.1)
+		END  as yearAmount
+		FROM
+		TB_USER us
+		LEFT JOIN TB_INVEST invest ON us.ID = invest.USERID
+		LEFT JOIN TB_LOAN loan ON invest.LOANID = loan.ID
+		WHERE
+		1 = 1
+		AND invest.`STATUS` IN (
+		'AUDITING',
+		'SETTLED',
+		'CLEARED'
+		)
+		and loan.`STATUS` in ('OPENED','SETTLED','CLEARED')
+		and us.ID=#{params.id}
+	   <if test="params.containsKey('startTime')">
+		and date(invest.SUBMITTIME)&gt;=date(#{params.startTime})
+	   </if>
+	   <if test="params.containsKey('endTime')">
+		and date(invest.SUBMITTIME)&lt;=date(#{params.endTime})
+	   </if>
+		group by us.`NAME`,loan.ID order by invest.status asc , invest.SUBMITTIME desc
+	</select>
+	-->
+</mapper>

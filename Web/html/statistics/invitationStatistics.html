@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>邀请统计</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header">邀请统计</p>
+<div class="inviteHeader clear">
+    <div class="alignLeft selectWrap"><em>机构：</em><span code="" class="selectedList"></span><ul class="list">
+    </ul></div>
+    <div class="alignRight">
+        <span>日期范围</span><input id="dataStar" type="text" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> - <input id="dataEnd" type="text" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/><span id="searchTime" class="searchTime">查询</span><input id="export" class="export" type="button" value="导出"/>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>员工姓名</th>
+                <th>手机号码</th>
+                <th>机构名称</th>
+                <th>总投资金额</th>
+                <th>年化总投资金额</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>任*</td>
+                <td>【季度红】化工企业短期借款15期</td>
+                <td>3个月</td>
+                <td>200,900.00</td>
+                <td>2015-12-11</td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<div class="detailed">
+    <div class="closeBar"><span class="exportDetails">导出</span><span class="close"></span></div>
+    <table>
+        <thead>
+            <tr>
+                <th>投资人</th>
+                <th>手机号码</th>
+                <th>投资金额</th>
+                <th>标的名称</th>
+                <th>利率</th>
+                <th>周期（月）</th>
+                <th>投资时间</th>
+                <th>投标状态</th>
+                <th>年化投资金额</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div id="detailedPaging" class="paging"></div>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.invitationStatistics();
+</script>
+</body>
+</html>

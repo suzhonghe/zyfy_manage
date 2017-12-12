@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>项目管理</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<p class="header clear"><span class="left">项目列表</span><a class="right" href="createNewItem.html">新建项目</a></p>
+<div class="function clear">
+    <div class="left"></div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span><input id="export" class="export" type="button" value="导出"/>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>项目名称</th>
+                <th>关联企业</th>
+                <th>借款人</th>
+                <th>总金额（元）</th>
+                <th>剩余额度（元）</th>
+                <th>借款期限（月）</th>
+                <th>还款方式</th>
+                <th>发起时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>商贸公司短期借款</td>
+                <td>大别山</td>
+                <td>张三丰</td>
+                <td>1000</td>
+                <td>100</td>
+                <td>3个月</td>
+                <td>按月付息到期还本</td>
+                <td class="operation"><a href="#">发标申请</a><span>编辑</span><span>冻结</span><span>删除</span></td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<div id="systemError">
+    <div class="mask"></div>
+    <div class="phoTestCon">
+        <p>确定要删除吗？</p>
+        <p><input type="button" class="OK" value="确定"/><input class="cancel" type="button" value="取消"/></p>
+    </div>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.projectList();
+zycfH.alignCenter();
+</script>
+</body>
+</html>

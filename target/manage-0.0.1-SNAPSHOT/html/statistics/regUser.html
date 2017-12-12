@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户注册统计</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header">注册列表</p>
+<div class="inviteHeader clear">
+    <div class="alignLeft">
+        <span>注册时间：</span><input id="dataStar" type="text" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> - <input id="dataEnd" type="text" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/>
+    </div>
+    <div class="alignLeft selectWrap realName"><em>是否实名：</em><span code="999" class="selectedList">所有</span><ul class="list">
+        <li code="999">所有</li>
+        <li code="1">是</li>
+        <li code="0">否</li>
+    </ul></div>
+     <div class="alignLeft selectWrap Investment"><em>是否投资：</em><span code="999" class="selectedList">所有</span><ul class="list">
+        <li code="999">所有</li>
+        <li code="1">是</li>
+        <li code="0">否</li>
+    </ul></div>
+    <div class="alignRight">
+        <span id="searchTime" class="searchTime">查询</span>
+    </div>
+</div>
+<div class="tableList" id="">
+    <table id="userInvest" >
+        <thead>
+            <tr>
+                <th>电话号码</th>
+                <th>姓名</th>
+                <th>最后登录时间</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+
+<div class="inviteHeader clear">
+    <p class="alignLeft">综合统计</p>
+    <input id="export" class="export alignRight" type="button" value="导出"/>
+</div>
+<div class="detailedData">
+    <table id="userStatistics">
+        <thead>
+            <tr>
+                <th>注册人数</th>
+                <th>已认证</th>
+                <th>未认证</th>
+                <th>投资人数</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="userInvests">
+        <thead>
+            <tr>
+                <th>类型</th>
+                <th>规模（元）</th>
+                <th>年化（元）</th>
+                <th>投资人数</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table id="freshInfos">
+        <thead>
+            <tr>
+                <th>红包类型</th>
+                <th>发放数量/使用（个）</th>
+                <th>兑现金额（元）</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table id="investLevelcount">
+        <thead>
+            <tr>
+                <th>≤1000（个人）</th>
+                <th>1001-5000（个人）</th>
+                <th>5001-10000（个人）</th>
+                <th>10001-50000（个人）</th>
+                <th>50000以上（个人）</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+/*zycfH.myData();*/
+zycfH.userStatistics();
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.SettleFileRecordDao'>
+	<resultMap type="com.zhongyang.java.pojo.SettleFileRecord" id="rm">
+		<id column="ID" property="id"/>
+		<result column="SETTLEDATE" property="settleDate"/>
+		<result column="SETTLETYPE" property="settleType"/>
+		<result column="STATUS" property="status"/>
+		<result column="APPLYTIME" property="applyTime"/>
+	</resultMap>
+	<sql id="sqlfile">
+		select ID id,SETTLEDATE settleDate,SETTLETYPE settleType,STATUS status,APPLYTIME applyTime from TB_SETTLE_FILE_RECORD where 1=1
+	</sql>
+	<insert id="insertSettleFileRecord" parameterType="com.zhongyang.java.pojo.SettleFileRecord">
+		insert into TB_SETTLE_FILE_RECORD (ID,SETTLEDATE,SETTLETYPE,STATUS,APPLYTIME)values
+		(#{id},#{settleDate},#{settleType},#{status},#{applyTime})
+	</insert>
+	<update id="updateByParams" parameterType="com.zhongyang.java.pojo.SettleFileRecord">
+		update TB_SETTLE_FILE_RECORD 
+			<set>
+				<if test="settleDate!=null">SETTLEDATE=#{settleDate},</if>
+				<if test="settleType!=null">SETTLETYPE=#{settleType},</if>
+				<if test="status!=null">STATUS=#{status},</if>
+				<if test="applyTime!=null">APPLYTIME=#{applyTime},</if>
+			</set>
+		where 1=1
+			<if test="id!=null">and ID=#{id}</if>
+	</update>
+	<delete id="deleteByParams" parameterType="com.zhongyang.java.pojo.SettleFileRecord">
+		delete from TB_SETTLE_FILE_RECORD where ID=#{id}
+	</delete>
+	<select id="selectByParams" parameterType="com.zhongyang.java.system.page.Page" resultMap="rm">
+		<include refid="sqlfile"/>
+			<if test="startTime!=null">and APPLYTIME &gt;=#{startTime}</if>
+			<if test="endTime!=null">and APPLYTIME &lt;=#{endTime}</if>
+			order by APPLYTIME desc
+	</select>
+	<select id="selectCountByParams" parameterType="java.util.Map" resultType="Integer">
+		select count(1) from TB_SETTLE_FILE_RECORD where 1=1
+			<if test="_parameter.containsKey('startTime')">and APPLYTIME &gt;=#{startTime}</if>
+			<if test="_parameter.containsKey('endTime')">and APPLYTIME &lt;=#{endTime}</if>
+	</select>
+</mapper>

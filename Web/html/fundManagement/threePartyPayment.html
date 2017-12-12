@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三方支付</title>
+    <link rel="stylesheet" href="../../css/zyfyCommon.css" />
+    <link rel="stylesheet" href="../../css/threePartyPayment.css" />
+</head>
+<body>
+    <div class="contBox">
+        <div class="cont">
+            <h3>
+                <span>商户充值</span>
+                <span class="mini">(单笔充值金额应大于1元小于100万元)</span>
+            </h3>
+            <p>
+                <label for="merchantRecharge">充值金额</label>
+                <input id="merchantRecharge" type="text"/><span>元</span>
+                <a class="btn" id="rechargeBtn">充值</a>
+            </p>
+        </div>
+    </div>
+    <div class="contBox">
+        <div class="cont">
+            <h3>
+                <span>商户提现</span>
+                <!-- <span class="mini">(无需审核，直接提现到默认卡)</span> -->
+            </h3>
+            <p>
+                <label for="merchantWithdraw">提现金额</label>
+                <input id="merchantWithdraw" type="text"/><span>元</span>
+                <a class="btn" id="withdrawBtn">提现</a>
+            </p>
+        </div>
+    </div>
+    <!-- <div class="contBox">
+        <div class="cont">
+            <h3>
+                <span>商户调帐</span>
+            </h3>
+            <div class="clear">
+                <div class="left accountBox">
+                    <h4>转出账户</h4>
+                    <p class="clear choseText">
+                        <label for="outAccount" class="left">用户名：</label>
+                        <input id="outAccount" class="left" type="text"/>
+                        <input id="search" class="btn" type="button" value="查询"/>
+                    </p>
+                    <ul class="msg">
+                        <li  class="clear">
+                            <span class="left">可用余额：</span>
+                            <span class="left"></span>
+                        </li>
+                        <li class="clear">
+                            <span class="left">账户余额：</span>
+                            <span class="left"></span>
+                        </li>
+                        <li class="clear">
+                            <span class="left">冻结余额：</span>
+                            <span class="left"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="left clear arrow">
+                    <div class="left square"></div>
+                    <div class="left triangle"></div>
+                </div>
+                <div class="left accountBox">
+                    <h4>转入账户</h4>
+                    <div class="clear choseText">
+                        <label class="left">转入账户：</label>
+                        <div class="left clear selectBox">
+                            <p name="7099044">平台账号</p>
+                            <ul>
+                                <li proId="7099044">平台账号</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul>
+                        <li class="clear">
+                            <span class="left">账户类型：</span>
+                            <span class="left">专属借记账户</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p>
+                <label for="merchantTransfer">转账金额</label>
+                <input id="merchantTransfer" type="text"/><span>元</span>
+                <a class="btn" id="transferBtn">转账</a>
+            </p>
+        </div>
+    </div> -->
+    <div class="shade">
+        <div class="tip">
+            <h4>正在取现</h4>
+            <p>
+                <input class="btn sucBtn" type="button" value="充值成功"/>
+                <input class="btn questBtn" type="button" value="查看充值相关问题"/>
+            </p>
+            <i>×</i>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../../js/jqueryCommon.js"></script>
+<script type="text/javascript" src="../../js/threePartyPay.js"></script>
+</html>

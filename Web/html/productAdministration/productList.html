@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>产品管理</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<p class="header clear"><span class="left">产品列表</span><a class="right" href="addProduct.html">新建产品</a></p>
+<div class="function clear">
+    <div class="left"></div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span><!-- <input type="text"/><span class="searchBtn"></span> -->
+    </div>
+</div>
+<div class="productTable tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>产品名称</th>
+                <th>借款期限</th>
+                <th>借款年利率</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.productList();
+</script>
+</body>
+</html>

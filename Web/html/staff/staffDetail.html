@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>员工详情</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/staff.css" />
+</head>
+<body>
+<p class="header clear"><span class="title">员工详情<span class="headBtn">重置密码</span></span><span class="save headBtn">保存</span></p>
+<div class="clear row">
+    <div class="left one loginName"><span>登录名</span><span class="fontColor"></span></div>
+    <div class="left empId"><span>唯一号</span><span class="fontColor"></span></div>
+</div>
+<div class="clear row">
+    <div class="left one mobile"><span>手机号码</span><input disabled="true" type="text" value=""/></div>
+    <div class="left idnumber"><span>身份证号码</span><span class="fontColor"></span></div>
+</div>
+<div class="clear row">
+    <div class="left one systemRole"><span>系统角色</span><span code="" class="staff fontColor"></span><ul class="selecetList">
+        <!-- <li>客户经理</li>
+        <li>小喽啰</li> -->
+    </ul></div>
+    <div class="left lastlogindate"><span>最后登录</span><span class="fontColor"></span></div>
+</div>
+<div class="clear row">
+    <div class="left one mechanismBar"><span>所属机构</span><span code="" class="staff fontColor mechanism"></span><ul class="list">
+        <!-- <li>客户经理</li>
+        <li>小喽啰</li> -->
+    </ul></div>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.staffDetail();
+</script>
+</body>
+</html>

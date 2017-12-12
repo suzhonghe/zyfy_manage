@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd  
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+	
+	<!-- 逾期还款状态修改 -->
+	<bean id="loanRepayTaskJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="loanRepayTask" />
+		<property name="targetMethod" value="loanRepaymentTask" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="loanRepayTaskJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="loanRepayTaskJob" />
+		<property name="cronExpression" value="0 0 1 * * ?" />
+	</bean>
+	
+	<!-- 体验标结算 -->
+	<bean id="virtualRecordTaskJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="virtualRecordTask" />
+		<property name="targetMethod" value="task" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="virtualRecordTaskJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="virtualRecordTaskJob" />
+		<property name="cronExpression" value="0 0 2 * * ?" />
+	</bean>
+	
+	<bean id="virtualQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="loanRepayTaskJobTrigger"></ref>
+				<ref bean="fundRecordStatusTaskJobTrigger"></ref>
+                <ref bean="virtualRecordTaskJobTrigger"></ref>
+                <ref bean="repaymentStatusJobTrigger"></ref>
+			</list>
+		</property>
+	</bean>
+	 <!-- 资金记录状态PROCESSING改为FAILED -->
+	<bean id="fundRecordStatusJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="fundRecordStatusTask" />
+		<property name="targetMethod" value="fundRecordStatusTaskM" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-->每周三晚上3点<-->
+	<bean id="fundRecordStatusTaskJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="fundRecordStatusJob" />
+		<property name="cronExpression" value="0 0 3 ? * WED" />
+	</bean>
+	
+	
+	
+	 <!--还款，回款计划补全-->
+	<bean id="repaymentStatusJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="repaymentStatusTask" />
+		<property name="targetMethod" value="repaymentStatusTaskM" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-->每天晚上23时<-->
+	<bean id="repaymentStatusJobTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="repaymentStatusJob" />
+		<property name="cronExpression" value="0 0 23 * * ?" />
+	</bean>
+	
+	
+</beans>  

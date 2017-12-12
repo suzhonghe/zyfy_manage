@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* 注册页 */
+.loginBody{background-color: #e0e0e0;}
+#loginFrame{width:468px;background-color: #fff;position: fixed;top:150px;left:50%;margin-left:-234px;}
+#loginFrame h3{width:468px;height:56px;background-color: #75bcec;color:#fff;font-size: 24px;text-align: center;line-height: 56px;}
+#loginFrame .content p{margin:16px auto;}
+#loginFrame .content .msgInfo{padding-left:32px;background:#ffe7e3 url(../img/regsiterMsgBg.png) no-repeat 8px -32px;height:30px;width:280px;border:1px solid #ff5c3c;line-height: 30px;color:#ff5c3c;font-size: 12px;visibility:hidden;margin:10px auto;}
+#loginFrame .userBar span,#loginFrame .passwordBar span,#loginFrame .codeBar span{font-size: 18px;color:#666;width:124px;display: inline-block;text-align: right;line-height: 36px;vertical-align: middle;padding-right: 16px;}
+#loginFrame .userBar input,#loginFrame .passwordBar input,#loginFrame .codeBar input{font-size: 14px;color:#ababab;width:230px;height:30px;border:1px solid #cccccc;vertical-align: middle;line-height: 30px;padding:0 10px;}
+#loginFrame .codeBar .Refresh{width:34px;height:32px;color:#ababab;line-height: 46px;vertical-align: middle;background: url(../img/RefreshBg.png) no-repeat center 2px;cursor:pointer;margin:0 4px;font-size: 14px;padding:0;}
+#loginFrame .codeBar .Refresh:hover{color:#289cff;}
+#loginFrame .codeBar input{width:100px;}
+#loginFrame .codeBar img{display: inline;border:1px solid #cccccc;width:94px;height:30px;vertical-align: middle;margin-left:4px;}
+#loginFrame .loginBar{height:42px;text-align: center;padding-bottom: 30px;}
+#loginFrame .loginBar input{width:284px;height:42px;border-radius:4px;background-color: #ff6f0a;color:#fff;font-size: 18px;cursor:pointer;}
+#loginFrame .loginBar input:hover{text-decoration: underline;}

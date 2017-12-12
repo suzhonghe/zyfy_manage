@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.UserFundDao'>
+	<resultMap type="com.zhongyang.java.pojo.UserFund" id="rm">
+		<id column="USERID" property="userid"/>
+		<result column="AVAILABLE_AMOUNT" property="availableAmount"/>
+		<result column="DEPOSIT_AMOUNT" property="depositAmount"/>
+		<result column="DUE_IN_AMOUNT" property="dueInAmount"/>
+		<result column="DUE_OUT_AMOUNT" property="dueOutAmount"/>
+		<result column="FROZEN_AMOUNT" property="frozenAmount"/>
+		<result column="TIMECREATED" property="timecreated"/>
+		<result column="TIMELASTUPDATED" property="timelastupdated"/>
+		<result column="TRANSFER_AMOUNT" property="transferAmount"/>
+		<result column="WITHDRAW_AMOUNT" property="withdrawAmount"/>
+		<result column="STATUS" property="status"/>
+		<result column="ALL_REVENUE" property="all_revenue"/>
+	</resultMap>
+	<sql id="sqlfield">
+		select USERID userid,AVAILABLE_AMOUNT availableAmount,DEPOSIT_AMOUNT depositAmount,DUE_IN_AMOUNT dueInAmount,DUE_OUT_AMOUNT dueOutAmount,
+			FROZEN_AMOUNT frozenAmount,TIMECREATED timecreated,TIMELASTUPDATED timelastupdated,TRANSFER_AMOUNT transferAmount,WITHDRAW_AMOUNT withdrawAmount,STATUS status,
+			ALL_REVENUE all_revenue
+		from TB_USER_FUND where 1=1
+	</sql>
+	<select id="byUserID"  parameterType="com.zhongyang.java.pojo.UserFund" resultType="com.zhongyang.java.pojo.UserFund">
+		<include refid="sqlfield"/>
+			<if test="userid!=null"> 
+				and USERID = #{userid}
+			</if>
+	</select>
+
+	<update id="updateUserFund" parameterType="com.zhongyang.java.pojo.UserFund">
+		update TB_USER_FUND
+			<set>
+				<if test="availableAmount!=null">AVAILABLE_AMOUNT=AVAILABLE_AMOUNT+#{availableAmount},</if>
+				<if test="frozenAmount!=null">FROZEN_AMOUNT=FROZEN_AMOUNT+#{frozenAmount},</if>
+				<if test="timelastupdated!=null">TIMELASTUPDATED=#{timelastupdated},</if>
+				<if test="transferAmount!=null">TRANSFER_AMOUNT=#{transferAmount},</if>
+				<if test="dueOutAmount != null">DUE_OUT_AMOUNT =DUE_OUT_AMOUNT+#{dueOutAmount},</if>
+			</set>
+		where USERID=#{userid}
+	</update>
+
+	<select id="byUserIdAccount"  parameterType="com.zhongyang.java.pojo.UserFund" resultType="com.zhongyang.java.pojo.UserFund">
+		select * from TB_USER_FUND where <if test="userid !=null"> and USERID = #{userid}</if>
+	</select>
+	
+
+	<update id="updateUserFundByUserID" parameterType="com.zhongyang.java.pojo.UserFund">  
+	    update TB_USER_FUND
+		    <set>
+		        <if test="depositAmount != null">
+		           DEPOSIT_AMOUNT = #{depositAmount},
+		        </if>
+		        <if test="availableAmount != null">
+		           AVAILABLE_AMOUNT = #{availableAmount},
+		        </if>
+		         <if test="frozenAmount != null">
+		           FROZEN_AMOUNT = #{frozenAmount},
+		        </if>
+		         <if test="withdrawAmount != null">
+		           WITHDRAW_AMOUNT = #{withdrawAmount},
+		        </if>
+		         <if test="dueOutAmount != null">
+		           DUE_OUT_AMOUNT = #{dueOutAmount},
+		        </if>
+		         <if test="dueInAmount != null">
+		           DUE_IN_AMOUNT = #{dueInAmount},
+		        </if>
+		        <if test="timelastupdated != null">
+		           TIMELASTUPDATED = #{timelastupdated},
+		        </if>
+		    </set>
+	    where USERID = #{userid}
+    </update>
+
+
+    <update id="reduceAmountByUser" parameterType="com.zhongyang.java.pojo.UserFund">
+        update TB_USER_FUND set
+         AVAILABLE_AMOUNT =  #{availableAmount},
+         DUE_OUT_AMOUNT = #{dueOutAmount},
+         TIMELASTUPDATED = #{timelastupdated} where USERID = #{userid};
+    </update>
+
+    <update id="addAmountByUser" parameterType="com.zhongyang.java.pojo.UserFund">
+        update TB_USER_FUND set
+        AVAILABLE_AMOUNT =  AVAILABLE_AMOUNT+#{availableAmount},
+        DUE_IN_AMOUNT = DUE_IN_AMOUNT+#{dueInAmount},
+        ALL_REVENUE = ALL_REVENUE+#{all_revenue},
+        TIMELASTUPDATED = #{timelastupdated}
+        where USERID = #{userid};
+    </update>
+
+</mapper>
+
+

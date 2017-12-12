@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.HomePageBannerDao'>
+	<resultMap type="com.zhongyang.java.pojo.HomePageBanner" id="rm">
+		<id column="ID" property="id"/>
+		<result column="SERIALNUMBER" property="serialNumber"/>
+		<result column="PHOTONAME" property="photoName"/>
+		<result column="ACCESSADDRESS" property="accessAddress"/>
+		<result column="JUMPADDRESS" property="jumpAddress"/>
+		<result column="TIME" property="time"/>
+		<result column="TYPE" property="type"/>
+	</resultMap>
+	<sql id="sqlfile">
+		select ID id,SERIALNUMBER serialNumber,PHOTONAME photoName,ACCESSADDRESS accessAddress,JUMPADDRESS jumpAddress,TIME time,TYPE type 
+			from TB_HOME_PAGE_BANNER where 1=1
+	</sql>
+	<insert id="insertPhoto" parameterType="com.zhongyang.java.pojo.HomePageBanner">
+		insert into TB_HOME_PAGE_BANNER values(#{id},#{serialNumber},#{photoName},#{accessAddress},#{jumpAddress},#{time},#{type})
+	</insert>
+	
+	<select id="sellectAllPhotos" parameterType="com.zhongyang.java.pojo.HomePageBanner" resultMap="rm">
+		<include refid="sqlfile"/>
+			<if test="type!=null">
+				and TYPE=#{type}
+			</if>
+			 order by SERIALNUMBER asc
+	</select>
+	
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.HomePageBanner" resultMap="rm">
+		<include refid="sqlfile"/>
+			<if test="id!=null">
+				and ID=#{id}
+			</if>
+			<if test="accessAddress!=null">
+				and ACCESSADDRESS=#{accessAddress}
+			</if>
+	</select>
+	<delete id="deleteByParams" parameterType="com.zhongyang.java.pojo.HomePageBanner">
+		delete from TB_HOME_PAGE_BANNER where TYPE=#{type}
+	</delete>
+</mapper>

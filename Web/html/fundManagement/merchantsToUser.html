@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>商户向用户转账</title>
+    <link rel="stylesheet" href="../../css/zyfyCommon.css" />
+    <link rel="stylesheet" href="../../css/merchantsToUser.css" />
+</head>
+<body>
+    <div class="contBox">
+        <h3>商户向用户转账</h3>
+        <div class="clear">
+            <span class="left">转账账户</span>
+            <div class="left clear selectBox">
+                <p class="left">往来账户</p>
+                <ul>
+                    <li>往来账户</li>
+                </ul>
+                <span class="right">
+                    <i class="triangle"></i>
+                </span>
+            </div>
+            <p class="left">
+                <span>账户类型：</span>
+                <span>专属借记账户</span>
+                <span>可用余额</span>
+                <span class="num" id="availableAmount">￥0.00</span>
+                <span>账户余额</span>
+                <span class="num" id="balanceAmount">￥0.00</span>
+                <span>冻结余额</span>
+                <span class="num" id="frozenAmount">￥0.00</span>
+            </p>
+        </div>
+        <p>
+            <label>转入用户</label>
+            <input name="projectUserId" type="text" placeholder="请输入用户手机号" disabled="disabled"/>
+            <a class="addUser">添加用户</a>
+        </p>
+        <ul class="choseId">
+            <li class="clear">
+                <span class="left">用户手机号</span>
+                <input class="left" type="text" placeholder="请输入用户手机号" name="loginName"/>
+                <span class="left btn query">查询</span>
+            </li>
+            <li class="clear">
+                <span class="left">真实姓名</span>
+                <span class="left"></span>
+            </li>
+            <li class="clear">
+                <span class="left">身份证号</span>
+                <span class="left"></span>
+            </li>
+            <li class="clear">
+                <span class="left">手机号码</span>
+                <span class="left"></span>
+            </li>
+            <li class="clear">
+                <span class="left">是否开户</span>
+                <span class="left"></span>
+            </li>
+            <li class="clear">
+                <span class="left">无密还款协议</span>
+                <span class="left"></span>
+            </li>
+            <li class="determine"><span class="btn">确定</span></li>
+        </ul>
+        <p>
+            <label>转入金额</label>
+            <input name="transAmount" type="text" placeholder=""/>
+            <span>元</span>
+        </p>
+
+        <p class="remarks clear">
+            <label class="left">备注信息</label>
+            <textarea class="left" id="description"></textarea>
+            <a class="btn left" id="subApp">提交申请</a>
+        </p>
+    </div>
+    <div class="contBox">
+        <h3>未处理的转账申请</h3>
+        <table id="transferTable">
+            <thead>
+                <tr>
+                    <th class="account">转出账户</th>
+                    <th class="operationEmplyee">申请员工</th>
+                    <th class="telephone">手机号码</th>
+                    <th class="userName">用户姓名</th>
+                    <th class="tradeAmount">转账金额</th>
+                    <th class="status">状态</th>                  
+                    <th class="createTime">申请时间</th>
+                    <th class="control">操作</th>
+                    <th class="description">备注</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+<div class="shade">
+    <div class="tip">
+        <p>
+        </p>
+        <p></p>
+        <p><a>确定</a></p>
+        <i>×</i>
+    </div>
+</div>
+</body>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/jqueryCommon.js"></script>
+<script src="../../js/merchantsToUser.js"></script>
+</html>

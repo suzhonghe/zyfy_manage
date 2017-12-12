@@ -1,0 +1,261 @@
+@charset "utf-8";
+body {
+    font-size: 16px;
+}
+input[type="text"] {
+    height: 14px;
+    padding: 6px;
+    border: 1px solid #e2e2e2;
+    width:208px;
+}
+
+textarea {
+    width: 456px;
+    height: 62px;
+    border: 1px solid #e2e2e2;
+    resize: none;
+}
+.add {
+    padding: 2px 0;
+    margin-left: 8px;
+    color: #38afff;
+    cursor: pointer;
+}
+.btn {
+    padding: 4px 22px;
+    text-align: center;
+    background-color: #7fcbff;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 5px;
+}
+
+/*百分比*/
+.percentBox {
+    width: 106px;
+    border: 1px solid #e2e2e2;
+}
+.percentBox input {
+    border: none;
+    width: 70px;
+}
+.percentBox i {
+    padding-top: 2px;
+    padding-right: 8px;
+    color: #38afff;
+}
+/*图片框*/
+.photoBox {
+    padding-left: 26%;
+    overflow: hidden;
+}
+.photoBox li {
+    position: relative;
+    margin: 10px;
+    float:left;
+}
+.photoBox li i {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background: #6a6a6a;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+.photoBox img {
+    width: 224px;
+    height: 130px;
+    display: inline-block;
+}
+.header h1 {
+    height: 44px;
+    padding: 0 24px;
+    line-height: 44px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #438eb9;
+}
+.slide {
+    width: 11%;
+    height: 490px;
+    margin-top: 14px;
+    background-color: #f1f1f1;
+    border: 1px solid #e2e2e2;
+}
+.slide li {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #e2e2e2;
+}
+li.act {
+    background-color: #7ecbff;
+    color: #fff;
+}
+.cont {
+    width: 86%;
+    padding: 10px 1%;
+}
+.cont h3 {
+    width: 100%;
+    padding-bottom: 6px;
+    color: #38afff;
+    font-weight: normal ;
+    border-bottom: 1px solid #38afff;
+}
+.cont>div {
+    padding: 10px 0;
+}
+.cont div span:first-child {
+    width: 26%;
+    height: 28px;
+    line-height: 28px;
+    text-align: right;
+}
+
+.choseId,
+.mortgage {
+    display: none;
+    margin-left: 26%;
+}
+.choseId {
+    width: 450px;
+    height: 278px;
+    padding-top: 22px;
+    background-color: #eee;
+    border: 1px solid #e2e2e2;
+}
+.choseId input {
+    border: 1px solid #999;
+}
+.choseId li {
+    padding: 6px 0;
+}
+.choseId li span {
+    padding: 2px 0;
+}
+.choseId li span:first-child {
+    width: 120px;
+    margin-right: 10px;
+    text-align: right;
+}
+.choseId .query {
+    margin-left: 8px;
+    width: 58px;
+}
+.choseId .determine {
+    text-align: center;
+}
+.choseId .determine span.btn {
+    display: inline-block;
+    width: 74px;
+    text-align: center;
+    background-color: #24a4ff;
+}
+.dateBox input {
+    width: 70px;
+}
+.dateBox label {
+    padding: 2px 10px;
+}
+.mortgage {
+    width: 576px;
+    background-color: #f1f1f1;
+}
+.mortgage li {
+    width: 112px;
+    padding: 10px 16px;
+}
+.mortgage li label {
+    display: inline-block;
+    width: 84%;
+}
+span.sec {
+    width: 230px;
+    padding-top: 2px;
+    text-align: right;
+}
+
+._box
+{
+    position: relative;
+    background-color: #7fcbff;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+}
+._box input
+{
+    position: absolute;
+    width: 119px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 23px;
+    opacity: 0;
+    filter: "alpha(opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    left: -5px;
+    top: -2px;
+    cursor: pointer;
+    z-index: 2;
+}
+p.sub {
+    width: 100%;
+    padding-top: 70px;
+    padding-bottom: 200px;
+    text-align: center;
+}
+.subAll {
+    margin-right: 20px;
+}
+.resAll {
+    background-color: #ff461b;
+}
+.resetBox {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: rgba(51,51,51,0.62);
+    -webkit-transform: translateZ(0);
+}
+.resetBox div {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    margin-left: -204px;
+    width: 408px;
+    height: 186px;
+    background-color: #fff;
+    border: 1px solid #e2e2e2;
+}
+.resetBox div p {
+    line-height: 75px;
+    text-align: center;
+}
+.resetBox div p span {
+    margin: 0 20px;
+    cursor: pointer;
+}
+.resetBox div p span:hover {
+    text-decoration: underline;
+}
+.resetBox div p span.resY {
+    color: #7fcbff;
+}
+.resetBox div p span.resN {
+    color: #ff461b;
+}
+
+#legalPerson,#enterpriseInfo,#contract,#assets,#others{position:relative;background-color:#7fcbff;width:164px;height:36px;line-height:36px;text-align:center;color:#fff;border-radius:5px;}
+#legalPerson input,#enterpriseInfo input,#contract input,#assets input,#others input{filter:alpha(opacity=0);opacity:0;width:164px;height:36px;position:absolute;left:0;top:0;}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ChangeInviteRecordDao'>
+	<insert id="insertChangeInviteRecord" parameterType="com.zhongyang.java.pojo.ChangeInviteRecord">
+	insert into TB_CHANGE_INVITE_RECORD(ID,OLDUSERID,NEWUSERID,OLDPHONENO,NEWPHONENO,OPERATOR,TYPE,CREATETIME) 
+	values(
+	#{id},
+	#{oldUserId},
+	#{newUserId},
+	#{oldPhoneNo},
+	#{newPhoneNo},
+	#{operator},
+	#{type},
+	#{createTime}
+	)
+	</insert>
+</mapper>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>新建项目</title>
+        <link href="../../css/zyfyCommon.css" rel="stylesheet"/>
+        <link href="../../css/createNewItem.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="main">
+        <div class="cont">
+
+            <h3>新建项目</h3>
+            <div class="clear">
+                <span class="left">项目名称：</span>
+                <input class="left" type="text" name="projectTitle"/>
+            </div>
+            <div class="clear">
+                <span class="left">唯一号：</span>
+                <input class="left" type="text" name="projectSerial"/><span>例：DBS-20150831-021</span>
+            </div>
+            <div class="clear">
+                <span class="left">借款人用户ID：</span>
+                <input class="left" type="text" name="projectUserId"/>
+                <span class="left add">选择用户</span>
+            </div>
+            <ul class="choseId">
+                <li class="clear">
+                    <span class="left">登陆名</span>
+                    <input class="left" type="text" placeholder="请输入注册用户登陆名" name="loginName"/>
+                    <span class="left btn query">查询</span>
+                </li>
+                <li class="clear">
+                    <span class="left">真实姓名</span>
+                    <span class="left"></span>
+                </li>
+                <li class="clear">
+                    <span class="left">身份证号</span>
+                    <span class="left"></span>
+                </li>
+                <li class="clear">
+                    <span class="left">手机号码</span>
+                    <span class="left"></span>
+                </li>
+                <li class="clear">
+                    <span class="left">是否开户</span>
+                    <span class="left"></span>
+                </li>
+               <!--  <li class="clear">
+                    <span class="left">无密还款协议</span>
+                    <span class="left">开通</span>
+                </li> -->
+                <li class="determine"><span class="btn">确定</span></li>
+            </ul>
+            <div class="clear">
+                <span class="left">借款单位法人：</span>
+                <input class="left" type="text" name="projectLegalPerson"/>
+            </div>
+            <div class="clear">
+                <span class="left">借款单位代理人：</span>
+                <input class="left" type="text" name="projectAgentPerson"/>
+            </div>
+            <div class="clear guaranteeRealm">
+                <span class="left">关联企业：</span>
+                <div class="left clear selectBox">
+                    <p class="left"></p>
+                    <ul>
+                    </ul>
+                    <span class="right">
+                        <i class="triangle"></i>
+                    </span>
+                </div>
+                <span class="left add"></span>
+            </div>
+            <div class="clear productId">
+                <span class="left">产品类型：</span>
+                <div class="left clear selectBox" id="sel">
+                    <p class="left"></p>
+                    <ul>
+                    </ul>
+                    <span class="right">
+                        <i class="triangle"></i>
+                    </span>
+                </div>
+                <span class="left add"></span>
+            </div>
+            <div class="clear">
+                <span class="left">项目总额（元）：</span>
+                <input class="left" type="text" name="projectAmount"/>
+            </div>
+            <div class="clear dateBox">
+                <span class="left">借款期限：</span>
+                <input id="year" class="left" type="text"/>
+                <label for="year" class="left">年</label>
+                <input id="month" class="left" type="text"/>
+                <label for="month" class="left">月</label>
+                <input id="day" class="left" type="text"/>
+                <label for="day" class="left">日</label>
+            </div>
+            <div class="clear">
+                <span class="left">年利率：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectRate"/>
+                    <i class="right">%</i>
+                </div>
+            </div>
+            <div class="clear method">
+                <span class="left">还款方式：</span>
+                <div class="left clear selectBox">
+                    <p class="left" name="MonthlyInterest">按月付息到期还本</p>
+                    <ul>
+                        <li proId="MonthlyInterest">按月付息到期还本</li>
+                        <li proId="BulletRepayment">一次性还本付息</li>
+                    </ul>
+                    <span class="right">
+                        <i class="triangle"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="clear">
+                <span class="left">抵押品：</span>
+                <div class="left mortgageBox">
+                    <p><input id="noMor" name="mortgage" value="0" type="radio" checked="checked"/><label for="noMor">无抵押-信用借款</label></p>
+                    <p><input id="mor" name="mortgage" value="1" type="radio"/><label for="mor">有抵押-请选择抵押品</label></p>
+                </div>
+            </div>
+            <ul class="mortgage clear ">
+                <li class="left">
+                    <input id="merchandise" type="checkbox"/>
+                    <label for="merchandise">商品库存</label>
+                </li>
+                <li class="left">
+                    <input id="vehicle" type="checkbox"/>
+                    <label for="vehicle">车辆</label>
+                </li>
+                <li class="left">
+                    <input id="equipment" type="checkbox"/>
+                    <label for="equipment">设备器材</label>
+                </li>
+                <li class="left">
+                    <input id="securities" type="checkbox"/>
+                    <label for="securities">证券</label>
+                </li>
+                <li class="left">
+                    <input id="housing" type="checkbox"/>
+                    <label for="housing">房产</label>
+                </li>
+                <li class="left">
+                    <input id="land" type="checkbox"/>
+                    <label for="land">土地</label>
+                </li>
+                <li class="left">
+                    <input id="workshop" type="checkbox"/>
+                    <label for="workshop">厂房库房</label>
+                </li>
+                <li class="left">
+                    <input id="bond" type="checkbox"/>
+                    <label for="bond">债券</label>
+                </li>
+                <li class="left">
+                    <input id="stock" type="checkbox"/>
+                    <label for="stock">股票</label>
+                </li>
+                <li class="left">
+                    <input id="bankdeposit" type="checkbox"/>
+                    <label for="bankdeposit">银行存单</label>
+                </li>
+                <li class="left">
+                    <input id="otherMortgage" type="checkbox"/>
+                    <label for="otherMortgage">其他</label>
+                </li>
+            </ul>
+            <div class="clear">
+                <span class="left">担保费用：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectLoanGuaranteeFee"/>
+                    <i class="right">%</i>
+                </div>
+                <span class="left sec">借款管理率：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectLoanManageFee"/>
+                    <i class="right">%</i>
+                </div>
+            </div>
+            <div class="clear">
+                <span class="left">服务费率：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectLoanServiceFee"/>
+                    <i class="right">%</i>
+                </div>
+                <span class="left sec">还款（借款）利息管理率：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectLoanInterestFee"/>
+                    <i class="right">%</i>
+                </div>
+            </div>
+            <div class="clear">
+                <span class="left">风险管理率：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectLoanRiskFee"/>
+                    <i class="right">%</i>
+                </div>
+                <span class="left sec">回款（投资）利息管理率：</span>
+                <div class="percentBox left clear">
+                    <input class="left" type="text" name="projectInvestInterestFee" />
+                    <i class="right">%</i>
+                </div>
+            </div>
+            <div class="clear">
+                <span class="left">公司简介：</span>
+                <textarea class="left" name="projectFirmInfo"></textarea>
+            </div>
+            <div class="clear">
+                <span class="left">经营范围：</span>
+                <textarea class="left" name="projectOperationRange"></textarea>
+            </div>
+            <div class="clear">
+                <span class="left">资金用途：</span>
+                <textarea class="left" name="projectDescription"></textarea>
+            </div>
+            <div class="clear">
+                <span class="left">还款来源：</span>
+                <textarea class="left" name="projectRepaySource"></textarea>
+            </div>
+            <div class="clear">
+                <span class="left">风险措施：</span>
+                <textarea class="left" name="projectRiskInfo"></textarea>
+            </div>
+            <div class="" >
+                <div class="clear">
+                    <span class="left">法人身份证&nbsp;&nbsp;</span>
+                    <div class="left" >
+                        <div id="legalPerson" >图片上传<form action="../../uploadPhoto?type=upload&name=1" enctype="multipart/form-data" method="post" target="frame" ><input type="file" name="items_pic" /></form></div>
+                    </div>
+                </div>
+                <div class="photoBox" id="legalPersonPhoto">
+                    <ul class="clear">
+                    </ul>
+                </div>
+            </div>
+            <div class="">
+                <div class="clear">
+                    <span class="left">企业信息&nbsp;&nbsp;</span>
+                    <div class="left" >
+                        <div id="enterpriseInfo">图片上传<form action="../../uploadPhoto?type=upload&name=2" enctype="multipart/form-data" method="post" target="frame" ><input type="file" name="items_pic" /></form></div>
+                    </div>
+                </div>
+                <div class="photoBox" id="enterpriseInfoPhoto">
+                    <ul class="clear">
+                    </ul>
+                </div>
+            </div>
+            <div class="">
+                <div class="clear">
+                    <span class="left">合同文件&nbsp;&nbsp;</span>
+                    <div class="left" >
+                        <div id="contract">图片上传<form action="../../uploadPhoto?type=upload&name=3" enctype="multipart/form-data" method="post" target="frame" ><input type="file" name="items_pic" /></form></div>
+                    </div>
+                </div>
+                <div class="photoBox" id="contractPhoto">
+                    <ul class="clear">
+                    </ul>
+                </div>
+            </div>
+            <div class="">
+                <div class="clear">
+                    <span class="left">资产信息&nbsp;&nbsp;</span>
+                    <div class="left" >
+                        <div id="assets">图片上传<form action="../../uploadPhoto?type=upload&name=4" enctype="multipart/form-data" method="post" target="frame" ><input type="file" name="items_pic" /></form></div>
+                    </div>
+                </div>
+                <div class="photoBox" id="assetsPhoto">
+                    <ul class="clear">
+                    </ul>
+                </div>
+            </div>
+            <div class="">
+                <div class="clear">
+                    <span class="left">其他资料&nbsp;&nbsp;</span>
+                    <div class="left" >
+                        <div id="others">图片上传<form action="../../uploadPhoto?type=upload&name=5" enctype="multipart/form-data" method="post" target="frame" ><input type="file" name="items_pic" /></form></div>
+                    </div>
+                </div>
+                <div class="photoBox" id="othersPhoto">
+                    <ul class="clear">
+                    </ul>
+                </div>
+            </div>
+
+            <p class="sub">
+               <span class="btn subAll">提交申请</span>
+               <span class="btn resAll">重置</span>
+           </p>
+
+        </div>
+
+    </div>
+        <div class="resetBox">
+            <div>
+                <p>确认重置？</p>
+                <p>
+                    <span class="resY">确认</span>
+                    <span class="resN">取消</span>
+                </p>
+            </div>
+        </div>
+
+    </body>
+    <iframe name="frame" id="frame" style="display:none;" ></iframe>
+    <script src="../../js/jquery-1.7.2.js"></script>
+    <script src="../../js/jqueryCommon.js"></script>
+    <script src="../../js/createNewItem.js"></script>
+</html>

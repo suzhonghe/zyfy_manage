@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+
+<mapper namespace='com.zhongyang.java.dao.UmpTenderTransferRecordDao'>
+    <resultMap type="com.zhongyang.java.pojo.UmpTenderTransferRecord" id="rm">
+    	<id column="ORDERID" property="orderid"/>
+    	<result column="AMOUNT" property="amount"/>
+    	<result column="LOANID" property="loanid"/>
+    	<result column="MERCHECKDATE" property="mercheckdate"/>
+    	<result column="MERDATE" property="merdate"/>
+    	<result column="PARTICACCOUNTTYPE" property="particaccounttype"/>
+    	<result column="PARTICTYPE" property="partictype"/>
+    	<result column="RETCODE" property="retcode"/>
+    	<result column="RETMSG" property="retmsg"/>
+    	<result column="STATUS" property="status"/>
+    	<result column="TENDERACTION" property="tenderaction"/>
+    	<result column="TIMECREATED" property="timecreated"/>
+    	<result column="TIMELASTUPDATED" property="timelastupdated"/>
+    	<result column="TRADENO" property="tradeno"/>
+    	<result column="TRANSFERTYPE" property="transfertype"/>
+    	<result column="UMPACCOUNTID" property="umpaccountid"/>
+    	<result column="UMPACCOUNTNAME" property="umpaccountname"/>
+    	<result column="UMPTENDERACCOUNTID" property="umptenderaccountid"/>
+    	<result column="UMPTENDERID" property="umptenderid"/>
+    	<result column="USERID" property="userid"/>
+    </resultMap>
+
+   <sql id="sqlfield">
+   		select ORDERID orderid,AMOUNT amount,LOANID loanid,MERCHECKDATE mercheckdate,MERDATE merdate,PARTICACCOUNTTYPE particaccounttype,PARTICTYPE partictype,
+	   		RETCODE retcode,RETMSG retmsg,STATUS status,TENDERACTION tenderaction,TIMECREATED timecreated,TIMELASTUPDATED timelastupdated,TRADENO tradeno,
+	   		TRANSFERTYPE transfertype,UMPACCOUNTID umpaccountid,UMPACCOUNTNAME umpaccountname,UMPTENDERACCOUNTID umptenderaccountid,UMPTENDERID umptenderid,USERID userid
+   		from TB_UMP_TENDER_TRANSFER_RECORD where 1=1
+   </sql>
+    <insert id="insertUmpTenderTransferRecord" parameterType="com.zhongyang.java.pojo.UmpTenderTransferRecord">
+    	insert into TB_UMP_TENDER_TRANSFER_RECORD values(#{orderid},#{amount},#{loanid},#{mercheckdate},#{merdate},#{particaccounttype},#{partictype},#{retcode},#{retmsg},
+    	#{status},#{tenderaction},#{timecreated},#{timelastupdated},#{tradeno},#{transfertype},#{umpaccountid},#{umpaccountname},#{umptenderaccountid},#{umptenderid},#{userid})
+    </insert>
+    <update id="updateUmpTenderTransferRecord" parameterType="com.zhongyang.java.pojo.UmpTenderTransferRecord">
+    	update TB_UMP_TENDER_TRANSFER_RECORD
+    		<set>
+    			<if test="amount!=null">AMOUNT=#{amount},</if>
+    			<if test="loanid!=null">LOANID=#{loanid},</if>
+    			<if test="mercheckdate!=null">MERCHECKDATE=#{mercheckdate},</if>
+    			<if test="merdate!=null">MERDATE=#{merdate},</if>
+    			<if test="particaccounttype!=null">PARTICACCOUNTTYPE=#{particaccounttype},</if>
+    			<if test="partictype!=null">PARTICTYPE=#{partictype},</if>
+    			<if test="retcode!=null">RETCODE=#{retcode},</if>
+    			<if test="retmsg!=null">RETMSG=#{retmsg},</if>
+    			<if test="status!=null">STATUS=#{status},</if>
+    			<if test="tenderaction!=null">TENDERACTION=#{tenderaction},</if>
+    			<if test="timecreated!=null">TIMECREATED=#{timecreated},</if>
+    			<if test="timelastupdated!=null">TIMELASTUPDATED=#{timelastupdated},</if>
+    			<if test="tradeno!=null">TRADENO=#{tradeno},</if>
+    			<if test="transfertype!=null">TRANSFERTYPE=#{transfertype},</if>
+    			<if test="umpaccountid!=null">UMPACCOUNTID=#{umpaccountid},</if>
+    			<if test="umpaccountname!=null">UMPACCOUNTNAME=#{umpaccountname},</if>
+    			<if test="umptenderaccountid!=null">UMPTENDERACCOUNTID=#{umptenderaccountid},</if>
+    			<if test="umptenderid!=null">UMPTENDERID=#{umptenderid},</if>
+    			<if test="userid!=null">USERID=#{userid},</if>
+    		</set>
+    	where ORDERID=#{orderid}
+    </update>
+     <select id="getUmpTenderTransferRecord" parameterType="String" resultType="com.zhongyang.java.pojo.UmpTenderTransferRecord">
+	    SELECT ORDERID,AMOUNT,LOANID,MERCHECKDATE,MERDATE,STATUS,TENDERACTION,TIMECREATED,TRANSFERTYPE,UMPACCOUNTID,UMPACCOUNTNAME,
+	           UMPTENDERACCOUNTID,UMPTENDERID,USERID
+	    FROM TB_UMP_TENDER_TRANSFER_RECORD where ORDERID = #{orderid}
+	</select>
+	
+	<select id="findSettledloan" parameterType="String" resultType="com.zhongyang.java.pojo.UmpTenderTransferRecord">
+	    SELECT
+			  ORDERID,
+			  AMOUNT,
+			  LOANID,
+			  STATUS,
+			  TIMECREATED,
+			  TRANSFERTYPE,
+			  UMPACCOUNTNAME,
+			  USERID
+	       FROM TB_UMP_TENDER_TRANSFER_RECORD 
+	       WHERE TRANSFERTYPE=#{0}
+	       and TIMECREATED &gt;=#{1}
+		and TIMECREATED &lt;=#{2}
+	</select>
+	
+	<select id="findSettledloanByLoanId" parameterType="string" resultType="com.zhongyang.java.pojo.UmpTenderTransferRecord">
+	    SELECT
+			  ORDERID,
+			  AMOUNT,
+			  LOANID,
+			  STATUS,
+			  TIMECREATED,
+			  TRANSFERTYPE,
+			  UMPACCOUNTNAME,
+			  USERID
+        FROM TB_UMP_TENDER_TRANSFER_RECORD 
+        WHERE LOANID= #{loanId}
+        AND TRANSFERTYPE = 'LOAN'
+	</select>
+	
+</mapper>

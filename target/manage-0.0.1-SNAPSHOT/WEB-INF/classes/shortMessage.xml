@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SYSTEM>
+	<url>http://sdk.entinfo.cn:8061/mdsmssend.ashx</url>
+	<sn>SDK-BBX-010-22709</sn>
+	<pwd>3fc7e=-3</pwd>
+	<mobile>$mobile$</mobile>
+	<content>$content$</content>
+	<ext></ext>
+	<stime></stime>
+	<rrid></rrid>
+	<msgfmt></msgfmt>
+
+	<verificationCode>欢迎注册左右逢园，手机验证码：random，验证码在10分钟内有效【左右逢园】</verificationCode>
+	<loanmsg>【左右逢园】您所投资的msg，请知晓。</loanmsg>
+	<messsge>【左右逢园】sendmsg</messsge>
+</SYSTEM>

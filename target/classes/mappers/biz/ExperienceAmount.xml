@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ExperienceAmountDao'>
+	<resultMap type="com.zhongyang.java.pojo.ExperienceAmount" id="rm">
+		<id column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="CREATETIME" property="createTime"/>
+		<result column="LIMITDAYS" property="limitDays"/>
+		<result column="ENDTIME" property="endTime"/>
+		<result column="USETIME" property="useTime"/>
+		<result column="ENABLE" property="enable"/>
+		<result column="ENABLEUSE" property="enableUse"/>
+		<result column="USERID" property="userId"/>		
+	</resultMap>
+	
+	<sql id="sqlfield">
+		select ID id,NAME name,AMOUNT amount,CREATETIME createTime,LIMITDAYS limitDays,ENDTIME endTime,
+			USETIME useTime,ENABLE enable,ENABLEUSE enableUse,USERID userId
+		from TB_EXPERIENCE_AMOUNT where 1=1
+	</sql>
+	
+	<insert id="addExperienceAmount" parameterType="com.zhongyang.java.pojo.ExperienceAmount">
+		insert TB_EXPERIENCE_AMOUNT(ID,NAME,AMOUNT,CREATETIME,LIMITDAYS,ENDTIME,
+			USETIME,ENABLE,ENABLEUSE,USERID)values(#{id},#{name},#{amount},#{createTime},#{limitDays},#{endTime},
+			#{useTime},#{enable},#{enableUse},#{userId})
+	</insert>
+	
+	<update id="updateExperienceAmount" parameterType="com.zhongyang.java.pojo.ExperienceAmount">
+		update TB_EXPERIENCE_AMOUNT
+			<set>
+				<if test="useTime!=null">USETIME=#{useTime},</if>
+				<if test="enable!=null">ENABLE=#{enable},</if>
+				<if test="enableUse!=null">ENABLEUSE=#{enableUse},</if>
+			</set>
+		where 1=1
+			<if test="id!=null">and ID=#{id}</if>
+			<if test="userId!=null">and USERID=#{userId}</if>
+	</update>
+	
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.ExperienceAmount" resultMap="rm">
+		<include refid="sqlfield"/>
+			<if test="userId!=null">and USERID=#{userId}</if>
+			<if test="id!=null">ID=#{id}</if>
+			<if test="enable!=null">and ENABLE=#{enable}</if>
+			<if test="enableUse!=null">and ENABLEUSE=#{enableUse}</if>
+	</select>
+	
+	<update id="updateExperiences">
+		update TB_EXPERIENCE_AMOUNT set ENABLE=1
+		where DATE(ENDTIME)=date_sub(curdate(),interval 1 day)
+		and ENABLEUSE=0
+	</update>
+</mapper>

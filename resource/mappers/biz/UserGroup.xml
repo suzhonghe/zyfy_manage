@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.UserGroupDao'>
+	<resultMap type="com.zhongyang.java.pojo.UserGroup" id="rm">
+		<id column="ID" property="id"/>
+		<result column="DESCRIPTION" property="description"/>
+		<result column="EMAILPATTERN" property="emailpattern"/>
+		<result column="GROUPCODE" property="groupcode"/>
+		<result column="NAME" property="name"/>
+		<result column="PARENTID" property="parentid"/>
+		<result column="PRIV" property="priv"/>
+		<result column="TIMECREATED" property="timecreated"/>
+		<result column="TIMELASTUPDATED" property="timelastupdated"/>
+	</resultMap>
+	<sql id="sqlfile">
+		select ID id,DESCRIPTION description,EMAILPATTERN emailpattern,GROUPCODE groupcode,NAME name,PARENTID parentid,
+			PRIV priv,TIMECREATED timecreated,TIMELASTUPDATED timelastupdated from TB_USER_GROUP where 1=1
+	</sql>
+	<insert id="insertUserGroup" parameterType="com.zhongyang.java.pojo.UserGroup">
+		insert into TB_USER_GROUP values(#{id},#{description},#{emailpattern},#{groupcode},#{name},#{parentid},#{priv},#{timecreated},#{timelastupdated})
+	</insert>
+	<update id="updateUserGroup" parameterType="com.zhongyang.java.pojo.UserGroup">
+		update TB_USER_GROUP
+			<set>
+				<if test="description!=null">DESCRIPTION=#{description},</if>
+				<if test="emailpattern!=null">EMAILPATTERN=#{emailpattern},</if>
+				<if test="groupcode!=null">GROUPCODE=#{groupcode},</if>
+				<if test="name!=null">NAME=#{name},</if>
+				<if test="parentid!=null">PARENTID=#{parentid},</if>
+				<if test="priv!=null">PRIV=#{priv},</if>
+				<if test="timelastupdated!=null">TIMELASTUPDATED=#{timelastupdated},</if>
+			</set>
+			where ID=#{id}
+	</update>
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.UserGroup" resultMap="rm">
+		<include refid="sqlfile"/>
+	</select>
+</mapper>

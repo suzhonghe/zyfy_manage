@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.CorporationUserDao'>
+	<resultMap type="com.zhongyang.java.pojo.CorporationUser" id="rm">
+		<id column="USER_ID" property="userId"/>
+		<result column="BANKLICENSE" property="banklicense"/>
+		<result column="BUSICODE" property="busicode"/>
+		<result column="CATEGORY" property="category"/>
+		<result column="CONTRACTSEALCODE" property="contractsealcode"/>
+		<result column="LEGALPERSONID" property="legalpersonid"/>
+		<result column="NAME" property="name"/>
+		<result column="ORGCODE" property="orgcode"/>
+		<result column="RTPO" property="rtpo"/>
+		<result column="SHORTNAME" property="shortname"/>
+		<result column="TAXCODE" property="taxcode"/>
+		<result column="TYPE" property="type"/>
+	</resultMap>
+	<sql id="sqlfiled">
+		select USER_ID userId,BANKLICENSE banklicense,BUSICODE busicode,CATEGORY category,CONTRACTSEALCODE contractsealcode,
+			LEGALPERSONID legalpersonid,NAME name,ORGCODE orgcode,RTPO rtpo,SHORTNAME shortname,TAXCODE taxcode,TYPE type
+		from TB_CORPORATION_USER where 1=1	
+	</sql>
+	<select id="selectAllCorporationUser" parameterType="com.zhongyang.java.pojo.CorporationUser" resultMap="rm">
+		<include refid="sqlfiled"/>
+			<if test="type!=null">
+				and TYPE=#{type}
+			</if>
+	</select>
+</mapper>

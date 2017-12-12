@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>对账文件下载</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="function clear">
+    <div class="left">联动优势于每日早7时后生成前一日的对账文件，故最早只能查前一日的对账记录</div>
+    <div class="right"></div>
+</div>
+<div class="function clear accountLoad">
+    <div class="left"><em>对账文件类型</em><span code="01" class="selectedList">充值对账</span><ul>
+        <li code="01">充值对账</li>
+        <li code="02">提现对账</li>
+        <li code="05">转账对账</li>
+        <li code="04">标的对账</li>
+    </ul></div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">申请下载对账文件</span>
+    </div>
+</div>
+
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.settleLoad();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.zhongyang.java.dao.UmpUserDao'>
+    <!-- 根据用户Id查询用户 -->
+    <select id="getOldUserIdByAccountName" parameterType="String" resultType="com.zhongyang.java.pojo.UmpUser" >
+			SELECT tu.USERID userId,tu.ACCOUNTNAME accountName
+			FROM TB_UMP_USER tu
+			          WHERE ACCOUNTNAME =
+			(SELECT tc.ACCOUNTNAME FROM TB_UMP_ACCOUNT tc
+                      WHERE tc.userid = #{accountName})
+	</select>
+</mapper>

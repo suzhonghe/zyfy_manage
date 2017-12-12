@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.InvestRepaymentDao'>
+<!-- 新增投资还款计划记录 -->
+	<insert id="createInvestRepayMent" parameterType="com.zhongyang.java.pojo.InvestRepayment">
+		INSERT INTO TB_INVEST_REPAYMENT (ID,CURRENTPERIOD,STATUS,AMOUNTINTEREST,
+		AMOUNTOUTSTANDING,AMOUNTPRINCIPAL,DUEDATE,INVEST_ID) 
+		VALUES (#{id},#{currentperiod},#{status},
+		#{amountinterest},#{amountoutstanding},#{amountprincipal},#{duedate},#{investId})
+	</insert>
+
+    <update id="updateStatus" parameterType="com.zhongyang.java.pojo.InvestRepayment">
+        update TB_INVEST_REPAYMENT set
+        <if test="status != null">
+            STATUS=#{status}
+        </if>
+        where ID = #{id}
+    </update>
+    <update id="updateInvestAmount">
+	update TB_INVEST_REPAYMENT set AMOUNTINTEREST=round((AMOUNTINTEREST*#{pre}),2) WHERE
+	INVEST_ID in (select ID from TB_INVEST where
+	LOANID=#{loanid} and `STATUS`='SETTLED')
+	and CURRENTPERIOD=#{currentPriod}
+    </update>
+    <!-- 查询个人投资利息之和：为了更新个人账户待收额度 -->
+    <select id="getInvestAllRate" parameterType="String"
+		resultType="com.zhongyang.java.pojo.InvestRepayment">
+		select sum(AMOUNTINTEREST) AS amountinterest  from TB_INVEST_REPAYMENT where invest_id = #{investId}
+	</select>
+    
+</mapper>

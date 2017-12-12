@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.zhongyang.java.dao.ContractDao'>
+
+<select id ="getContractInfo" parameterType="String"  resultType="com.zhongyang.java.pojo.ContractPojo">
+
+select 
+L.TIMESETTLED signDate,
+L.SERIAL serial,
+IU.NAME CJRName,
+IU.IDNUMBER CJRIdNumber,
+IU.LOGINNAME CJRloginName,
+LU.NAME JKRName,
+LU.IDNUMBER JKRIdNumber,
+LU.LOGINNAME JKRloginName,
+CU.NAME guaranteeCorporationName,
+CUI.ADDRESS guaranteeCorporationAddress,
+U.NAME guaranteeCorporationUserName,
+LQ.DESCRIPTION loanPurpose,
+I.ID investId, 
+I.AMOUNT amount,
+I.RATE loanRate,
+L.TIMESETTLED settleDate
+FROM 
+
+TB_LOAN L 
+ LEFT JOIN TB_LOANREQUEST LQ ON L.PROJECTID = LQ.ID
+LEFT JOIN TB_CORPORATION_USER CU ON L.GUARANTEE_ID =  CU.USER_ID
+LEFT JOIN TB_CORPORATION_USER_INFO CUI ON CU.USER_ID =  CUI.USER_ID
+LEFT JOIN TB_USER U ON U.ID =  CU.USER_ID
+LEFT JOIN TB_INVEST I ON  I.LOANID = L.ID
+LEFT JOIN TB_USER IU ON IU.ID = I.USERID
+LEFT JOIN TB_USER LU ON LU.ID =  L.LOANUSERID
+LEFT JOIN TB_INVEST_CONTRACT_INFO C ON I.ID =  C.INVESTID
+-- RIGHT JOIN TB_INVEST_REPAYMENT IR ON IR.INVEST_ID = I.ID
+WHERE  1=1
+AND C.ISDEL IS  NULL
+and L.ID=#{loanId}
+and I.STATUS='SETTLED'
+</select>	
+
+
+<select id = "uncontractLoans" parameterType="com.zhongyang.java.system.page.Page" resultType="com.zhongyang.java.pojo.Loan">
+SELECT distinct L.ID, 
+L.STATUS, L.AMOUNT,L.RATE,L.TIMESETTLED,L.TITLE
+ FROM 
+
+TB_LOAN L LEFT JOIN TB_INVEST I ON L.ID = I.LOANID
+
+LEFT JOIN TB_INVEST_CONTRACT_INFO C ON I.ID =  C.INVESTID
+WHERE
+	C.ISDEL IS NULL
+    AND I.STATUS = "SETTLED"
+    AND L.STATUS = "SETTLED"
+    order by L.TIMESETTLED desc
+</select>
+
+<select id="getInvestRepaymets"	 parameterType="com.zhongyang.java.pojo.InvestRepayment" 
+resultType= "com.zhongyang.java.pojo.InvestRepayment">
+select ID,CURRENTPERIOD,STATUS,AMOUNTINTEREST,
+		AMOUNTOUTSTANDING,AMOUNTPRINCIPAL,DUEDATE,INVEST_ID
+		FROM TB_INVEST_REPAYMENT
+		WHERE 1=1 
+		AND INVEST_ID=#{investId}
+		
+		order by CURRENTPERIOD desc
+</select>
+</mapper>

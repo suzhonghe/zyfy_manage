@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.VirtualLoanDao'>
+	<resultMap type="com.zhongyang.java.pojo.VirtualLoan" id="rm">
+		<id column="ID" property="id"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="RATE" property="rate"/>
+		<result column="CREATETIME" property="createTime"/>
+		<result column="LOANDAY" property="loanDay"/>
+		<result column="STATUS" property="status"/>
+		<result column="METHOD" property="method"/>
+		<result column="TITLE" property="title"/>
+	</resultMap>
+	
+	<sql id="sqlfield">
+		select ID id,AMOUNT amount,STATUS status,RATE rate,LOANDAY loanDay,METHOD method,CREATETIME createTime,
+			TITLE title
+		from TB_VIRTUAL_LOAN where 1=1 
+	</sql>
+	
+	<!-- 查询获得所有体验标 -->
+	<select id="getAllVirtualLoan" parameterType="com.zhongyang.java.system.page.Page" resultMap="rm">
+		<include refid="sqlfield"/>
+		order by CREATETIME desc
+	</select>
+	
+	<!-- 新建体验标 -->
+	<insert id="saveVirtualLoan" parameterType="com.zhongyang.java.pojo.VirtualLoan">
+	insert into TB_VIRTUAL_LOAN (ID,AMOUNT,RATE,CREATETIME,LOANDAY,STATUS,METHOD,TITLE)
+	 values
+	 (#{id},#{amount},#{rate},#{createTime},#{loanDay},#{status},#{method},#{title})	
+	</insert>
+	
+	<!-- 修改体验标是否可用状态 -->
+	<update id="updateVirtualLoan" parameterType="com.zhongyang.java.pojo.VirtualLoan">
+		update TB_VIRTUAL_LOAN 
+		<set> 
+			<if test="status!=null and status!=''">
+			  STATUS=#{status},
+			</if>
+			<if test="title!=null and title!=''">
+				TITLE=#{title},
+			</if>
+			<if test="loanDay!=null and loanDay!=''">
+				LOANDAY=#{loanDay},
+			</if>
+			<if test="rate!=null and rate!=''">
+				RATE=#{rate},
+			</if>
+			<if test="amount!=null and amount!=''">
+				AMOUNT=#{amount},
+			</if>
+			<if test="method!=null and method!=''">
+				METHOD=#{method},
+			</if> 
+		</set>
+		where ID=#{id}
+	</update>
+	<select id="getVirtualLoanById" parameterType="String" resultMap="rm"> 
+		<include refid="sqlfield"/> 
+		and ID=#{id}
+	</select>
+	
+	<select id="selectVirtualLoanByParams" parameterType="com.zhongyang.java.pojo.VirtualLoan" resultMap="rm"> 
+		<include refid="sqlfield"/> 
+		<if test="status!=null and status!=''">
+			and STATUS=#{status}
+		</if>
+	</select>
+</mapper>

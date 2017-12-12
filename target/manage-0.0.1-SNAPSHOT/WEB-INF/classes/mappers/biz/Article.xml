@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ArticleDao'>
+	<resultMap type="com.zhongyang.java.pojo.Article" id="rm">
+		<id column="ID" property="id" />
+		<result column="COLUMNID" property="columnId" />
+		<result column="COLUMNNAME" property="columnName" />
+		<result column="TITLE" property="title" />
+		<result column="AUTHOR" property="author" />
+		<result column="SOURCE" property="source" />
+		<result column="SOURCELINK" property="sourceLink" />
+		<result column="CONTENT" property="content" />
+		<result column="SUBMITTIME" property="submitTime" />
+		<result column="INDEX" property="index" />
+	</resultMap>
+	<sql id="sqlfile">
+		select ID id,COLUMNID columnId,COLUMNNAME columnName,TITLE
+		title,AUTHOR author,SOURCE source,
+		SOURCELINK sourceLink,CONTENT content,SUBMITTIME submitTime,`INDEX` `index` from
+		TB_ARTICLE where 1=1
+	</sql>
+	<insert id="insertArticle" parameterType="com.zhongyang.java.pojo.Article">
+		insert into TB_ARTICLE (ID,COLUMNID,COLUMNNAME,TITLE,AUTHOR,SOURCE,
+			SOURCELINK,CONTENT,SUBMITTIME)values(#{id},#{columnId},#{columnName},#{title},#{author},#{source},#{sourceLink},#{content},#{submitTime})
+	</insert>
+	<update id="updateByParams" parameterType="com.zhongyang.java.pojo.Article">
+		update TB_ARTICLE
+		<set>
+			<if test="columnId!=null">COLUMNID=#{columnId},</if>
+			<if test="columnName!=null">COLUMNNAME=#{columnName},</if>
+			<if test="title!=null">TITLE=#{title},</if>
+			<if test="author!=null">AUTHOR=#{author},</if>
+			<if test="source!=null">SOURCE=#{source},</if>
+			<if test="sourceLink!=null">SOURCELINK=#{sourceLink},</if>
+			<if test="content!=null">CONTENT=#{content},</if>
+			<if test="submitTime!=null">SUBMITTIME=#{submitTime},</if>
+			<if test="index!=null">`INDEX`=#{index}</if>
+		</set>
+		where 1=1
+		<if test="id!=null">and ID=#{id}</if>
+	</update>
+	<delete id="deleteByParams" parameterType="com.zhongyang.java.pojo.Article">
+		delete from TB_ARTICLE
+		where ID=#{id}
+	</delete>
+	<select id="selectByParams" parameterType="com.zhongyang.java.system.page.Page"
+		resultMap="rm">
+		<include refid="sqlfile" />
+		<if test="params.containsKey('columnId')">
+			and COLUMNID = #{params.columnId}
+		</if>
+		<if test="params.containsKey('title')"> and TITLE like CONCAT(CONCAT('%', #{params.title}), '%')
+		</if>
+		order by  SUBMITTIME desc
+	</select>
+
+	<select id="getArticleById" resultMap="rm">
+		select * from TB_ARTICLE where ID=#{id}
+
+	</select>
+	<update id="updateAllArtIndex">
+		update TB_ARTICLE set `INDEX`=50 where COLUMNID = #{columnId}
+	</update>
+</mapper>

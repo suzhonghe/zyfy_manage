@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.UntredtedApplicationDao'>
+<!-- 插入平台资金记录 -->
+  <insert id="addUntredtedApplication" parameterType="com.zhongyang.java.pojo.UntredtedApplication">
+		INSERT INTO TB_UNTREATED_APPLICATION
+            (ID,ACCOUNT,OPERATIONEMPLYEE,TELEPHONE,TRADEAMOUNT,STATUS,CREATETIME,OPERATION,
+             DESCRIPTION,USERNAME,USERID,ORDERID)
+             VALUES(#{id},#{account},#{operationEmplyee},#{telephone}, #{tradeAmount},#{status},
+		#{createTime},#{opreation},#{description},#{userName},#{userId},#{ordreId})
+   </insert>
+   <!-- 查询状态为AUDITING的未审批的信息 -->
+   <select id="getUntredtedApplicationByStutas" parameterType="com.zhongyang.java.pojo.UntredtedApplication" resultType="com.zhongyang.java.pojo.UntredtedApplication">
+	  SELECT ID,ACCOUNT,OPERATIONEMPLYEE,TELEPHONE,TRADEAMOUNT,STATUS,CREATETIME,OPERATION,DESCRIPTION,USERNAME FROM TB_UNTREATED_APPLICATION
+	     where 1 = 1
+		<if test="status != null">
+		 and STATUS = #{status}
+		</if>
+	</select>
+	
+	<!-- 查询状态为id的未审批的信息 -->
+   <select id="getUntredtedApplicationById" parameterType="com.zhongyang.java.pojo.UntredtedApplication" resultType="com.zhongyang.java.pojo.UntredtedApplication">
+	  SELECT ID id,ACCOUNT account,OPERATIONEMPLYEE operationEmplyee,USERID userId,ORDERID ordreId,USERNAME userName,
+	     TELEPHONE telephone,TRADEAMOUNT tradeAmount,STATUS status,CREATETIME createTime,
+	     OPERATION opreation,DESCRIPTION description FROM TB_UNTREATED_APPLICATION
+	  where 1 = 1
+	    <if test="id != null">
+		  and ID = #{id}
+		</if>
+		<if test="ordreId != null">
+		  and ORDERID = #{ordreId}
+		</if>
+	</select>
+	
+	<!-- 查询状态为id的未审批的信息 -->
+   <update id="deleteUntredtedApplicationByOrderId" parameterType="com.zhongyang.java.pojo.UntredtedApplication">
+         update TB_UNTREATED_APPLICATION
+	        <set>
+					FLGA='1',
+					STATUS=#{status}
+			</set> 
+	       where ORDERID = #{ordreId}
+	</update>
+	
+	<!-- 查询状态为id的未审批的信息 -->
+   <delete id="deleteApplicationId" parameterType="String">
+	     update TB_UNTREATED_APPLICATION
+	        <set>
+					STATUS='CANCEL'
+			</set> 
+	         where ID = #{id}
+	</delete>
+</mapper>

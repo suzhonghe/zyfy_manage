@@ -1,0 +1,156 @@
+@charset "utf-8";
+.contBox {
+    padding: 0 40px;
+}
+.contBox > div {
+    padding-bottom: 90px;
+    line-height: 30px;
+}
+.contBox > div .selectBox{
+    margin: 0 14px;
+    line-height: 26px;
+}
+.contBox > div p span:nth-child(odd){
+    margin-left: 30px;
+}
+.contBox > div p span:nth-child(even){
+    margin-right: 18px;
+}
+div.contBox > p{
+    margin-bottom: 30px;
+}
+div.contBox > p.remarks {
+
+}
+div.contBox > p.remarks label{
+    padding-bottom: 10px;
+}
+div.contBox > p.remarks a {
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #38afff;
+    padding: 0 8px;
+    margin-top: 20px;
+}
+.contBox textarea {
+    width: 220px;
+    height: 60px;
+    margin: 0 16px;
+}
+.contBox h3{
+    padding-top: 12px;
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    border-bottom: 1px solid #e2e2e2;
+}
+input[type=text] {
+    width: 130px;
+    margin: 0 10px;
+    padding: 6px 12px;
+    border: 1px solid #e5e5e5;
+}
+
+.choseId {
+    display: none;
+    width: 450px;
+    height: 278px;
+    padding-top: 22px;
+    background-color: #eee;
+    border: 1px solid #e2e2e2;
+}
+.choseId input {
+    border: 1px solid #999;
+}
+.choseId li {
+    padding: 6px 0;
+}
+.choseId li span {
+    padding: 2px 0;
+}
+.choseId li span:first-child {
+    width: 120px;
+    margin-right: 10px;
+    text-align: right;
+}
+.choseId .query {
+    margin-left: 8px;
+    width: 58px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #38afff;
+    padding: 0 8px;
+}
+.choseId .determine {
+    text-align: center;
+}
+.choseId .determine span.btn {
+    display: inline-block;
+    width: 74px;
+    line-height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #24a4ff;
+}
+.contBox table {
+    width: 80%;
+    border-collapse: collapse;
+}
+.contBox thead {
+    background-color: #f3f3f3;
+
+}
+.contBox table,
+.contBox table th,
+.contBox table td {
+    border: 1px solid #e4e4e4;
+}
+.contBox table th {
+    height: 36px;
+}
+.contBox table td {
+    height: 70px;
+    text-align: center;
+}
+.contBox table .btn {
+    display: inline-block;
+    margin: 0 8px;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+.contBox table .approval {
+    background-color: #38afff;
+}
+.contBox table .refuse {
+    background-color: #ff461b;
+}
+.contBox table .cancel {
+    color: #38afff;
+    margin: 0;
+}
+.addUser:hover {
+    color: #38afff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.shade .tip p {
+	margin: 40px 0;
+	text-align: center;
+	color: #eb2100;
+	font-size: 14px;
+}

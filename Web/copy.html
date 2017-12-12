@@ -1,0 +1,41 @@
+<!DOCTYPE html5> 
+<head> 
+<title>Zero Clipboard Test</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css"> 
+body { font-family:arial,sans-serif; font-size:9pt; } 
+.my_clip_button { width:150px; text-align:center; border:1px solid black; background-color:#ccc; margin:10px; padding:10px; cursor:default; font-size:9pt; } 
+.my_clip_button.hover { background-color:#eee; } 
+.my_clip_button.active { background-color:#aaa; } 
+</style> 
+</head> 
+<body> 
+<div id="d_clip_container" style="position:relative"> 
+<div id="d_clip_button" class="my_clip_button"><b>Copy To Clipboard...</b></div> 
+</div> 
+<textarea id="myresource" class="clearfix" onChange="clip.setText(this.value)">我复制</textarea> 
+<script type="text/javascript" src="js/ZeroClipboard.js"></script>
+<script src="js/jquery.min.1.10.2.js"></script> 
+<script language="JavaScript"> 
+var clip = null; 
+function init() { 
+clip = new ZeroClipboard.Client(); 
+clip.setHandCursor( true ); 
+clip.addEventListener('load', function (client) { 
+debugstr("Flash movie loaded and ready."); 
+}); 
+clip.addEventListener('mouseOver', function (client) { 
+// update the text on mouse over 
+clip.setText( $('#myresource').val() ); 
+}); 
+clip.addEventListener('complete', function (client, text) { 
+debugstr("Copied text to clipboard: " + text ); 
+}); 
+clip.glue( 'd_clip_button', 'd_clip_container' ); 
+} 
+setTimeout(function(){ 
+init(); 
+},1500); 
+</script> 
+</body> 
+</html> 

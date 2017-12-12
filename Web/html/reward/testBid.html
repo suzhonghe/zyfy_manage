@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>testBid</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header clear"><span class="alignLeft">体验标</span><a href="creatTestBid.html" class="alignRight">创建体验标</a></p>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>期限（天）</th>
+                <th>利率（%）</th>
+                <th>创建时间</th>
+                <th>体验天数</th>
+                <th>状态</th>
+                <th>计息方式</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>test</td>
+                <td>7</td>
+                <td>12</td>
+                <td>1000</td>
+                <td>2016-3-3 00:00:00</td>
+                <td>2016-3-3 00:00:00</td>
+                <td>进行中</td>
+                <td class="operation"><a code="" href='javascript:void(0);'>结束</a><a code="" href='javascript:void(0);'>定时结束</a><a code="" href='javascript:void(0);'>回款计划</a></td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+//zycfH.myData();
+zycfH.maListAjax({
+    page:1,
+    num:10,
+    url:"../../getAllVirtualLoan",
+    callBack:function(obj){
+      zycfH.testBidData(obj);
+    }
+});
+</script>
+</body>
+</html>

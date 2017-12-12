@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../../css/zyfyCommon.css" rel="stylesheet"/>
+    <link href="../../css/userDetail.css" rel="stylesheet"/>
+    <link href="../../css/listCommon.css" rel="stylesheet"/>
+</head>
+<body>
+    <ul class="clear nav">
+        <li class="left">基本信息</li>
+        <li class="left">资金明细</li>
+        <li class="left">借出历史</li>
+        <li class="left">借入历史</li>
+    </ul>
+    <div class="detailBox basic">
+        <ul class="clear">
+            <li class="left">
+                <span class="keyName">姓名：</span>
+                <span class="userName"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">身份证号码：</span>
+                <span class="idNumber"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">手机号码：</span>
+                <span class="phoneNumber"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">电子邮箱：</span>
+                <span class="email"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">用户名：</span>
+                <span class="loginName"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">银行卡号：</span>
+                <span class="bankCard"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">推荐人：</span>
+                <span class="inviter"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">最后登录时间：</span>
+                <span class="lastTime"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">注册时间：</span>
+                <span class="regTime"></span>
+            </li>
+            <li class="left">
+                <span class="keyName">是否员工：</span>
+                <span class="isStaff"></span>
+            </li>
+            <li class="left">
+                <i></i>
+            </li>
+        </ul>
+        <div class="userUmpNone">数据加载中...</div>
+        <div class="userUmpInfo">
+            <h4>用户账户状态</h4>
+            <ul>
+                <li><span>姓名：</span><span></span></li>
+                <li><span>手机号码：</span><span></span></li>
+                <li><span>ump账户：</span><span></span></li>
+                <li><span>账户状态：</span><span></span></li>
+                <li><span>账户余额：</span><span></span></li>
+                <li><span>银行卡号：</span><span></span></li>
+                <li><span>银行简称：</span><span></span></li>
+                <li><span>umpAcountId：</span><span></span></li>
+            </ul>
+            <input type="button" value="关闭" />
+        </div>
+    </div>
+    <div class="detailBox amountDetail">
+        <div class="overview clear">
+            <div class="left frequency">
+                <p>
+                    <span>投资次数：</span>
+                    <span></span>
+                </p>
+                <p>
+                    <span>借款次数：</span>
+                    <span></span>
+                </p>
+            </div>
+            <div class="left allAmount">
+                <p>资产总额<span></span></p>
+                <ul class="clear">
+                    <li class="left">
+                        <span>可用金额</span>
+                        <span class="avaAmount"></span>
+                    </li>
+                    <li class="left">
+                        <span>待收金额</span>
+                        <span class="dueInAmount"></span>
+                    </li>
+                    <li class="left">
+                        <span>冻结金额</span>
+                        <span class="frozenAmount"></span>
+                    </li>
+                    <li class="left">
+                        <span>待还金额</span>
+                        <span class="dueOutAmount"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear searchBox">
+            <div class="left">资金类型</div>
+            <div class="left clear selectBox amountType">
+                <p class="left" name=""></p>
+                <ul>
+                    <li proId="">全部资金类型</li>
+                    <li proId="INVEST">投标</li>
+                    <li proId="WITHDRAW">取现</li>
+                    <li proId="DEPOSIT">充值</li>
+                    <li proId="LOAN">放款</li>
+                    <li proId="LOAN_REPAY">贷款还款</li>
+                    <li proId="DISBURSE">垫付还款</li>
+                    <li proId="INVEST_REPAY">投资还款</li>
+                    <li proId="FAILED_LOAN_REPAY">流标返款</li>
+                    <li proId="TRANSFER">转账扣款</li>
+                    <li proId="FEE_WITHDRAW">提现手续费</li>
+                    <li proId="FEE_INVEST_INTEREST">投资管理费</li>
+                    <li proId="FEE_LOAN_SERVICE">借款服务费</li>
+                    <li proId="FEE_LOAN_MANAGE">借款管理费</li>
+                    <li proId="FEE_LOAN_INTEREST">还款管理费</li>
+                    <li proId="FEE_LOAN_RISK">风险管理费</li>
+                    <li proId="FEE_DEPOSIT">充值手续费</li>
+                </ul>
+                <span class="right">
+                    <i class="triangle"></i>
+                </span>
+            </div>
+            <div class="left">
+                <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""> - <input id="dataEnd" class="dateInp" type="text" value="">
+            </div>
+            <div class="left">状态</div>
+            <div class="left clear selectBox status">
+                <p class="left" name=""></p>
+                <ul>
+                    <li proId="">全部</li>
+                    <li proId="INITIALIZED">初始</li>
+                    <li proId="PROCESSING">处理中</li>
+                    <li proId="AUDITING">审核中</li>
+                    <li proId="SUCCESSFUL">成功</li>
+                    <li proId="FAILED">失败</li>
+                </ul>
+                <span class="right">
+                    <i class="triangle"></i>
+                </span>
+            </div>
+            <input id="searchTime" class="searchTime left" type="button" value="查询"/>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="orderId">订单号</th>
+                    <th class="amount">金额（元）</th>
+                    <th class="type">类型</th>
+                    <th class="status">状态</th>
+                    <th class="time">时间</th>
+                    <th class="description">备注</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div id="amountDetailPage" class="paging"></div>
+    </div>
+    <div class="detailBox lend">
+        <table>
+            <thead>
+            <tr>
+                <th class="loanName">标题</th>
+                <th class="amount">金额</th>
+                <th class="rate">年利率</th>
+                <th class="term">期限(月)</th>
+                <th class="method">还款方式</th>
+                <th class="status">标的状态</th>
+                <th class="submittime">投资日期</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="lendPage" class="paging"></div>
+    </div>
+    <div class="detailBox borrow">
+        <table>
+            <thead>
+            <tr>
+                <th class="loanName">标题</th>
+                <th class="amount">金额</th>
+                <th class="rate">年利率</th>
+                <th class="term">期限(月)</th>
+                <th class="method">还款方式</th>
+                <th class="status">借款状态</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="borrowPage" class="paging"></div>
+    </div>
+</body>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/jqueryCommon.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script src="../../js/userDetail.js"></script>
+<script>
+    zycfH.myData();
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>违约列表</title>
+    <link rel="stylesheet" href="../../css/zyfyCommon.css" />
+    <link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="function clear">
+    <div class="left">显示</div>
+    <div class="left clear selectBox">
+        <p class="left">10</p>
+        <ul>
+            <li >10</li>
+            <li >20</li>
+            <li >30</li>
+        </ul>
+        <span class="right">
+            <i class="triangle"></i>
+        </span>
+    </div>
+    <div class="left">条记录</div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span>
+    </div>
+</div>
+<table id="defaultTab">
+    <thead>
+        <tr>
+            <th class="loanName">标的名称</th>
+            <th class="realName">借款人</th>
+            <th class="periods">期数</th>
+            <th class="stillAmount">待还金额</th>
+            <th class="bidAcount">标的账户</th>
+            <th class="maturity">到期日</th>
+            <th class="repayDate">还款时间</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div id="duePage" class="paging"></div>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/jqueryCommon.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script src="../../js/dueList.js"></script>
+<script>
+    zycfH.myData();
+</script>
+</body>
+</html>

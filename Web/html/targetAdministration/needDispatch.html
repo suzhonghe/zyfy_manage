@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>需调度发标列表</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="function clear">
+    <div class="left"></div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>标的名称</th>
+                <th>关联企业</th>
+                <th>借款人</th>
+                <th>借款人ID</th>
+                <th>总金额（元）</th>
+                <th>年化利率（%）</th>
+                <th>借款期限</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<div id="systemError">
+    <div class="mask"></div>
+    <div class="phoTestCon">
+        <p>定时发标时间设置</p>
+        <p><input type="text" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/></p>
+        <p><input type="button" class="OK" value="确定"/><input class="cancel" type="button" value="取消"/></p>
+    </div>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.needDispatch();
+</script>
+</body>
+</html>

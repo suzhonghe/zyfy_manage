@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.BannerPhotoDao'>
+	<resultMap type="com.zhongyang.java.pojo.BannerPhoto" id="rm">
+		<id column="ID" property="id"/>
+		<result column="PHOTONAME" property="photoName"/>
+		<result column="PATHADDRESS" property="pathAddress"/>
+		<result column="JUMPADDRESS" property="jumpAddress"/>
+		<result column="TIME" property="time"/>
+		<result column="TYPE" property="type"/>
+		<result column="WHETHERSHOW" property="whetherShow"/>
+		<result column="SERIALNUMBER" property="serialNumber"/>
+		<result column="TITLE" property="title"/>
+	</resultMap>
+	<sql id="sqlfile">
+		select ID id,PHOTONAME photoName,PATHADDRESS pathAddress,JUMPADDRESS jumpAddress,TIME time,TYPE type,WHETHERSHOW whetherShow,SERIALNUMBER serialNumber,TITLE title
+			from TB_BANNER_PHOTO where 1=1
+	</sql>
+	<insert id="insertPhoto" parameterType="com.zhongyang.java.pojo.BannerPhoto">
+		insert into TB_BANNER_PHOTO (ID,PHOTONAME,PATHADDRESS,JUMPADDRESS,TIME,TYPE,WHETHERSHOW,SERIALNUMBER,TITLE) values (#{id},#{photoName},#{pathAddress},#{jumpAddress},#{time},#{type},#{whetherShow},#{serialNumber},#{title})
+	</insert>
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.BannerPhoto" resultMap="rm">
+		<include refid="sqlfile"/>
+			<if test="id!=null">
+				and ID=#{id}
+			</if>
+			<if test="pathAddress!=null">
+				and PATHADDRESS=#{pathAddress}
+			</if>
+			<if test="type!=null">
+				and TYPE=#{type}
+			</if>
+			<if test="whetherShow!=null">
+				and WHETHERSHOW=#{whetherShow}
+			</if>
+			order by SERIALNUMBER asc,TIME desc
+	</select>
+	<delete id="deleteByParams" parameterType="com.zhongyang.java.pojo.BannerPhoto">
+		delete from TB_BANNER_PHOTO where PATHADDRESS=#{pathAddress}
+	</delete>
+	<update id="batchUpdateBannerPhotos" parameterType="java.util.List">
+		<foreach collection="list" item="bannerPhoto" index="index" separator=";">  
+			update TB_BANNER_PHOTO   
+				<set>
+					<if test="bannerPhoto.serialNumber!=null">SERIALNUMBER=#{bannerPhoto.serialNumber},</if> 
+					<if test="bannerPhoto.title!=null">TITLE=#{bannerPhoto.title},</if>
+					<if test="bannerPhoto.whetherShow!=null">WHETHERSHOW=#{bannerPhoto.whetherShow},</if>
+					<if test="bannerPhoto.jumpAddress!=null">JUMPADDRESS=#{bannerPhoto.jumpAddress},</if> 
+				</set>  
+			where 1=1
+				<if test="bannerPhoto.id!=null">and ID = #{bannerPhoto.id}</if>
+				<if test="bannerPhoto.pathAddress!=null">and PATHADDRESS = #{bannerPhoto.pathAddress}</if>  
+    	</foreach> 
+	</update>
+	<update id="updateByParams" parameterType="com.zhongyang.java.pojo.BannerPhoto">
+		update TB_BANNER_PHOTO   
+			<set>
+				<if test="title!=null">TITLE=#{title},</if>
+				<if test="jumpAddress!=null">JUMPADDRESS=#{jumpAddress},</if> 
+			</set>  
+		where 1=1
+			<if test="id!=null">and ID = #{bannerPhoto.id}</if>
+			<if test="pathAddress!=null">and PATHADDRESS = #{pathAddress}</if>
+	</update>
+</mapper>

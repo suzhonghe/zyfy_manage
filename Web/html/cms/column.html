@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>栏目</title>
+    <link rel="stylesheet" href="../../css/zyfyCommon.css" />
+    <link rel="stylesheet" href="../../css/listCommon.css" />
+    <style>
+        input{border:1px solid #d1d1d1;height:28px;line-height: 28px;padding:0 10px;width:140px;}
+    </style>
+</head>
+<body>
+<div class="function clear bidSearch">
+    <div class="left aLink">
+        <a class="addColumn" href="javascript:void(0);">新增栏目</a>
+    </div>
+    <div class="right">
+        <!-- <input type="text" value=""/><span id="searchTime" class="searchTime">搜索</span> -->
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>栏目名称</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+           <!--  <tr>
+               <td>左右动态</td>
+               <td>2016-01-06 19:50</td>
+               <td class="operation"><a href="#">编辑</a><a href="#">删除</a></td>
+           </tr> -->
+        </tbody>
+    </table>
+</div>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/cms.js"></script>
+<script>
+cms.column();
+</script>
+</body>
+</html>

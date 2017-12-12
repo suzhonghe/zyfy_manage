@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.UmpAccountDao'>
+	<select id="getUmpAccountByUserId" parameterType="com.zhongyang.java.pojo.UmpAccount"
+		resultType="com.zhongyang.java.pojo.UmpAccount">
+		select * from TB_UMP_ACCOUNT where
+		<if test="userId !=null">
+			USERID = #{userId}
+		</if>
+	</select>
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.UmpAccount"
+		resultType="com.zhongyang.java.pojo.UmpAccount">
+		select * from TB_UMP_ACCOUNT where
+		<if test="userId !=null">
+			USERID = #{userId}
+		</if>
+		<if test="accountName !=null">
+			ACCOUNTNAME = #{accountName}
+		</if>
+		<if test="accountId !=null">
+			ACCOUNTID = #{accountId}
+		</if>
+	</select>
+	<select id="selectByAccount" parameterType="com.zhongyang.java.pojo.UmpAccount" resultType="com.zhongyang.java.pojo.User">
+		select tu.NAME name,tu.ID id from TB_UMP_ACCOUNT tua 
+			left join TB_USER tu on tua.USERID=tu.ID
+		where 1=1
+		<if test="accountName !=null">
+			and tua.ACCOUNTNAME = #{accountName}
+		</if>
+		<if test="accountId !=null">
+			and tua.ACCOUNTID = #{accountId}
+		</if>
+	</select>
+</mapper>
+

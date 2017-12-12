@@ -1,0 +1,134 @@
+@charset "utf-8";
+.nav li{
+    padding: 0 10px;
+    font-size: 16px;
+}
+.nav li.act{
+    color: #1261f2;
+}
+.detailBox {
+    display: none;
+    padding-top: 20px;
+}
+.detailBox.basic ul {
+    background: #f2f2f2;
+}
+.detailBox.basic ul li {
+    width: 50%;
+    line-height: 42px;
+}
+.detailBox.basic ul li span:first-child {
+    padding-left: 60px;
+    color: #1e3142;
+}
+.amountDetail .overview {
+    width: 100%;
+    background: #e4e4e4;
+}
+.amountDetail .overview .frequency {
+    width: 40%;
+    line-height: 40px;
+}
+.amountDetail .overview p span:first-child{
+    color: #0099FF;
+}
+.amountDetail .overview .allAmount p {
+    font-size: 18px;
+}
+.amountDetail .overview .allAmount p span{
+    color: #e96d17;
+}
+.amountDetail .overview .allAmount {
+    width: 60%;
+}
+.amountDetail .overview .allAmount li{
+    width: 50%;
+    line-height: 34px;
+}
+.amountDetail .overview .allAmount li span:first-child{
+    color: #6a6a6a;
+}
+.amountDetail .searchBox input[type=text] {
+    border: 1px solid #888;
+    height: 16px;
+    padding: 4px;
+}
+.amountDetail .searchBox {
+    line-height: 30px;
+}
+.amountDetail .searchBox input[type=button] {
+    padding: 8px 12px;
+    border-radius: 5px;
+    background: #0265ff;
+    color: #fff;
+    cursor: pointer;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+table,
+table td,
+table th {
+    border: 1px solid #e4e4e4;
+    text-align: center;
+}
+.amountDetail table th{
+    line-height: 30px;
+    background:#f2f2f2;
+}
+.amountDetail table td {
+    line-height: 38px;
+    text-align: center;
+}
+.amountDetail table td i {
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.amountDetail table td i.succ {
+    background: #00d065;
+}
+.amountDetail table td i.treat {
+    background: #ccc;
+}
+.lend tr,.borrow tr {
+    line-height: 50px;
+}
+.open,.noOpen {
+    padding: 6px;
+    background: #019dd8;
+    border-radius: 5px;
+    color: #fff;
+}
+.noOpen {
+     background: #999;
+}
+
+.userUmpInfo,.userUmpNone {
+    display: none;
+    border: 1px solid #787878;
+}
+.userUmpInfo h4 {
+    line-height: 32px;
+    background: #f3f3f3;
+    text-align: center;
+    border-bottom: 1px solid #787878; 
+}
+.userUmpInfo input[type=button] {
+    display: block;
+    margin: 0 auto; 
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    border-radius: 5px; 
+    background: #3299ff;
+    text-align: center;
+}

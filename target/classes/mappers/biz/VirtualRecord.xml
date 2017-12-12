@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.VirtualRecordDao'>
+	<resultMap type="com.zhongyang.java.pojo.VirtualRecord" id="rm">
+		<id column="ID" property="id" />
+		<result column="AMOUNT" property="amount" />
+		<result column="REALEARNING" property="realEarning" />
+		<result column="CREATETIME" property="createTime" />
+		<result column="LOANDAY" property="loanDay" />
+		<result column="REPAYTIME" property="repayTime"/>
+		<result column="VLOANID" property="vloanId" />
+		<result column="STATUS" property="status" />
+		<result column="FLAG" property="flag" />
+		<result column="USERID" property="userId" />
+	</resultMap>
+	
+	<sql id="sqlfile">
+		select ID id,AMOUNT amount,REALEARNING realEarning,CREATETIME createTime,LOANDAY loanDay,REPAYTIME repayTime,VLOANID vloanId,
+		STATUS status,FLAG flag,USERID userId from TB_VIRTUAL_RECORD where 1=1
+	</sql>
+	
+	<select id="selectByParams" parameterType="com.zhongyang.java.system.page.Page" resultType="com.zhongyang.java.pojo.VirtualRecord">
+		select r.ID id,r.AMOUNT amount,r.REALEARNING realEarning,r.CREATETIME createTime,r.LOANDAY loanDay,r.REPAYTIME repayTime,r.VLOANID vloanId,
+		r.STATUS status,r.FLAG flag,u.NAME userId from TB_VIRTUAL_RECORD r
+		left join TB_USER u on r.USERID=u.ID
+		where 1=1
+		<if test="params.containsKey('vloanId')">and r.VLOANID=#{params.vloanId}</if>
+	</select>
+	
+	<select id="selectRecordByTime" resultMap="rm">
+		<include refid="sqlfile"/>
+		and DATE(REPAYTIME)=CURDATE()
+		and FLAG=0
+	</select>
+	
+	<update id="updateVirtualRecord" parameterType="com.zhongyang.java.pojo.VirtualRecord">
+		update TB_VIRTUAL_RECORD
+			<set>
+				<if test="flag!=null">FLAG=#{flag},</if>
+			</set>
+		where 1=1
+			<if test="userId!=null">and USERID=#{userId}</if>
+	</update>
+	
+	<update id="updateBatchVirtualRecords" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" separator=";" close=""> 
+			update TB_VIRTUAL_RECORD 
+				<set>
+					<if test="item.flag!=null">FLAG=#{item.flag},</if>
+				</set>
+       		where 1=1
+			<if test="item.userId!=null">and USERID=#{item.userId}</if>
+    	</foreach>
+	</update>
+</mapper>

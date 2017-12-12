@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        <title>树状图</title>  
+<style>
+*{padding:0;margin:0;}
+li{list-style:none;}
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 12px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+.popUp{width:390px;position:absolute;left:50%;margin-left: -185px;top:120px;background-color: #fff;border:1px solid #e2e2e2;border-radius:5px;display: none;}
+.popUp ul{height:60px;overflow: hidden;background-color: #e0ecff;}
+.popUp li{height:60px;line-height:60px;width:130px;float:left;text-align:center;color:#666;cursor:pointer;border-radius: 5px;background-color: #e2edff;}
+.popUp li.active{color:#ff6f0a;}
+.popUp .content{padding:20px;}
+.popUp .content .checkLink{text-align: center;font-size:14px;line-height: 60px;}
+.popUp .content .checkLink span{cursor:pointer;}
+.popUp .content .editor,.popUp .content .add{display: none;}
+
+.aRow{height:40px;line-height: 40px;overflow: hidden;padding:6px 0;}
+.aRow span,.aRow input{display: inline-block;vertical-align: middle;}
+.aRow .alignLeft{float:left;width:80px;}
+.aRow input.alignLeft{width:240px;border:1px solid #e2e2e2;line-height: 40px;padding:0 14px;}
+.delector{text-align: center;cursor:pointer;}
+.editor .active{background-color: #75bcec;color:#fff;border-radius:4px;}
+.aRow .delectorBtn{display: block;width:100px;background-color:#e0ecff;margin:0 auto;text-align: center;line-height: 40px;border-radius: 4px;cursor: pointer; }
+
+.popUp .btn{height:40px;overflow: hidden;background-color: #e0ecff;display: none;}
+.popUp .btn div{height:40px;float:left;text-align:center;cursor:pointer;color:#333;line-height: 40px;}
+.popUp .makesure{width:183px;border-right:2px solid #e2e2e2;}
+.popUp .cancel{width:185px;}
+</style>
+  </head> 
+<body>
+<script src="../../js/d3.v3.min.js"></script>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<div id="popUp" class="popUp">
+	<ul>
+		<li class="active">查看</li>
+		<li>编辑</li>
+		<li>添加</li>
+	</ul>
+	<div class="content">
+		<div class="checkLink">
+			<span>查看员工列表</span>
+		</div>
+		<div class="editor">
+		    <div class="aRow">
+		        <span class="alignLeft">名称：</span>
+		        <input class="alignLeft title" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">描述：</span>
+		        <input class="alignLeft describe" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">服务热线：</span>
+		        <input class="alignLeft hotline" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">地址：</span>
+		        <input class="alignLeft address" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">是否删除：</span>
+		        <span class="alignLeft delector">是</span>
+		        <span class="alignLeft delector active">否</span>
+		        <!-- <span class="delectorBtn">删除</span> -->
+		    </div>
+		</div>
+		<div class="add">
+			<div class="aRow">
+		        <span class="alignLeft">名称：</span>
+		        <input class="alignLeft title" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">描述：</span>
+		        <input class="alignLeft describe" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">服务热线：</span>
+		        <input class="alignLeft hotline" type="text">
+		    </div>
+		    <div class="aRow">
+		        <span class="alignLeft">地址：</span>
+		        <input class="alignLeft address" type="text">
+		    </div>
+		</div>
+	</div>
+	<div class="btn">
+		<div class="makesure">确定</div>
+		<div class="cancel">取消</div>
+	</div>
+</div>
+<script>
+var flag = false;
+$("#popUp").click(function(ev){
+	stopPropagation(ev);
+});
+$("#popUp .cancel").click(function(){
+	$("#popUp").hide();
+});
+$(document).click(function(ev){
+	$("#popUp").hide();
+	stopPropagation(ev);
+});
+$(".checkLink span").click(function(){
+	$(window.parent.document).find('.sideBarNav li li').removeClass('on');
+    $(window.parent.document).find('.sideBarNav li li').each(function(){
+        if($(this).html() == '员工列表'){
+            $(this).addClass('on');
+        };
+    });
+    setCookie('sideNav', '员工列表',{"path":"/manage"});
+    setCookie('URL', 'html/staff/staffList.html',{"path":"/manage"});
+    $(window.parent.document).find('.navList p strong').html("<span>员工管理</span>").append("<span>员工列表</span>");
+    window.location.href = "../staff/staffList.html";
+});
+$("#popUp ul li").each(function(){
+	$(this).click(function(){
+		$(this).addClass("active").siblings().removeClass("active");
+		$("#popUp .content").children().hide().eq($(this).index()).show();
+		if($(this).index() != 0){
+			$("#popUp .btn").show();
+		}else{
+			$("#popUp .btn").hide();
+		};
+	});
+});
+$(".editor .delector").click(function(){
+	$(this).addClass("active").siblings().removeClass("active");
+});
+$("#popUp .makesure").click(function(){
+	$("#popUp ul li").each(function(){
+		if($(this).hasClass("active")){
+			if($(this).index() == 1){
+				var del = ($(".editor .delector").eq(0).hasClass("active"))?true:false;
+				sendAjax({
+					"name":$(".editor .title").val(),
+					"description":$(".editor .describe").val(),
+					"tel":$(".editor .hotline").val(),
+					"address":$(".editor .address").val(),
+					"del":del,
+					"id":$("#popUp .makesure").attr("id"),
+					"level":$("#popUp .makesure").attr("level"),
+					"URL":"../../modifyOrganization"
+				});
+			}else if($(this).index() == 2){
+				if( $(".add .title").val() == "" ){
+					alert("名称不能为空");
+					return;
+				};
+				sendAjax({
+					"name":$(".add .title").val(),
+					"description":$(".add .describe").val(),
+					"tel":$(".add .hotline").val(),
+					"address":$(".add .address").val(),
+					"del":false,
+					"id":$("#popUp .makesure").attr("id"),
+					"level":$("#popUp .makesure").attr("level"),
+					"URL":"../../addOrganization"
+				});
+			};
+		};
+	});
+});
+function stopPropagation(e) {  
+    e = e || window.event;  
+    if(e.stopPropagation) { //W3C阻止冒泡方法  
+        e.stopPropagation();  
+    } else {  
+        e.cancelBubble = true; //IE阻止冒泡方法  
+    }  
+} ; 
+function sendAjax(opt){
+	$.ajax({
+		type:"POST",
+		url:opt.URL,
+		data:{"name":opt.name,"description":opt.description,"tel":opt.tel,"address":opt.address,"del":opt.del,"id":opt.id,"level":opt.level},
+		success:function(str){
+			if(str.code == 1){
+				$("#popUp").hide();
+				window.location.reload();
+			};
+			alert(str.message);
+		}
+	});
+};
+function add(evt){
+	flag = false;
+	var ev = evt || window.event;
+	$("#popUp").show();
+	var rect = ev.target;
+    $.ajax({
+		type:"post",
+		url:"../../queryOrganizationByParams",
+		data:{"id":rect.id},
+		success:function(str){
+			flag = true;
+			$("#popUp .editor .title").val( str.name );
+			$("#popUp .editor .describe").val( str.description );
+			$("#popUp .editor .hotline").val( str.tel?str.tel:"");
+			$("#popUp .editor .address").val( str.address?str.address:"" );
+			$("#popUp .makesure").attr("id",str.id);
+			$("#popUp .makesure").attr("level",str.level);
+		}
+	});
+	stopPropagation(ev);
+};
+function over(evt){
+	var rect = evt.target;
+	var v=document.getElementById(rect.id);
+	$(v).attr("fill","red");
+};
+function out(evt){
+	var rect = evt.target;
+	var v=document.getElementById(rect.id);
+	$(v).attr("fill","black")
+};
+			var width = 900,
+			height = 900;
+			var tree = d3.layout.tree()
+				.size([width, height-200])
+				.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2); });
+
+			var diagonal = d3.svg.diagonal()
+				.projection(function(d) { return [d.y, d.x]; });
+
+			var svg = d3.select("body").append("svg")
+				.attr("width", width)
+				.attr("height", height)
+				.append("g")
+				.attr("transform", "translate(100,0)");
+
+
+
+			d3.json("../../queryAllOrganizations", function(error, root) {
+				
+
+				var nodes = tree.nodes(root);
+				var links = tree.links(nodes);
+				
+				/*console.log(nodes);
+				console.log(links);*/
+				
+				var link = svg.selectAll(".link")
+				  .data(links)
+				  .enter()
+				  .append("path")
+				  .attr("class", "link")
+				  .attr("d", diagonal);
+				
+				var node = svg.selectAll(".node")
+				  .data(nodes)
+				  .enter()
+				  .append("g")
+				  .attr("class", "node")
+				  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+				
+				node.append("circle")
+				  .attr("r", 4.5);
+				
+				node.append("text")
+				  .attr("data",function(d) {return d; })
+				  .attr("id",function(d) {return d.id; })
+				  .attr("onclick","add(evt)")
+				  .attr("onmouseover","over(evt)")
+				  .attr("onmouseout","out(evt)")
+				  .attr("dx", function(d) { return d.children ? 15 : -15; })
+				  .attr("dy", 20)
+				  .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
+				  .text(function(d) {return d.name; })
+				  
+				});
+
+</script>
+		
+    </body>  
+</html>  

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+
+<mapper namespace='com.zhongyang.java.dao.LoanOrderDao'>
+	<resultMap type="com.zhongyang.java.pojo.LoanOrder" id="rm">
+		<id column="ID" property="id"/>
+		<result column="INVESTID" property="investId"/>
+		<result column="LOANID" property="loanId"/>
+		<result column="ORDERDATE" property="orderDate"/>
+		<result column="ORDERID" property="orderId"/>
+		<result column="STATUS" property="status"/>
+		<result column="TIMERECORDED" property="timeRecorded"/>
+		<result column="AMOUNT" property="amount"/>
+	</resultMap>
+	<sql id="sqlfield">
+		select ID id,INVESTID investId,LOANID loanId,ORDERDATE orderDate,ORDERID orderId,STATUS status,
+			TIMERECORDED timeRecorded,AMOUNT amount from TB_LOAN_ORDER where 1=1
+	</sql>
+	<select id="selectLoanOrderByOrderId" parameterType="String" resultMap="rm">
+		<include refid="sqlfield"/>
+			and ORDERID=#{orderId}
+	</select>
+	<update id="updateLoanOrder" parameterType="com.zhongyang.java.pojo.LoanOrder">
+		update TB_LOAN_ORDER
+			<set>
+				<if test="status!=null">STATUS=#{status},</if>
+			</set>
+		where ORDERID=#{orderId}
+	</update>
+</mapper>

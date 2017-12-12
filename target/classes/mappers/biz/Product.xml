@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ProductDao'>
+	<resultMap type="com.zhongyang.java.pojo.Product" id="rm">
+		<id column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="DESCRIPTION" property="description"/>
+		<result column="RATE" property="rate"/>
+		<result column="REPAYMETHOD" property="repayMethod"/>
+		<result column="DAYS" property="days"/>
+		<result column="MONTHS" property="months"/>
+		<result column="YEARS" property="years"/>
+		<result column="MININVESTAMOUNT" property="minInvestAmount"/>
+		<result column="MAXINVESTAMOUNT" property="maxInvestAmount"/>
+		<result column="GROUPID" property="groupId"/>
+		<result column="STATUS" property="status"/>
+		<result column="TIMECREATE" property="timeCreate"/>
+	</resultMap>
+	<sql id="sqlfield">
+		select ID id,NAME name,DESCRIPTION description,RATE rate,REPAYMETHOD repayMethod,DAYS days,
+			MONTHS months,YEARS years,MININVESTAMOUNT minInvestAmount,MAXINVESTAMOUNT maxInvestAmount,GROUPID groupId,STATUS status,TIMECREATE timeCreate
+		from TB_PRODUCT where 1=1
+	</sql>
+	<insert id="insertProduct" parameterType="com.zhongyang.java.pojo.Product">
+		insert into TB_PRODUCT values(#{id},#{name},#{description},#{rate},#{repayMethod},#{days},#{months},#{years},#{minInvestAmount},#{maxInvestAmount},#{groupId},#{status},#{timeCreate})
+	</insert>
+	<select id="selectAllProduct" parameterType="com.zhongyang.java.system.page.Page" resultMap="rm">
+		<include refid="sqlfield"/>
+			<if test="startTime!=null">
+				and TIMECREATE &gt;=#{startTime}
+			</if>
+			<if test="endTime!=null">
+				and TIMECREATE &lt;=#{endTime}
+			</if>
+			<if test="params.containsKey('timeCreate')">
+				order by ${params.timeCreate}
+			</if> 
+			<if test="params.containsKey('sort')">
+				${params.sort}
+			</if>
+	</select>
+	<select id="selectCount" parameterType="java.util.Map" resultType="int">
+		select count(*) from TB_PRODUCT where 1=1
+			<if test="_parameter.containsKey('startTime')">
+				and TIMECREATE &gt;=#{startTime}
+			</if>
+			<if test="_parameter.containsKey('endTime')">
+				and TIMECREATE &lt;=#{endTime}
+			</if>
+	</select>
+	<select id="selectProductsByStatus" parameterType="Integer" resultMap="rm">
+		<include refid="sqlfield"/>and STATUS=#{status}
+	</select>
+	<select id="selectProductById" parameterType="String" resultMap="rm">
+		<include refid="sqlfield"/>and ID=#{id}
+	</select>
+	<update id="updateProduct" parameterType="com.zhongyang.java.pojo.Product">
+		update TB_PRODUCT
+			<set>
+				<if test="name!=null">
+					NAME=#{name},
+				</if>
+				<if test="description!=null">
+					DESCRIPTION=#{description},
+				</if>
+				<if test="rate!=null">
+					RATE=#{rate},
+				</if>
+				<if test="repayMethod!=null">
+					REPAYMETHOD=#{repayMethod},
+				</if>
+				<if test="days!=null">
+					DAYS=#{days},
+				</if>
+				<if test="months!=null">
+					MONTHS=#{months},
+				</if>
+				<if test="years!=null">
+					YEARS=#{years},
+				</if>
+				<if test="minInvestAmount!=null">
+					MININVESTAMOUNT=#{minInvestAmount},
+				</if>
+				<if test="maxInvestAmount!=null">
+					MAXINVESTAMOUNT=#{maxInvestAmount},
+				</if>
+				<if test="groupId!=null">
+					GROUPID=#{groupId},
+				</if>
+				<if test="status!=null">
+					STATUS=#{status},
+				</if>
+				<if test="timeCreate!=null">
+					TIMECREATE=#{timeCreate},
+				</if>
+			</set>
+		where ID=#{id}
+	</update>
+</mapper>

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="css/login.css" />
+<link rel="stylesheet" href="css/zyfyCommon.css" />
+<title>左右逢园--后台管理--登录页</title>
+</head>
+<body class="loginBody">
+<div id="loginFrame">
+	<h3>员工登陆</h3>
+	<div class="content">
+	    <p class="msgInfo">用户不存在</p>
+		<p class="userBar"><span>用户名</span><input type="text" value="" name="pho"/></p>
+
+		<p class="passwordBar"><span>密码</span><input class="password" type="password" name="password" value=""/></p>
+
+		<p class="codeBar"><span>验证码</span><input type="text" name="VerificationCode" value=""/><img src="imgValalidate" height="30" width="94" alt="验证码" /><span class="Refresh">刷新</span></p>
+
+		<p class="loginBar"><input type="button" value="登录"/></p>
+	</div>
+</div>
+</body>
+<script src="js/jquery.min.1.10.2.js"></script>
+<script src="js/zycfH.js"></script>
+<script>
+zycfH.login();
+</script>
+</html>

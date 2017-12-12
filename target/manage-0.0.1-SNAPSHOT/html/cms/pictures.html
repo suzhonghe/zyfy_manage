@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片上传</title>
+    <link rel="stylesheet" href="../../css/zyfyCommon.css" />
+    <link rel="stylesheet" href="../../css/pictures.css" />
+    <script>
+            //上移
+            function upTr(obj) {
+                var $tr = $(obj).parents("tr");
+
+                if ($tr.index() != 0) {
+                    //$tr.fadeOut().fadeIn();
+                    $tr.prev().before($tr);
+                }
+            };
+            //下移
+            function downTr(obj) {
+                var len = $(".downBtn").length;
+                var $tr = $(obj).parents("tr");
+                if ($tr.index() != len - 1) {
+                    // $tr.fadeOut().fadeIn();
+                    $tr.next().after($tr);
+                }
+            };
+            //删除
+            function deleteTr(obj){
+                var $tr = $(obj).parents("tr");
+                var imgSrc = $tr.find("img").attr("src");
+                $(".shade").show();
+
+                $(".shade").find("a").click(function(){
+                    
+                    $(".shade").hide();
+                    $.ajax({
+                       url: '../../deleteBannerPhoto',
+                       type: 'post',
+                       data: {"pathAddress":imgSrc},
+                       success: function(str){
+                           if(str){
+                               $tr.remove();
+                           }
+                       }
+                    });
+                    $(this).unbind("click");
+                });
+                $(".shade").find("i").click(function(){
+                	
+                    $(this).parents(".shade").hide();
+                    $(this).unbind("click");
+                });
+                //$tr.remove();
+                //$tr.fadeOut().fadeIn();
+                //$(".table").prepend($tr);
+            };
+
+            //编辑
+
+            function editTr(obj){
+                var $tr = $(obj).parents("tr");
+                $(obj).parents(".subBox").find(".editBox").show();
+               
+                $(obj).parents(".subBox").find(".editBox").find("img").attr("src",$(obj).parent().parent().parent().find("img").attr("src"));
+
+                $(obj).parents(".subBox").find(".editBox").find(".edTitle").val($(obj).parent().parent().parent().find(".tdTitle").html());
+                $(obj).parents(".subBox").find(".editBox").find(".edLink").val($(obj).parent().parent().parent().find(".tdLink").find("a").html());
+                $(obj).parents(".subBox").find(".editBox").find(".determine").click(function(){
+                    //e.stopPropagation();
+                    $(this).parents(".editBox").hide();
+                    $(obj).parent().parent().parent().find(".tdTitle").html($(this).parents(".editBox").find(".edTitle").val());
+                    $(obj).parent().parent().parent().find(".tdLink").find("a").html($(this).parents(".editBox").find(".edLink").val()).attr("href",$(this).parents(".editBox").find(".edLink").val());
+                    $(this).unbind("click");
+                });
+            };
+    </script>
+</head>
+<body>
+    <div class="main clear">
+        <div class="left slideBox">
+            <ul class="slideNav">
+                <li class="act">pc-banner</li>
+                <li>app-banner</li>
+                <li>广告</li>
+                <li>新闻图片</li>
+                <li>文章图片</li>
+            </ul>
+        </div>
+        <div class="left viewBox">
+            <!--pc-banner---begin---------------->
+            <div class="photoBox" id="pcPhoto">
+               <div class="subBox">
+                   <div class="clear">
+                   		<input class="left btn add" type="button" value="pc添加图片"/>
+                   		<input class="right btn release" type="button" value="pc预览"/>
+                   </div>
+                   <div class="addBox">
+                       <h4>pc添加图片</h4>              
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="pcUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="pcPicTitle">标题</label>
+                           <input class="left title" id="pcPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="pcPicLink">链接</label>
+                           <input class="left link" id="pcPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <div class="editBox">
+                       <h4>pc修改图片</h4>
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="pcEditUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="pcEditPicTitle">标题</label>
+                           <input class="left edTitle" id="pcEditPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="pcEditPicLink">链接</label>
+                           <input class="left edLink" id="pcEditPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <table>
+                       <thead>
+                       <tr>
+                           <th class="pic">图片</th>
+                           <th class="title">标题</th>
+                           <th class="link">链接</th>
+                           <th class="time">时间</th>
+                           <th class="control">操作</th>
+                       </tr>
+                        </thead>
+                       <tbody>
+                       </tbody>
+                   </table>
+                   
+               </div>
+            </div>
+            <!--pc-banner---end------------------>
+            <!--app-banner---begin---------------->
+            <div class="photoBox" id="appPhoto">
+               <div class="subBox">
+                   <div class="clear">
+                      <input class="left btn add" type="button" value="app添加图片"/>
+                      <input class="right btn release" type="button" value="app预览"/>
+                   </div>
+                   <div class="addBox">
+                       <h4>app添加图片</h4>
+                       
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="appUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="appPicTitle">标题</label>
+                           <input class="left title" id="appPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="appPicLink">链接</label>
+                           <input class="left link" id="appPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <div class="editBox">
+                       <h4>app修改图片</h4>
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="appEditUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="appEditPicTitle">标题</label>
+                           <input class="left edTitle" id="appEditPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="appEditPicLink">链接</label>
+                           <input class="left edLink" id="appEditPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <table>
+                       <thead>
+                       <tr>
+                           <th class="pic">图片</th>
+                           <th class="title">标题</th>
+                           <th class="link">链接</th>
+                           <th class="time">时间</th>
+                           <th class="control">操作</th>
+                       </tr>
+                        </thead>
+                       <tbody>
+                       </tbody>
+                   </table>
+                   
+               </div>
+            </div>
+            <!--app-banner---end------------------>
+            <!--adv-begin---------------->
+            <div class="photoBox" id="advPhoto">
+               <div class="subBox">
+                   <div class="clear">
+                      <input class="left btn add" type="button" value="adv添加图片"/>
+                      <input class="right btn release" type="button" value="adv预览"/>
+                   </div>
+                   <div class="addBox">
+                       <h4>adv添加图片</h4>
+                       
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="advUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="advPicTitle">标题</label>
+                           <input class="left title" id="advPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="advPicLink">链接</label>
+                           <input class="left link" id="advPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <div class="editBox">
+                       <h4>adv修改图片</h4>
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="advEditUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="advEditPicTitle">标题</label>
+                           <input class="left edTitle" id="advEditPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="advEditPicLink">链接</label>
+                           <input class="left edLink" id="advEditPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <table>
+                       <thead>
+                       <tr>
+                           <th class="pic">图片</th>
+                           <th class="title">标题</th>
+                           <th class="link">链接</th>
+                           <th class="time">时间</th>
+                           <th class="control">操作</th>
+                       </tr>
+                        </thead>
+                       <tbody>
+                       </tbody>
+                   </table>
+               </div>
+            </div>
+            <!--adv-end------------------>
+            <!--news-begin---------------->
+            <div class="photoBox" id="newsPhoto">
+               <div class="subBox">
+                   <div class="clear">
+                      <input class="left btn add" type="button" value="news添加图片"/>
+                      <input class="right btn release" type="button" value="news预览"/>
+                   </div>
+                   <div class="addBox">
+                       <h4>news添加图片</h4>
+                       
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="newsUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="newsPicTitle">标题</label>
+                           <input class="left title" id="newsPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="newsPicLink">链接</label>
+                           <input class="left link" id="newsPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <div class="editBox">
+                       <h4>news修改图片</h4>
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="newsEditUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="newsEditPicTitle">标题</label>
+                           <input class="left edTitle" id="newsEditPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="newsEditPicLink">链接</label>
+                           <input class="left edLink" id="newsEditPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <table>
+                       <thead>
+                       <tr>
+                           <th class="pic">图片</th>
+                           <th class="title">标题</th>
+                           <th class="link">链接</th>
+                           <th class="time">时间</th>
+                           <th class="control">操作</th>
+                       </tr>
+                        </thead>
+                       <tbody>
+                       </tbody>
+                   </table>
+                   
+               </div>
+            </div>
+            <!--news-end------------------>
+            <!--article-begin---------------->
+            <div class="photoBox" id="articlePhoto">
+               <div class="subBox">
+                   <div class="clear">
+                      <input class="left btn add" type="button" value="article添加图片"/>
+                      <input class="right btn release" type="button" value="article预览"/>
+                   </div>
+                   <div class="addBox">
+                       <h4>article添加图片</h4>
+                       
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="articleUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="articlePicTitle">标题</label>
+                           <input class="left title" id="articlePicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="articlePicLink">链接</label>
+                           <input class="left link" id="articlePicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <div class="editBox">
+                       <h4>article修改图片</h4>
+                       <p class="clear">
+                           <label class="left">url</label>
+                           <img class="left" src="" alt=""/>
+                           <span class="left btn">
+                               <span id="newsEditUpBtn"></span>
+                           </span>
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="articleEditPicTitle">标题</label>
+                           <input class="left edTitle" id="articleEditPicTitle" type="text" />
+                       </p>
+                       <p class="clear">
+                           <label class="left" for="articleEditPicLink">链接</label>
+                           <input class="left edLink" id="articleEditPicLink" type="text" />
+                       </p>
+                       <input class="btn determine" type="button" value="确定"/>
+                   </div>
+                   <table>
+                       <thead>
+                       <tr>
+                           <th class="pic">图片</th>
+                           <th class="title">标题</th>
+                           <th class="link">链接</th>
+                           <th class="time">时间</th>
+                           <th class="control">操作</th>
+                       </tr>
+                        </thead>
+                       <tbody>
+                       </tbody>
+                   </table>
+                   
+               </div>
+            </div>
+            <!--article-end------------------>
+        </div>
+        
+        
+    </div>
+    <!--遮罩层begin------------------>
+        <div class="shade">
+            <div class="tip">
+                <p>确定删除？</p>
+                <a>确定</a>
+                <i>×</i>
+            </div>
+        </div>
+        <!--遮罩层end-->
+    <div class="reBox">
+            <div class="tabBanner">
+                <ul>
+                    <!-- <li class="one act"></li>
+                    <li class="two"></li>
+                    <li class="three"></li>
+                    <li class="four"></li>
+                    <li class="five"></li> -->
+                </ul>
+                <ol class="clear">
+                    <!-- <li class="left act"></li>
+                    <li class="left"></li>
+                    <li class="left"></li>
+                    <li class="left"></li>
+                    <li class="left"></li> -->
+                </ol>
+            </div>
+            <div class="signOut">
+                <input type="button" value="退出"/>
+            </div>
+    </div>
+    <div class="pic_wrap">
+        <div class="pic_position">
+          <ul class="pic_list">
+            <li><a href="javascript:;"><img src="../../img/01.jpg" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+            <li><a href="javascript:;"><img src="https://creditmanager.b0.upaiyun.com/d2ffbd3954d454e16db55d9fde7ed4d5" alt="图片" /></a></li>
+          </ul>
+        </div>
+        <p class="close"></p>
+        <div class="next"></div>
+        <div class="prev"></div>
+    </div>
+</body>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/jquery.uploadify.min.js"></script>
+<script src="../../js/pictures.js"></script>
+</html>

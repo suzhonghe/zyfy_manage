@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.DictDao'>
+	<select id="getAllDict" resultType="com.zhongyang.java.pojo.Dict">
+	select * from TB_DICT 
+	</select>
+	<insert id="addDict" parameterType="com.zhongyang.java.pojo.Dict" useGeneratedKeys="true" keyProperty="id">
+	insert into TB_DICT (id,code,name) values (#{id},#{code},#{name})	
+	</insert>
+	<update id="updateDict" parameterType="com.zhongyang.java.pojo.Dict">
+	update TB_DICT set code=#{code} where id = #{id}
+	</update>
+	<select id="getDictByCode" resultType="com.zhongyang.java.pojo.Dict">
+	select * from TB_DICT where code=#{code}
+	</select>
+</mapper>

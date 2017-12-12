@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ProofPhotoDao'>
+	<resultMap type="com.zhongyang.java.pojo.ProofPhoto" id="rm">
+		<id column="ID" property="id"/>
+		<result column="PHOTONAME" property="photoName"/>
+		<result column="URLPATH" property="urlPath"/>
+		<result column="PROJECTID" property="projectId"/>
+		<result column="SUBMITTIME" property="submitTime"/>
+	</resultMap>
+	<sql id="sqlfield">
+		select ID id,PHOTONAME photoName,URLPATH urlPath,PROJECTID projectId,SUBMITTIME submitTime from TB_PROOF_PHOTO where 1=1
+	</sql>
+	<insert id="insertProofPhoto" parameterType="java.util.List">
+		insert into TB_PROOF_PHOTO (ID,PHOTONAME,URLPATH,PROJECTID,SUBMITTIME) values
+			<foreach collection="list" item="item" index="index" separator=",">
+				(#{item.id},#{item.photoName},#{item.urlPath},#{item.projectId},#{item.submitTime})
+	  		</foreach>
+		
+	</insert>
+	<select id="selectByParams" parameterType="com.zhongyang.java.pojo.ProofPhoto" resultMap="rm">
+		<include refid="sqlfield"/>
+			<if test="projectId!=null">and PROJECTID=#{projectId}</if>
+			<if test="photoName!=null">and PHOTONAME=#{photoName}</if>
+	</select>
+	<delete id="deleteByParams" parameterType="com.zhongyang.java.pojo.ProofPhoto">
+		delete from TB_PROOF_PHOTO where 1=1
+			<if test="projectId!=null">and PROJECTID=#{projectId}</if>
+			<if test="photoName!=null">and PHOTONAME=#{photoName}</if>
+			<if test="urlPath!=null">and URLPATH=#{urlPath}</if>
+		
+	</delete>
+	<delete id="deleteByUrl" parameterType="String">
+		delete from TB_PROOF_PHOTO where URLPATH=#{url}
+	</delete>
+</mapper>

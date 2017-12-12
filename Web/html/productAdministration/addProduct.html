@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新建产品</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/addProduct.css" />
+</head>
+<body>
+<div class="clear productTltle">
+    <div class="left"><span>产品名称：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear RepaymentMethod">
+    <div class="left"><span>还款方式：</span></div>
+    <div class="right"><span class="select">按月付息到期还本</span><ul>
+        <li>一次性还本付息</li>
+<!--         <li>按月等额本息</li> -->
+        <li>按月付息到期还本</li>
+<!--         <li>按月等额本金</li> -->
+<!--         <li>月平息</li> -->
+    </ul></div>
+</div>
+<div class="clear date">
+    <div class="left"><span>借款期限：</span></div>
+    <div class="right"><input class="months" type="text" value="" />月</div>
+</div>
+<div class="clear rate">
+    <div class="left"><span>借款利率：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear InvestmentGroup">
+    <div class="left"><span>投资人群：</span></div>
+    <div class="right"><span class="select">全部用户</span><ul>
+        <li>全部用户</li>
+        <li>新用户</li>
+    </ul></div>
+</div>
+<div class="clear minInvestAmount">
+    <div class="left"><span>最小投资额（元）：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear maxInvestAmount">
+    <div class="left"><span>最大投资金额（元）：</span></div>
+    <div class="right"><input type="text" value="" /></div>
+</div>
+<div class="clear description">
+    <div class="left"><span>产品描述：</span></div>
+    <div class="right"><textarea rows="3"></textarea></div>
+</div>
+<p class="subBtn"><input type="button" value="保存"/></p>
+<div id="systemError">
+    <div class="mask"></div>
+    <div class="phoTestCon">
+        <div class="close"></div>
+        <div class="bg"></div>
+        <p class="msg">操作失败！</p>
+        <p class="back"><strong>3</strong>秒后自动返回上一页</p>
+    </div>
+</div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.newStandard();
+zycfH.addProduct();
+</script>
+</body>
+</html>

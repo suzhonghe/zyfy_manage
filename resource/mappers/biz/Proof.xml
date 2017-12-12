@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ProofDao'>
+	<resultMap type="com.zhongyang.java.pojo.Proof" id="rm">
+		<id column="ID" property="id"/>
+		<result column="LEGALPERSONIDENTITYCARD" property="legalPersonIdentityCard"/>
+		<result column="COMPANYINFO" property="companyInfo"/>
+		<result column="CONTRACTDOCUMENT" property="contractDocument"/>
+		<result column="EMPLOYEE" property="employee"/>
+		<result column="PROPERTYINFO" property="propertyInfo"/>
+		<result column="SUBMITTIME" property="submitTime"/>
+		<result column="REQUEST_ID" property="requestId"/>
+		<result column="CERTIFICATE_ID" property="certificateId"/>
+		<result column="OTHERDETAILS" property="otherDetails"/>
+		<result column="PROJECTID" property="projectId"/>
+	</resultMap>
+	<sql id="sqlfield">
+		select ID id,LEGALPERSONIDENTITYCARD legalPersonIdentityCard,COMPANYINFO companyInfo,CONTRACTDOCUMENT contractDocument,
+			EMPLOYEE employee,PROPERTYINFO propertyInfo,SUBMITTIME submitTime,REQUEST_ID requestId,CERTIFICATE_ID certificateId,
+			OTHERDETAILS otherDetails,PROJECTID projectId
+		from TB_PROOF where 1=1
+	</sql>
+	<insert id="insertProof" parameterType="com.zhongyang.java.pojo.Proof">
+		insert into TB_PROOF(ID,LEGALPERSONIDENTITYCARD,COMPANYINFO,EMPLOYEE,CONTRACTDOCUMENT,PROPERTYINFO,SUBMITTIME,REQUEST_ID,CERTIFICATE_ID,OTHERDETAILS,LOANREQUESTID) values(#{id},
+			#{legalPersonIdentityCard},#{companyInfo},#{employee},#{contractDocument},#{propertyInfo},#{submitTime},#{requestId},#{certificateId},#{otherDetails},#{projectId})
+	</insert>
+	<select id="selectProofByProjectId" parameterType="String" resultMap="rm">
+		<include refid="sqlfield"/>
+			and PROJECTID=#{id}
+	</select>
+	<delete id="deleteProofById" parameterType="String">
+		delete from TB_FROOF where ID=#{id}
+	</delete>
+</mapper>

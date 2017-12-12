@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.LoanRepayMentDao'>
+    <!-- 新增还款计划记录 -->
+	<insert id="createLoanRepayMent" parameterType="com.zhongyang.java.pojo.LoanRepayment">
+		INSERT INTO TB_LOAN_REPAYMENT (ID,CURRENTPERIOD,STATUS,AMOUNTINTEREST,
+		AMOUNTOUTSTANDING,AMOUNTPRINCIPAL,DUEDATE,LOAN_ID)
+		VALUES (#{id},#{currentperiod},#{status},
+		#{amountinterest},#{amountoutstanding},#{amountprincipal},#{duedate},#{loanId})
+	</insert>
+	<!--根据loanId查询标的的利率之和 -->
+	<select id="userFundRateSum"  parameterType="com.zhongyang.java.pojo.LoanRepayment" resultType="com.zhongyang.java.pojo.LoanRepayment">
+	     select SUM(AMOUNTINTEREST)from TB_LOAN_REPAYMENT where 
+		<if test="loanId != null">
+		   LOAN_ID = #{loanId}
+		</if>
+	</select>
+
+    <update id="updateStatus" parameterType="com.zhongyang.java.pojo.LoanRepayment">
+          update TB_LOAN_REPAYMENT set STATUS= #{status},REPAYAMOUNT=#{repayamount},REPAYDATE= #{repaydate},
+          <if test="amountinterest!=null">
+          AMOUNTINTEREST = #{amountinterest}, 
+          </if>
+          SOURCE_ID=#{sourceId}
+          where ID = #{id}
+    </update>
+    
+	<update id="updateStatusByTime" parameterType="java.lang.String">
+	update TB_LOAN_REPAYMENT set `STATUS`=#{status} 
+	where DATE(DUEDATE)=date_sub(curdate(),interval 1 day) 
+	and REPAYDATE is null and `STATUS` ='UNDUE'
+	</update>
+	
+	<!--根据loanId查询标的的利率之和 -->
+	<select id="findByLoanId"  parameterType="com.zhongyang.java.pojo.LoanRepayment" resultType="int">
+	     select count(LOAN_ID)from TB_LOAN_REPAYMENT where 
+		<if test="loanId != null">
+		   LOAN_ID = #{loanId}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>标的列表</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<p class="bidHead"><strong class="title">VIP</strong><span>投资金额大于100万的用户</span></p>
+<div class="function clear bidSearch">
+    <div class="right">
+        <input id="fuzzyQuery" class="dateInp" type="text" value="" placeholder="按姓名查询"/><span id="searchTime" class="searchTime">查询</span><input id="export" class="export" type="button" value="添加用户"/>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>手机号码</th>
+                <th>登录名</th>
+                <th>姓名</th>
+                <th>邀请人</th>
+                <th>注册时间</th>
+                <th>最后登录时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>159****0574</td>
+                <td>chengjg</td>
+                <td>刘士龙</td>
+                <td>134****0038</td>
+                <td>16年1月20日</td>
+                <td>16年1月20日</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.userGroupInfo();
+</script>
+</body>
+</html>

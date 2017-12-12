@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.FreshAmountDao'>
+	<resultMap type="com.zhongyang.java.pojo.FreshAmount" id="rm">
+		<id column="ID" property="id"/>
+		<result column="CREATETIME" property="createTime"/>
+		<result column="AMOUNT" property="amount"/>
+		<result column="STATUS" property="status"/>
+		<result column="TYPE" property="type"/>
+		<result column="NAME" property="name"/>
+		<result column="EFFECTDAY" property="effectDay"/>
+		<result column="ENDTIME" property="endTime"/>
+		<result column="USETIME" property="useTime"/>
+		<result column="AMOUNTLIMIT" property="amountLimit"/>
+		<result column="MONTHS" property="months"/>
+		<result column="USERID" property="userId"/>
+	</resultMap>
+	
+	<sql id="sqlfield">
+		select ID id,CREATETIME createTime,AMOUNT amount,STATUS status,TYPE type,NAME name,EFFECTDAY effectDay,
+		ENDTIME endTime,USETIME useTime,AMOUNTLIMIT amountLimit,MONTHS months,USERID userId from TB_FRESH_AMOUNT where 1=1
+	</sql>
+	
+	<insert id="insertFreshAmount" parameterType="com.zhongyang.java.pojo.FreshAmount">
+		insert into TB_FRESH_AMOUNT(ID,CREATETIME,AMOUNT,STATUS,TYPE,NAME,EFFECTDAY,
+		ENDTIME,USETIME,AMOUNTLIMIT,MONTHS,USERID)values(#{id},#{createTime},#{amount},#{status},#{type},#{name},#{effectDay},
+		#{endTime},#{useTime},#{amountLimit},#{months},#{userId})
+	</insert>
+	
+	<insert id="insertBatchFreshAmount" parameterType="java.util.List">
+		insert into TB_FRESH_AMOUNT(ID,CREATETIME,AMOUNT,STATUS,TYPE,NAME,EFFECTDAY,
+		ENDTIME,USETIME,AMOUNTLIMIT,MONTHS,USERID)values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id},#{item.createTime},#{item.amount},#{item.status},#{item.type},#{item.name},#{item.effectDay},
+			#{item.endTime},#{item.useTime},#{item.amountLimit},#{item.months},#{item.userId})
+		</foreach>
+	</insert>
+	
+	<update id="updateFreshAmount" parameterType="com.zhongyang.java.pojo.FreshAmount">
+		update TB_FRESH_AMOUNT
+			<set>
+				<if test="status!=null">STATUS=#{status},</if>
+				<if test="useTime!=null">USETIME=#{useTime},</if>
+			</set>
+		where 1=1
+		<if test="id!=null">and ID=#{id}</if>
+		<if test="userId!=null">and USERID=#{userId}</if>
+	</update>
+	
+	<update id="updateFreshAmounts">
+		update TB_FRESH_AMOUNT set STATUS=2
+		where DATE(ENDTIME)=date_sub(curdate(),interval 1 day)
+		and STATUS=0
+	</update>
+</mapper>

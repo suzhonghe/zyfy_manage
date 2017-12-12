@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户余额对账</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<div class="function clear">
+    <div class="left"></div>
+    <div class="right">
+        <span>登录名称或手机号</span><input id="condition" class="dateInp" type="text" value=""/> <span id="searchTime" class="searchTime">查询</span>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>用户ID</th>
+                <th>姓名</th>
+                <th>手机号</th>
+                <th>联动用户名</th>
+                <th>联动用户号</th>
+                <th>联动余额（元）</th>
+                <th>平台余额（元）</th>
+                <th>平台冻结金额（元）</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>1</td>
+                <td>大别山</td>
+                <td>张三丰</td>
+                <td>1000</td>
+                <td>10.3</td>
+                <td>3个月</td>
+                <td>95%</td>
+                <td>95%</td>
+                <td>999</td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<p class="junp">跳转到<input type="text" />页</p>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.userFund();
+</script>
+</body>
+</html>

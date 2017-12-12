@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+</head>
+<body>
+        <button onclick='sss()'>
+            asdasd
+        </button>
+</body>
+    <script>
+    var emp = new Object();
+    emp["loginName"] = "tester";
+    emp["mobile"]="15911118888";
+    emp["name"]="库里";
+    emp["idnumber"]="371529200105083458";
+    emp["empId"]="88888";
+    
+        function sss(){
+            $.ajax({
+                type:"POST",
+                data : {"loginName":"tester",
+                	"name":"Curry",
+                	"mobile":"15911118888",
+                	"idnumber":"371529200105083458",
+            "empId":"88888"
+                	},
+                url:"http://192.168.1.108:9002/manage/addEmployee",
+                dataType:"json",
+                async: false,
+                success:function(data){
+                	if(data.code==0){
+                	//	window.location.href=data.message;	
+                	alert(data.message);
+                	}
+                }
+            });
+        }
+    </script>
+</html>

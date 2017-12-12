@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.zhongyang.java.dao.UserDao'>
+	<!-- 根据用户Id查询用户 -->
+	<select id="getUserById" parameterType="com.zhongyang.java.pojo.User"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,NAME name,MOBILE mobile FROM TB_USER WHERE 1=1
+		<if test="id != null">
+			and ID = #{id}
+		</if>
+	</select>
+	<select id="getUser" parameterType="com.zhongyang.java.pojo.User"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,NAME name,IDNUMBER idnumber,MOBILE
+		mobile,REFERRAL_ID referralId,LOGINNAME loginname, IDAUTHENTICATED
+		idauthenticated FROM TB_USER WHERE 1=1 
+	</select>
+	<select id="getUserByParam" parameterType="com.zhongyang.java.pojo.User"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,NAME name,IDNUMBER idnumber,MOBILE mobile,REFERRAL_ID
+		referralId,LOGINNAME loginname, IDAUTHENTICATED idauthenticated FROM
+		TB_USER WHERE 1=1
+		<if test="mobile != null">
+			and MOBILE = #{mobile}
+		</if>
+		<if test="loginname != null">
+			and LOGINNAME = #{loginname}
+		</if>
+		<if test="passphrase != null">
+			and PASSPHRAMSE = #{passphrase}
+		</if>
+		<if test="id != null">
+			and ID = #{id}
+		</if>
+	</select>
+
+	<select id="selectByUser" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,MOBILE mobile,LOGINNAME loginname, NAME name,REFERRAL_ID
+		referralId,REFERRAL_REALM referralRealm,
+		REGISTERDATE
+		registerdate,LASTLOGINDATE lastlogindate from TB_USER where 1=1
+		<if test="params.containsKey('groupid')">and GROUPID=#{params.groupid}</if>
+		<if test="params.containsKey('organizationId')">and ORGANIZATIONID=#{params.organizationId}</if>
+		order by LASTLOGINDATE desc
+	</select>
+	<select id="selecCountByParams" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from TB_USER where 1=1
+		<if test="_parameter.containsKey('groupid')">and GROUPID=#{groupid}</if>
+		<if test="_parameter.containsKey('mobile')">and MOBILE like '%${mobile}%'</if>
+		<if test="_parameter.containsKey('name')">and NAME like '%${name}%'</if>
+		<if test="_parameter.containsKey('organizationId')">and ORGANIZATIONID=#{organizationId}</if>
+		<if test="_parameter.containsKey('referralId')">and REFERRAL_ID=#{referralId}</if>
+	</select>
+	<update id="updateUser" parameterType="com.zhongyang.java.pojo.User">
+		update TB_USER
+		<set>
+			<if test="groupid!=null">GROUPID=#{groupid},</if>
+			<if test="organizationId!=null">ORGANIZATIONID=#{organizationId},</if>
+			<if test="birthDate!=null">BIRTHDATE=#{birthDate},</if>
+		</set>
+		where 1=1
+		<if test="id!=null">and ID=#{id}</if>
+	</update>
+	<select id="likeSelect" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,MOBILE mobile,LOGINNAME loginname, NAME name,REFERRAL_ID
+		referralId,REFERRAL_REALM referralRealm,
+		REGISTERDATE
+		registerdate,LASTLOGINDATE lastlogindate from TB_USER where 1=1
+		<if test="params.containsKey('groupid')">and GROUPID=#{params.groupid}</if>
+		<if test="params.containsKey('mobile')">and MOBILE like '%${params.mobile}%'</if>
+		<if test="params.containsKey('name')">and NAME like '%${params.name}%'</if>
+		order by LASTLOGINDATE desc
+	</select>
+	<select id="getUserListCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from TB_USER where 1=1
+		<if test="_parameter.containsKey('name')">
+			and NAME =#{name}
+		</if>
+		<if test="_parameter.containsKey('mobile')">
+			and MOBILE =#{mobile}
+		</if>
+	</select>
+	<select id="getUserList" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		SELECT t2.ID id,t1.MOBILE referralId,t2.REFERRAL_ID
+		referralRealm,t2.MOBILE mobile,t2.LOGINNAME loginname,t2.name NAME,
+		t2.REGISTERDATE registerdate,t2.LASTLOGINDATE lastlogindate,t2.ENABLED
+		enabled
+		FROM TB_USER t1,TB_USER t2
+		WHERE t1.ID = t2.REFERRAL_ID
+		<if test="params.containsKey('name')">
+			and t2.NAME =#{params.name}
+		</if>
+		<if test="params.containsKey('mobile')">
+			and t2.MOBILE =#{params.mobile}
+		</if>
+		ORDER BY t2.LASTLOGINDATE DESC
+	</select>
+	<select id="getUserDetaile" parameterType="String"
+		resultType="com.zhongyang.java.vo.UserVo">
+		SELECT tu.ID id,tu.REFERRAL_ID referralId,tu.IDNUMBER
+		idnumber,tu.MOBILE mobile,
+		tu.LOGINNAME loginname,tu.EMAIL
+		email,tu.NAME NAME,tu.REGISTERDATE registerdate,
+		tu.LASTLOGINDATE
+		lastlogindate,ENTERPRISE enterprise,tf.ACCOUNT
+		account
+		FROM TB_USER tu
+		LEFT JOIN TB_FUND_ACCOUNT tf
+		ON tu.ID = tf.USER_ID WHERE
+		tu.ID=#{userId}
+	</select>
+
+	<update id="updateUserInfos" parameterType="com.zhongyang.java.vo.UserVo">
+		update TB_USER
+		<set>
+			<if test="mobile !=null">MOBILE=#{mobile},</if>
+			<if test="enabled !=null">ENABLED=#{enabled},</if>
+			<if test="referralId !=null">REFERRAL_ID=#{referralId},</if>
+			<if test="referralRealm !=null">REFERRAL_REALM=#{referralRealm},</if>
+		</set>
+		where 1=1
+		<if test="id !=null">and ID=#{id}</if>
+	</update>
+	<select id="selectUserListByParams" parameterType="com.zhongyang.java.pojo.User"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,NAME name,REFERRAL_ID referralId from TB_USER where 1=1
+		<if test="referralId!=null">and REFERRAL_ID=#{referralId}</if>
+	</select>
+	<select id="selectByParams" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.vo.OrganizationUser">
+		select ID id,NAME name,MOBILE mobile from TB_USER where 1=1
+		<if test="params.containsKey('organizationId')">and ORGANIZATIONID=#{params.organizationId}</if>
+	</select>
+
+	<select id="selectUserByParams" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		select ID id,NAME name,MOBILE mobile,IDNUMBER idnumber,BIRTHDATE
+		birthDate from TB_USER where 1=1
+		<if test="params.containsKey('startTime')">and DATE_FORMAT(BIRTHDATE,'%m-%d')
+			&gt;=#{params.startTime}</if>
+		<if test="params.containsKey('endTime')">and DATE_FORMAT(BIRTHDATE,'%m-%d') &lt;=#{params.endTime}
+		</if>
+
+	</select>
+	<select id="selectFund" resultType="com.zhongyang.java.pojo.User">
+	select u.ID id,u.NAME name,u.MOBILE mobile
+		from TB_USER u left join TB_USER_FUND f on u.ID=f.USERID where f.AVAILABLE_AMOUNT &gt;2
+	</select>
+
+	<resultMap type="com.zhongyang.java.vo.OrganizationUserVo"
+		id="rm">
+		<id column="ID" property="id" />
+		<result column="NAME" property="name" />
+		<result column="MOBILE" property="mobile" />
+		<collection property="invests" ofType="com.zhongyang.java.pojo.Invest">
+			<id column="IID" property="id" />
+			<result column="AMOUNT" property="amount" />
+		</collection>
+	</resultMap>
+
+	<select id="selectUsersInvestByParams" parameterType="java.util.Map"
+		resultMap="rm">
+		select tu.ID id,tu.NAME name,tu.MOBILE mobile,ti.AMOUNT amount from
+		TB_USER tu
+		left join TB_INVEST ti on tu.ID=ti.USERID
+		where 1=1
+		<if test="_parameter.containsKey('referralId')">and tu.REFERRAL_ID=#{referralId}</if>
+		<if test="_parameter.containsKey('startTime')">and ti.SUBMITTIME &gt;=#{startTime}</if>
+		<if test="_parameter.containsKey('endTime')">and ti.SUBMITTIME &lt;=#{endTime}</if>
+	</select>
+
+
+	<!-- 短信发送用户电话号码查询 -->
+	<select id="getUserMobiles" parameterType="java.util.Map"
+		resultType="com.zhongyang.java.pojo.User">
+		SELECT MOBILE FROM TB_USER INNER JOIN TB_UMP_ACCOUNT ON TB_USER.id =
+		TB_UMP_ACCOUNT.USERID
+		<if test="startTime != null">and TB_USER.REGISTERDATE &gt;=#{startTime}</if>
+		<if test="endTime != null">and TB_USER.REGISTERDATE &lt;=#{endTime}</if>
+	</select>
+
+	<select id="getUserByName" resultType="com.zhongyang.java.pojo.User">
+		select * from TB_USER
+		where name = #{name}
+	</select>
+
+	<select id="updateInviteUserBatch">
+		update TB_USER set
+		REFERRAL_ID=#{newReferralId},REFERRAL_REALM =
+		#{newReferralRealm} where
+		REFERRAL_ID=#{oldReferralId};
+	</select>
+	<select id="selectUserFund" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.vo.UmpUserFund">
+		select u.ID userId,u.NAME userName,u.MOBILE mobile,f.AVAILABLE_AMOUNT
+		aviAmount,
+		f.FROZEN_AMOUNT frozenAmount from TB_USER u
+		left join
+		TB_USER_FUND f on u.ID=f.USERID
+		where 1=1
+		<if
+			test="params.containsKey('mobile') and  params.mobile !=null and  params.mobile!=''">
+			and u.MOBILE=#{params.mobile}
+		</if>
+		<if
+			test="params.containsKey('loginName') and  params.loginName !=null and  params.loginName!=''">
+			and u.LOGINNAME=#{params.loginName}
+		</if>
+		order by f.AVAILABLE_AMOUNT desc
+	</select>
+
+	<select id="getUserListCountZC" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from TB_USER where 1=1
+		<if test="_parameter.containsKey('startTime')">and REGISTERDATE &gt;=#{startTime}</if>
+		<if test="_parameter.containsKey('endTime')">and REGISTERDATE &lt;=#{endTime}</if>
+	</select>
+	<select id="getUserListZC" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		SELECT t2.ID id,t1.MOBILE referralId,t2.REFERRAL_ID
+		referralRealm,t2.MOBILE mobile,t2.LOGINNAME loginname,t2.name NAME,
+		t2.REGISTERDATE registerdate,t2.LASTLOGINDATE lastlogindate,t2.ENABLED
+		enabled
+		FROM TB_USER t1,TB_USER t2
+		WHERE t1.ID = t2.REFERRAL_ID
+		<if test="startTime != null">and t2.REGISTERDATE &gt;=#{startTime}</if>
+		<if test="endTime != null">and t2.REGISTERDATE &lt;=#{endTime}</if>
+		ORDER BY t2.REGISTERDATE DESC
+	</select>
+
+	<select id="getTodayInvestUserInfo" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.User">
+		select * from TB_USER U
+		<choose>
+			<when test="params.status =='REPAY' ">
+				LEFT JOIN TB_INVEST i ON U.ID = i.USERID
+				LEFT JOIN
+				TB_INVEST_REPAYMENT ir ON i.ID = ir.INVEST_ID
+				WHERE
+				DATE(DUEDATE) =
+				CURDATE()
+			</when>
+			<when test="params.status == 'INVEST'">
+				LEFT JOIN TB_INVEST i on U.ID = i.USERID
+				where
+				DATE(i.SUBMITTIME) = CURDATE()
+			</when>
+			<otherwise>
+				LEFT JOIN TB_FUND_RECORD f ON U.ID = f.USER_ID
+				WHERE
+				1 = 1
+				<if test="params.status != null">
+					and f.status = #{params.status}
+				</if>
+				AND DATE(f.TIMERECORDED) = CURDATE()
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getUserInvestInfo" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="java.util.HashMap">
+		SELECT u.id as id, u.`NAME` as name,u.MOBILE as mobile,us.MOBILE as
+		inviteMobile,i.AMOUNT as amount ,cast(date(i.SUBMITTIME) as char) as
+		investTime from TB_USER u
+		LEFT JOIN TB_INVEST i ON u.id = i.USERID LEFT
+		JOIN TB_USER us on
+		u.REFERRAL_ID = us.ID
+		where 1=1
+		<if test="params.queryData !=null ">
+			and i.AMOUNT> #{params.queryData}
+		</if>
+		<if test="params.startTime !=null">
+			and DATE(i.SUBMITTIME)&gt;=DATE(#{params.startTime})
+		</if>
+		<if test="params.endTime !=null">
+			and DATE(i.SUBMITTIME)&lt;=DATE(#{params.endTime})
+		</if>
+		order by i.AMOUNT desc
+	</select>
+	<select id="getUserInvestCount" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="java.util.HashMap">
+		SELECT u.id as id, u.`NAME` as name ,u.MOBILE as mobile,us.MOBILE as
+		inviteMobile,COUNT(i.USERID) as count,cast(MAX(Date(i.SUBMITTIME)) as
+		char) as lastInvestTime
+		from TB_USER u LEFT JOIN TB_INVEST i ON u.id =
+		i.USERID LEFT JOIN
+		TB_USER us on u.REFERRAL_ID = us.ID where 1=1
+		<if test="params.startTime !=null">
+			and DATE(i.SUBMITTIME)&gt;=DATE(#{params.startTime})
+		</if>
+		<if test="params.endTime !=null">
+			and DATE(i.SUBMITTIME)&lt;=DATE(#{params.endTime})
+		</if>
+		GROUP BY i.USERID
+		<if test="params.queryData!=null">
+			HAVING
+			COUNT(i.USERID)>#{params.queryData}
+		</if>
+		order by count(i.USERID) desc
+	</select>
+	<select id="queryUserByParamslistCC" resultType="com.zhongyang.java.vo.UserVo">
+		select
+		t1.NAME
+		name,
+		t1.MOBILE mobile,
+		t1.IDNUMBER idnumber
+		from TB_USER t1
+		where
+		t1.REFERRAL_ID= #{ccid}
+	</select>
+
+	<select id="selectUserInfos" parameterType="com.zhongyang.java.vo.ParamsPojo"
+		resultType="com.zhongyang.java.vo.UserInvest">
+		select u.ID id,u.MOBILE mobile,u.NAME name,u.LASTLOGINDATE
+		lastLoginTime
+		<if test="ifinvest==1">
+			,count(i.STATUS) count
+		</if>
+		from TB_USER u 
+		<if test="ifinvest==1">
+			left join TB_INVEST i on u.ID=i.USERID 
+		</if>
+		where 1=1
+		<if test="idauthenticated==1">
+			and u.IDAUTHENTICATED=1
+		</if>
+		<if test="idauthenticated==0">
+			and u.IDAUTHENTICATED=0
+		</if>
+		<if test="ifinvest==1">
+			and i.STATUS in('AUDITING','SETTLED','CLEARED')
+		</if>
+		
+		<if test="start!=null and start!='' ">
+			and DATE_FORMAT(u.REGISTERDATE,"%Y-%m-%d %H:%i:%s")&gt;=#{start}
+		</if>
+		<if test="end!=null and end!='' ">
+			and DATE_FORMAT(u.REGISTERDATE,"%Y-%m-%d %H:%i:%s") &lt;=#{end}
+		</if>
+		<if test="crowd==1">
+			and u.REFERRAL_ID is not null
+		</if>
+		<if test="crowd==2">
+			and u.REFERRAL_ID ='F2683775-060B-441B-AEBD-41DF9806C0FC'
+		</if>
+		<if test="crowd==3">
+			and u.REFERRAL_ID !='F2683775-060B-441B-AEBD-41DF9806C0FC'
+		</if>
+		group by u.ID
+	</select>
+	<select id="selectConditionUser" parameterType="com.zhongyang.java.vo.ParamsPojo"
+		resultType="java.util.HashMap">
+		SELECT
+		COUNT(ID) registUsers,COUNT(IDNUMBER) authenUsers
+		FROM
+		TB_USER
+		WHERE
+		DATE_FORMAT(REGISTERDATE, "%Y-%m-%d %H:%i:%s") &gt;=#{start}
+		AND DATE_FORMAT(REGISTERDATE, "%Y-%m-%d %H:%i:%s") &lt;=#{end}
+	</select>
+	<select id="selectUserInvestByLoan" parameterType="com.zhongyang.java.vo.ParamsPojo"
+		resultType="java.util.HashMap">
+		SELECT
+		SUM(i.AMOUNT) totalAmount,COUNT(DISTINCT i.USERID)
+		totalPerson,i.MONTHS months
+		FROM
+		TB_INVEST i
+		LEFT JOIN TB_USER u ON
+		i.USERID = u.ID
+		WHERE
+		DATE_FORMAT(u.REGISTERDATE,
+		"%Y-%m-%d %H:%i:%s")&gt;=#{start}
+		AND DATE_FORMAT(u.REGISTERDATE,
+		"%Y-%m-%d %H:%i:%s")&lt;=#{end}
+		AND i.`STATUS`
+		in('AUDITING','SETTLED','CLEARED')
+		GROUP BY i.MONTHS
+	</select>
+	<select id="selectFreshInfos" parameterType="com.zhongyang.java.vo.ParamsPojo"
+		resultType="java.util.HashMap">
+		SELECT
+		COUNT(f.`STATUS`) count,SUM(f.AMOUNT) amount,`STATUS`
+		status,MONTHS months
+		FROM
+		TB_FRESH_AMOUNT f
+		LEFT JOIN TB_USER u ON u.ID =
+		f.USERID
+		WHERE
+		DATE_FORMAT(u.REGISTERDATE,"%Y-%m-%d %H:%i:%s")&gt;=#{start}
+		AND
+		DATE_FORMAT(u.REGISTERDATE,"%Y-%m-%d %H:%i:%s")&lt;=#{end}
+		GROUP BY
+		f.MONTHS,f.`STATUS`
+	</select>
+	<select id="selectInvestLevelCount" parameterType="com.zhongyang.java.vo.ParamsPojo"
+		resultType="java.util.HashMap">
+		SELECT t.`LEVEL` level, COUNT(*) count
+		FROM (SELECT
+		r.AMOUNT,CASE
+		WHEN r.AMOUNT &lt;= 1000 THEN
+		1
+		WHEN r.AMOUNT &lt;= 5000
+		AND r.AMOUNT &gt; 1000 THEN
+		2
+		WHEN r.AMOUNT &lt;= 10000
+		AND r.AMOUNT &gt; 5000 THEN
+		3
+		WHEN r.AMOUNT &lt;= 50000
+		AND r.AMOUNT &gt; 10000 THEN
+		4
+		WHEN r.AMOUNT &gt; 50000 THEN
+		5
+		END AS LEVEL
+		FROM(SELECT
+		SUM(i.AMOUNT) AMOUNT,
+		u.ID ID
+		FROM
+		TB_INVEST i
+		LEFT JOIN TB_USER u ON i.USERID = u.ID
+		WHERE
+		DATE_FORMAT(u.REGISTERDATE,"%Y-%m-%d %H:%i:%s")&gt;=#{start}
+		AND
+		DATE_FORMAT(u.REGISTERDATE,"%Y-%m-%d %H:%i:%s")&lt;=#{end}
+		AND i.`STATUS` IN (
+		'AUDITING',
+		'SETTLED',
+		'CLEARED'
+		)
+		GROUP BY
+		u.ID)r) t
+		GROUP BY t.`LEVEL`
+	</select>
+	<update id="updateUsers" parameterType="java.util.List">
+		<foreach collection="list" index="index" item="item" open="" separator=";" close=""> 
+       		update TB_USER set PMO=#{item.pmo} where ID=#{item.id}
+    	</foreach>
+	</update>
+</mapper>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+dddddddddddddddddddddddddd
+</body>
+<script>
+window.onload = function(){
+	var str = window.location.toString();
+	
+	
+	if(str.indexOf("ret_code=0000")){
+		document.write("充值成功，5后自动关闭");
+	}else{
+		document.write("充值失败，5后自动关闭");
+	}
+	setTimeout(function(){
+		window.close();
+	},5000)
+};
+
+
+</script>
+</html>

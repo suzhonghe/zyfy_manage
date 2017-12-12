@@ -1,0 +1,177 @@
+@charset "utf-8";
+/*清除默认*/
+
+body,ul,ol,p,h1,h3,h4,li,input,table,tr,th,td{
+	margin:0;
+	padding:0;
+}
+h3,h4,strong {
+	font-weight: normal;
+}
+li {
+	list-style:none;
+}
+th {
+	font-weight: normal;
+}
+input,
+select {
+	border: 0;
+	outline: none;
+}
+textarea {
+	border: 1px solid #e2e2e2;
+	resize: none;
+}
+i {
+	font-style: normal;
+}
+img {
+	display:block;
+	border:0;
+	vertical-align:top;
+}
+a {
+	text-decoration:none;
+	color:#000;
+}
+em{font-style:normal}
+.clear {
+	zoom:1;
+}
+html,body {height: 100%;}
+.clear:after {
+	display: block;
+	content: '';
+	clear: both;
+}
+.left {
+	display: inline;
+	float: left;
+}
+.right {
+	display: inline;
+	float: right;
+}
+body {
+	font: 12px 'Microsoft Yahei','Arial';
+}
+
+a:hover,
+.num {
+	color: #eb6100;
+}
+/*下拉选框*/
+div.selectBox {
+	position: relative;
+	padding: 0;
+	width: 218px;
+	height: 28px;
+	border: 1px solid #e2e2e2;
+}
+div.selectBox p {
+	padding: 2px 0 2px 10px;
+}
+div.selectBox ul {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 28px;
+	width: 180px;
+	background-color: #f1f1f1;
+}
+div.selectBox ul li,
+.mortgage li{
+	height: 30px;
+	padding-left: 10px;
+}
+div.selectBox ul li:hover,
+.mortgage li:hover {
+	background-color: #7fcbff;
+}
+div.selectBox span {
+	width: 28px;
+	height: 28px;
+	background-color: #f1f1f1;
+	text-align: center;
+	border-left: 1px solid #e2e2e2;
+}
+div.selectBox span .triangle {
+	display: inline-block;
+	margin-top: 12px;
+	border-top: 8px solid #666;;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+}
+/*遮罩层*/
+.shade {
+	display: none;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(51,51,51,0.62);
+}
+.shade .tip {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 410px;
+	height: 190px;
+	margin-left: -205px;
+	margin-top: -95px;
+	background-color: #eee;
+	border: 1px solid #e2e2e2;
+	color: #666;
+}
+.shade .tip i {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	color: #fff;
+	cursor: pointer;
+	margin-right: 14px;
+	margin-top: 14px;
+	border-radius: 50%;
+	background-color: #ff5825;
+}
+.shade .tip a {
+	display: block;
+	margin: 0 auto;
+	width: 86px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 5px;
+	background-color: #38afff;
+	cursor: pointer;
+	color: #fff;
+}
+.shade .tip a.repay {
+	background-color: #38afff;
+}
+.shade .tip a.advance {
+	background-color: #ff302b;
+}
+/*repayBtn*/
+.repayBtn,
+.advanceBtn {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.repayBtn {
+	color: #38afff;
+}
+.advanceBtn {
+	color: #ff5825;
+}
+
+
+

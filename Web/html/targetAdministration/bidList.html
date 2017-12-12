@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>标的列表</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/listCommon.css" />
+</head>
+<body>
+<p class="bidHead"><a href="#" class="active">全部</a><a href="#">进行中</a><a href="#">满标</a><a href="#">还款中</a><a href="#">已还清</a></p>
+<div class="function clear bidSearch">
+    <div class="left bidSearchC"><em>产品类型</em><span class="selectedList"></span><ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul></div>
+    <div class="left bidSearchT"><em>担保公司</em><span class="selectedList"></span><ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul></div>
+    <div class="left bidSearchB"><em>标的名称</em><input id="bidNameSearch" class="dateInp" type="text" value=""/></div>
+    <div class="right">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span><input id="export" class="export" type="button" value="导出"/>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>标的名称</th>
+                <th>产品类型</th>
+                <th>关联企业</th>
+                <th>标的金额（元）</th>
+                <th>平台标的账户余额（元）</th>
+                <th>UMP标的余额（元）</th>
+                <th>状态</th>
+                <th>发布时间</th>
+                <th>结算时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<p class="amount">总计标的金额： <strong id="totalAmount"></strong> 元</p>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.bidList();
+</script>
+</body>
+</html>

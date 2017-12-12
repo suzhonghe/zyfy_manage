@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>邀请列表</title>
+<link rel="stylesheet" href="../../css/zyfyCommon.css" />
+<link rel="stylesheet" href="../../css/newStandard.css" />
+</head>
+<body>
+<p class="header">邀请列表</p>
+<div class="inviteHeader clear">
+    <div class="alignLeft"><span>用户id：</span><input id="userID" type="text" /></div>
+    <div class="alignRight">
+        <span>日期范围</span><input id="dataStar" class="dateInp" type="text" value=""/> - <input id="dataEnd" class="dateInp" type="text" value=""/><span id="searchTime" class="searchTime">查询</span>
+    </div>
+</div>
+<div class="inviteHeader clear">
+    <div class="alignLeft inviteInfo"><span>推荐<strong></strong>人，共 <strong></strong> 笔，投资金额<strong></strong> 元</span></div>
+    <div class="alignLeft inviteAmount">
+        <span>年化投资额<strong></strong> 元</span>
+    </div>
+</div>
+<div class="tableList">
+    <table>
+        <thead>
+            <tr>
+                <th>投资人</th>
+                <th>标的名称</th>
+                <th>期限</th>
+                <th>投资金额（元）</th>
+                <th>投资日期</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>任*</td>
+                <td>【季度红】化工企业短期借款15期</td>
+                <td>3个月</td>
+                <td>200,900.00</td>
+                <td>2015-12-11</td>
+            </tr> -->
+        </tbody>
+    </table>
+</div>
+<div id="paging" class="paging"></div>
+<script src="../../js/jquery.min.1.10.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/newWin.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script>
+zycfH.myData();
+zycfH.inviteList();
+</script>
+</body>
+</html>

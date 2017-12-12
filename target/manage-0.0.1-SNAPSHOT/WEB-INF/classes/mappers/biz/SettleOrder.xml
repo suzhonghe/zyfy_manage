@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.SettleOrderDao'>
+    <!-- 插入 ORDERIDFEE,SETTLEID-->
+	<insert id="addSettleOrder" parameterType="com.zhongyang.java.pojo.SettleOrder">
+		INSERT INTO TB_SETTLEORDER
+		(ID,ORDERIDFEE,SETTLEID,LOANID,UMPACCOUNTNAME)
+		VALUES(#{Id},#{orderIdFee},#{settleId},#{loanId},#{umpAccountName})
+	</insert>
+    <!-- 查询根据ORDERIDFEE查询SETTLEID-->
+	<select id="getSettleloanByOrderId" parameterType="com.zhongyang.java.pojo.SettleOrder"
+		resultType="com.zhongyang.java.pojo.SettleOrder">
+		select ORDERIDFEE orderIdFee,SETTLEID settleId,LOANID loanId,UMPACCOUNTNAME umpAccountName from TB_SETTLEORDER where SETTLEID = #{settleId}
+	</select>
+	
+	
+	 <!-- 查询根据ORDERIDFEE查询SETTLEID-->
+	<select id="getOrderIdByfeeIdSettle" parameterType="com.zhongyang.java.pojo.SettleOrder"
+		resultType="com.zhongyang.java.pojo.SettleOrder">
+		select ORDERIDFEE orderIdFee,SETTLEID settleId,LOANID loanId,UMPACCOUNTNAME umpAccountName from TB_SETTLEORDER where ORDERIDFEE = #{orderIdFee}
+	</select>
+</mapper>

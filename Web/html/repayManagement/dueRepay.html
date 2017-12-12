@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>本日到期还款</title>
+    <link rel="stylesheet" href="../../css/zyfyCommon.css" />
+    <link rel="stylesheet" href="../../css/listCommon.css" />
+    <link rel="stylesheet" href="../../css/dueRepay.css" />
+</head>
+<body>
+<div class="function clear">
+    <div class="left">显示</div>
+    <div class="left clear selectBox">
+        <p class="left">10</p>
+        <ul>
+            <li >10</li>
+            <li >20</li>
+            <li >30</li>
+        </ul>
+        <span class="right" style="background:none;">
+            <i class="triangle"></i>
+        </span>
+    </div>
+    <div class="left">条记录</div>
+</div>
+<table id="dueRepayTab">
+    <thead>
+    <tr>
+        <th class="loanName">标的名称</th>
+        <th class="realName">借款人</th>
+        <th class="periods">期数</th>
+        <th class="stillAmount">待还金额</th>
+        <th class="availableAmount">账户余额</th>
+        <th class="bidAcount">标的账户</th>
+        <th class="maturity">到期日</th>
+        <th class="repay">操作</th>
+        <th class="advance">垫付</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<div class="paging" id="duePage">
+</div>
+<div class="shade">
+    <div class="tip">
+        <ul>
+            <li>
+                <span>应还本金:</span>
+                <span></span>
+            </li>
+            <li>
+                <span>应还利息:</span>
+                <span></span>
+            </li>
+            <li>
+                <span>金额总计:</span>
+                <span></span>
+            </li>
+        </ul>
+        <a></a>
+        <i>×</i>
+    </div>
+</div>
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/laydate.js"></script>
+<script src="../../js/jqueryCommon.js"></script>
+<script src="../../js/zycfH.js"></script>
+<script src="../../js/dueRepay.js"></script>
+<script>
+    zycfH.myData();
+</script>
+</body>
+</html>

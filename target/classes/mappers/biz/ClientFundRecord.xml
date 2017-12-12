@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.zhongyang.java.dao.ClientFundRecordDao'>
+<!-- 插入平台资金记录 -->
+  <insert id="addClientFundRecord" parameterType="com.zhongyang.java.pojo.ClientFundRecord">
+		INSERT INTO TB_CLIENT_FUND_RECORD
+            (ID,ACCOUNT,AMOUNT,DESCRIPTION,OPERATION,ORDERID,RECORDPRIV,STATUS,
+             TIMERECORDED,TRANSACTIONID,TYPE,USERID,ENTITYID,REALM)
+             VALUES(#{id},#{account},#{amount},#{description}, #{operation},#{orderid},
+		#{recordpriv},#{status},#{timerecorded},#{transactionid},#{type},#{userid},#{entityid},#{realm})
+	</insert>
+  
+<!-- 平台资金记录记录状态更新 -->
+    <update id="updateClentFundByOrderId" parameterType="com.zhongyang.java.pojo.ClientFundRecord">
+		update TB_CLIENT_FUND_RECORD 
+			<set>
+				<if test="status!=null">
+					STATUS=#{status},
+				</if>
+				<if test="transactionid !=null">
+					TRANSACTIONID=#{transactionid},
+				</if>
+				<if test="amount !=null">
+					AMOUNT=#{amount},
+				</if>
+			</set> 
+			where ORDERID=#{orderid}
+	</update>
+     <!-- 根据OrderId查询userID -->
+    <select id="getClientFundRecordByOrderId"  parameterType="com.zhongyang.java.pojo.ClientFundRecord" resultType="com.zhongyang.java.pojo.ClientFundRecord">
+		SELECT
+			  ACCOUNT account,
+			  AMOUNT amount,
+			  DESCRIPTION description,
+			  OPERATION operation,
+			  ORDERID orderid,
+			  RECORDPRIV recordpriv,
+			  STATUS status,
+			  TIMERECORDED timerecorded,
+			  TRANSACTIONID transactionid,
+			  TYPE type,
+			  USERID userid from TB_CLIENT_FUND_RECORD where 1 = 1
+		<if test="orderid != null">
+		 and ORDERID = #{orderid}
+		</if>
+	</select>
+
+	 <!-- 根据OrderId查询userID -->
+    <select id="getClientFundRecordByStatusAmountSum"  parameterType="com.zhongyang.java.pojo.ClientFundRecord" resultType="com.zhongyang.java.pojo.ClientFundRecord">
+		  select SUM(AMOUNT) as amount from TB_CLIENT_FUND_RECORD where 
+		<if test="status != null">
+		   STATUS = #{status}
+		</if>
+		
+	</select>
+	 <!-- 根据OrderId查询ClientFundRecord -->
+    <select id="getClentFundByOrderId"  parameterType="com.zhongyang.java.pojo.ClientFundRecord" resultType="com.zhongyang.java.pojo.ClientFundRecord">
+		select ACCOUNT account,AMOUNT amount,
+			OPERATION operation,ORDERID orderid,
+			STATUS status,TIMERECORDED timerecorded,
+			TYPE type,USERID userid
+        from TB_CLIENT_FUND_RECORD where 1 = 1
+		<if test="orderid != null">
+		 and  ORDERID = #{orderid}
+		</if>
+	</select>
+		 <!-- 根据OrderId查询userID -->
+   <!--  <select id="getClientFundRecord"  parameterType="com.zhongyang.java.vo.ClientFundRecordVo" resultType="com.zhongyang.java.pojo.ClientFundRecord">
+		SELECT
+			  ACCOUNT account,
+			  AMOUNT amount,
+			  DESCRIPTION description,
+			  OPERATION operation,
+			  ORDERID orderid,
+			  RECORDPRIV recordpriv,
+			  STATUS status,
+			  TIMERECORDED timerecorded,
+			  TRANSACTIONID transactionid,
+			  TYPE type,
+			  USERID userid from TB_CLIENT_FUND_RECORD where 1 = 1
+		<if test="type != null">
+		 and TYPE = #{type}
+		</if>
+		<if test="startTime!=null and startTime!=''">
+		    <![CDATA[   and DATE_FORMAT(TIMERECORDED, '%Y-%m-%d')>=  DATE_FORMAT(#{startTime}, '%Y-%m-%d')   ]]>
+		</if>
+		<if test="endTime!=null and endTime!=''">
+		    <![CDATA[  and DATE_FORMAT(TIMERECORDED, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')    ]]>
+		</if>
+        <if test="userid != null">
+		 and USERID = #{userid}
+		</if>
+	</select> -->
+	
+	<select id="getClientFundRecordCount" parameterType="java.util.Map" resultType="int">
+		select count(*) from TB_CLIENT_FUND_RECORD where 1=1
+			<if test="_parameter.containsKey('userId')">and USERID =#{userId}</if>
+			<if test="_parameter.containsKey('type')">and TYPE = #{type}</if>
+			<if test="startTime!=null and startTime!=''">
+			     and TIMERECORDED &gt;=#{startTime}
+		    </if>
+		    <if test="endTime!=null and endTime!=''">
+		        and TIMERECORDED &lt;=#{endTime}
+		    </if>
+	</select>
+	<select id="getClientFundRecord" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.pojo.ClientFundRecord">
+		SELECT
+			  ACCOUNT account,
+			  AMOUNT amount,
+			  DESCRIPTION description,
+			  OPERATION operation,
+			  ORDERID orderid,
+			  RECORDPRIV recordpriv,
+			  STATUS status,
+			  TIMERECORDED timerecorded,
+			  TRANSACTIONID transactionid,
+			  TYPE type,
+			  USERID userid from TB_CLIENT_FUND_RECORD where 1 = 1 
+		    <if test="params.containsKey('type')">
+				and TYPE =#{params.type}
+			</if>
+			<if test="params.containsKey('userId')">
+				and USERID =#{params.userId}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+			     and TIMERECORDED &gt;=#{startTime}
+		    </if>
+		    <if test="endTime!=null and endTime!=''">
+		        and TIMERECORDED &lt;=#{endTime}
+		    </if>
+			 ORDER BY TIMERECORDED DESC
+	</select>
+	<select id="ClientFundRecordOutExcle" parameterType="com.zhongyang.java.system.page.Page"
+		resultType="com.zhongyang.java.vo.ClientFundRecordVo">
+		<!-- SELECT
+			  cl.ORDERID orderid,
+			  cl.ACCOUNT account,
+			  cl.AMOUNT amount,
+			  cl.STATUS status,
+			  cl.USERID userid,
+			  cl.TIMERECORDED timerecordeds,
+			  cl.TYPE type,
+			  cl.OPERATION operation,
+			  cl.DESCRIPTION description
+              FROM TB_CLIENT_FUND_RECORD cl WHERE  1 = 1  -->
+              SELECT tu.NAME userName,tu.MOBILE mobile,cl.ORDERID orderid, cl.ACCOUNT account, 
+              cl.AMOUNT amount, cl.STATUS STATUS, cl.USERID userid, cl.TIMERECORDED timerecordeds, cl.TYPE TYPE, 
+				cl.OPERATION operation, cl.DESCRIPTION description 
+				FROM TB_CLIENT_FUND_RECORD  cl
+				LEFT JOIN TB_USER tu 
+				ON cl.USERID=tu.id
+				WHERE 1=1 
+		    <if test="params.containsKey('type')">
+				and cl.TYPE =#{params.type}
+			</if>
+			<if test="params.containsKey('userId')">
+				and cl.USERID =#{params.userId}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+			     and cl.TIMERECORDED &gt;=#{startTime}
+		    </if>
+		    <if test="endTime!=null and endTime!=''">
+		       and  cl.TIMERECORDED &lt;=#{endTime}
+		    </if>
+			 ORDER BY cl.TIMERECORDED DESC
+	</select>
+	
+</mapper>
